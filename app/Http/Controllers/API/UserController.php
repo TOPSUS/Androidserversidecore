@@ -9,9 +9,33 @@ use App\User;
 
 class UserController extends Controller
 {
-    public function detail()
+    public function detail(Request $request)
     {
-        $user = User::all();
+        $validator = Validator::make($request->all(),[
+            'id' => 'required|numeric',
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                'response_code' => 401,
+                'status' => 'failure',
+                'message' => 'authentikasi gagal dilakukan',
+                'error' => [],
+            ],200);
+        }
+
+        $user = User::find($id);
+
+        if($user == null){
+            return response()->json([
+                'response_code' => 401,
+                'status' => 'tidak ada user yang dimaksud',
+                'message' => 'tidak ada user yang dimaksud',
+                'error' => [],
+            ],200);
+        }
+
+
         return response()->json(['user' => $user], 200);
     }
 }
