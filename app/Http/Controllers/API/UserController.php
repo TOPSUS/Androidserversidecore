@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function detail()
     {
-        $user = User::find(1);
-        return response()->json(['nama' => $user->nama], 200);
+        $user = User::all();
+        return response()->json(['user' => $user], 200);
     }
 }
