@@ -37,7 +37,21 @@ class UserController extends Controller
             ],200);
         }
 
+            return response()->json([
+                'response_code' => 200,
+                'status' => 'success',
+                'message' => 'register berhasil dilakukan',
+                'error' => [],
+                'token' => '',
+                'user_id' => $user->id,
+                'name' => $user->nama,
+                'alamat' => $user->alamat,
+                'chat_id' => $user->chat_id,
+                'pin' => $user->pin,
+                'email' => $user->email,
+                'nohp' => $user->nohp,
+                'jeniskelamin' => $user->jeniskelamin
+            ],200);
 
-        return response()->json(['user' => Auth::user()], 200);
     }
 }
