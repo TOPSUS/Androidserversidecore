@@ -19,7 +19,7 @@ class AuthController extends Controller
     public function login(Request $request){
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             $user = Auth::user();
-            
+
             $token =  $user->createToken('nApp')->accessToken;
 
             return response()->json([
@@ -100,6 +100,15 @@ class AuthController extends Controller
             'email' => $request->email,
             'nohp' => $request->nohp,
             'jeniskelamin' => $request->jeniskelamin
+        ],200);
+    }
+
+    public function failureMethod(){
+        return response()->json([
+            'response_code' => 401,
+            'status' => 'failure',
+            'message' => 'authentikasi gagal dilakukan',
+            'error' => [],
         ],200);
     }
 
