@@ -40,7 +40,7 @@ class UserController extends Controller
             return response()->json([
                 'response_code' => 200,
                 'status' => 'success',
-                'message' => 'register berhasil dilakukan',
+                'message' => ' berhasil dilakukan',
                 'error' => [],
                 'token' => '',
                 'user_id' => $user->id,
