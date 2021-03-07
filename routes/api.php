@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login','API\AuthController@login');
 Route::post('/register','API\AuthController@register');
+Route::post('/failure','API\AuthController@failure')->name('failure');
 
 
 Route::group(['middleware' => 'auth:api'],function(){
