@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 use App\User;
 
@@ -16,13 +17,32 @@ class AuthController extends Controller
      * SETELAH LOGIN MAKA USER AKAN DIBERIKAN AUTH TOKEN
      */
     public function login(Request $request){
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->username])){
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             $user = Auth::user();
-            $success['token'] =  $user->createToken('nApp')->accessToken;
-            return response()->json(['success' => $success], $this->successStatus);
+
+            $token =  $user->createToken('nApp')->accessToken;
+
+            return response()->json([
+                'response_code' => 200,
+                'status' => 'success',
+                'message' => 'register berhasil dilakukan',
+                'error' => [],
+                'token' => $token,
+                'user_id' => $user->id,
+                'name' => $request->nama,
+                'email' => $request->email,
+                'nohp' => $request->nohp,
+                'jeniskelamin' => $request->jeniskelamin
+            ],200);
+
         }
         else{
-            return response()->json(['error'=>'Unauthorised'], 200);
+            return response()->json([
+                'response_code' => 401,
+                'status' => 'failure',
+                'message' => 'Username atau password salah',
+                'error' => ['username' => 'Username atau password salah'],
+            ],200);
         }
     }
 
