@@ -29,10 +29,13 @@ class AuthController extends Controller
                 'error' => [],
                 'token' => $token,
                 'user_id' => $user->id,
-                'name' => $request->nama,
-                'email' => $request->email,
-                'nohp' => $request->nohp,
-                'jeniskelamin' => $request->jeniskelamin
+                'name' => $user->nama,
+                'alamat' => $user->alamat,
+                'chat_id' => $user->chat_id,
+                'pin' => $user->pin,
+                'email' => $user->email,
+                'nohp' => $user->nohp,
+                'jeniskelamin' => $user->jeniskelamin
             ],200);
 
         }
