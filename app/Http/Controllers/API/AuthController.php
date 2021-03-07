@@ -19,7 +19,6 @@ class AuthController extends Controller
     public function login(Request $request){
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             $user = Auth::user();
-            return response()->json($user->all());
             $token =  $user->createToken('nApp')->accessToken;
 
             return response()->json([
