@@ -15,7 +15,21 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
-            return route('login');
+            return response()->json([
+                'response_code' => 401,
+                'status' => 'failure',
+                'message' => 'Tidak ada authentikasi user',
+                'error' => [],
+                'token' => '',
+                'user_id' => '',
+                'name' => '',
+                'alamat' => '',
+                'chat_id' => '',
+                'pin' => '',
+                'email' => '',
+                'nohp' => '',
+                'jeniskelamin' => ''
+            ],200);
         }
     }
 }
