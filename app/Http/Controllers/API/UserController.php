@@ -25,7 +25,7 @@ class UserController extends Controller
             ],200);
         }
 
-        $user = User::find($id);
+        $user = User::find($request->id);
 
         if($user == null){
             return response()->json([
