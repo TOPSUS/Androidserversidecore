@@ -17,6 +17,20 @@ class AuthController extends Controller
      * SETELAH LOGIN MAKA USER AKAN DIBERIKAN AUTH TOKEN
      */
     public function login(Request $request){
+        $validator = Validator::make($request->all(),[
+            'email' => 'required|email|min:3|max:50',
+            'password' => 'required|min:3|max:50'
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                'response_code' => 401,
+                'status' => 'failure',
+                'message' => 'terdapat format penulisan yang salah',
+                'error' => $validator->errors(),
+            ],200);
+        }
+
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             $user = Auth::user();
 
