@@ -125,7 +125,7 @@ class AuthController extends Controller
 
 
         // SIMPAN SEMUA PERUBAHAN
-        $user->save();
+        // $user->save();
 
         // BUAT EMAIL
         $data = [
