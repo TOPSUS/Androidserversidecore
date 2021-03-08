@@ -126,16 +126,16 @@ class AuthController extends Controller
 
 
         // SIMPAN SEMUA PERUBAHAN
-        // $user->save();
+        $user->save();
 
         // BUAT EMAIL
         $data = [
             "nama" => $user->nama,
-            "link" => url(''),
+            "link" => url('').'/verify//'.$user->token_login,
         ];
 
         // KIRIM
-        \Mail::to("alindeveloper14@gmail.com")->send(new VerifikasiUser($data));
+        \Mail::to($user->email)->send(new VerifikasiUser($data));
 
         return response()->json([
             'response_code' => 200,
