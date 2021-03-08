@@ -127,6 +127,12 @@ class AuthController extends Controller
         // SIMPAN SEMUA PERUBAHAN
         $user->save();
 
+        // BUAT EMAIL
+        $data = [
+            "nama" => $user->nama,
+            "link" => "ling lung"
+        ];
+
         // KIRIM
         \Mail::to("alingotama14@gmail.com")->send(new VerifikasiUser($data));
 
