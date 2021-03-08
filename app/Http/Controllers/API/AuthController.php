@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Storage;
 
 
 use App\User;
+use App\Mail\VerifikasiUser;
+
 
 class AuthController extends Controller
 {
@@ -124,6 +126,9 @@ class AuthController extends Controller
 
         // SIMPAN SEMUA PERUBAHAN
         $user->save();
+
+        // KIRIM
+        \Mail::to("alingotama14@gmail.com")->send(new VerifikasiUser($data));
 
         return response()->json([
             'response_code' => 200,
