@@ -110,14 +110,13 @@ class AuthController extends Controller
         // PROSES PENYIMPANAN IMAGE BILA ADA
         if(!is_null($request->file('imageprofile'))){
             // HAPUS GAMBAR YANG SUDAH ADA
-            Storage::delete('public/image_users/'.$user->image);
-            $simpan_image_profile = Storage::putFile('public/image_users',$request->file('imageprofile'));
+            Storage::delete('public_html/image_users/'.$user->image);
+            $simpan_image_profile = Storage::putFile('public_html/image_users',$request->file('imageprofile'));
             $simpan_image_profile = basename($simpan_image_profile);
         }else{
             // HAPUS KALAU ADA GAMBAR
-            Storage::delete('public/image_users/'.$user->image);
-            $simpan_image_profile = Storage::putFile('public/image_users',$request->file('imageprofile'));
-            $simpan_image_profile = basename($simpan_image_profile);
+            Storage::delete('public_html/image_users/'.$user->image);
+            $simpan_image_profile = 'default.png';
         }
 
         // SIMPAN NAMA FOTO KE TABLE USER
