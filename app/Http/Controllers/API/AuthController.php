@@ -88,7 +88,12 @@ class AuthController extends Controller
         ]);
 
         if($validator->fails()){
-            return "Oke error";
+            return response()->json([
+                'response_code' => 401,
+                'status' => 'failure',
+                'message' => 'terdapat format penulisan yang salah',
+                'error' => $validator->errors(),
+            ],200);
         }
 
     
@@ -120,7 +125,17 @@ class AuthController extends Controller
         // SIMPAN SEMUA PERUBAHAN
         $user->save();
 
-        return "Oke sukses";
+        return response()->json([
+            'response_code' => 200,
+            'status' => 'success',
+            'message' => 'register berhasil dilakukan',
+            'error' => (Object)[],
+            'user_id' => $user->id,
+            'name' => $request->nama,
+            'email' => $request->email,
+            'nohp' => $request->nohp,
+            'jeniskelamin' => $request->jeniskelamin
+        ],200);
     }
 
     public function failureMethod(){
