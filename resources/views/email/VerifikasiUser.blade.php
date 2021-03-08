@@ -7,7 +7,7 @@
     <style>
         table,th,td {
             text-align:center;
-            background:white;
+            background:#fff;
             padding:3px;
         }
     </style>
@@ -21,7 +21,7 @@
                 E-MAIL
                 </h1>
                 <P>
-                Universitas Udayana <br>
+                Email Verifikasi Akun<br>
                 </P>
             </th>
         </tr>
