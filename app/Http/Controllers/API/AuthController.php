@@ -25,7 +25,7 @@ class AuthController extends Controller
         if($validator->fails()){
             return response()->json([
                 'response_code' => 401,
-                'status' => 'failure',
+                'status' => 'error_input',
                 'message' => 'terdapat format penulisan yang salah',
                 'error' => $validator->errors(),
             ],200);
@@ -56,7 +56,7 @@ class AuthController extends Controller
         else{
             return response()->json([
                 'response_code' => 401,
-                'status' => 'failure',
+                'status' => 'failed_login',
                 'message' => 'Username atau password salah',
                 'error' => (Object)[],
             ],200);
@@ -108,7 +108,7 @@ class AuthController extends Controller
             'response_code' => 200,
             'status' => 'success',
             'message' => 'register berhasil dilakukan',
-            'error' => [],
+            'error' => (Object)[],
             'user_id' => $user->id,
             'name' => $request->nama,
             'email' => $request->email,
@@ -122,7 +122,7 @@ class AuthController extends Controller
             'response_code' => 401,
             'status' => 'failure',
             'message' => 'authentikasi gagal dilakukan',
-            'error' => [],
+            'error' => (Object)[],
         ],200);
     }
 
