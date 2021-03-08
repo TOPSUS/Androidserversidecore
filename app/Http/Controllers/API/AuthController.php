@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
 
 use App\User;
 
@@ -80,41 +82,45 @@ class AuthController extends Controller
             'jeniskelamin' => 'in:Laki-laki,Peremuan',
             'nohp' => 'required|min:8|max:15',
             'email' => 'required|unique:tb_user,email',
-            'foto' => 'nullable|image|max:1000',
+            'imageprofile' => 'nullable|image|max:1000',
             'password' => 'required',
             'c_password' => 'required',
         ]);
 
         if($validator->fails()){
-            return response()->json([
-                'response_code' => 401,
-                'status' => 'failure',
-                'message' => 'terdapat format penulisan yang salah',
-                'error' => $validator->errors(),
-            ],200);
+            return "Oke error";
         }
 
+    
         $user = new User;
         $user->nama = $request->nama;
         $user->alamat = $request->alamat;
         $user->jeniskelamin = $request->jeniskelamin;
         $user->nohp = $request->nohp;
         $user->email = $request->email;
-        $user->foto = "test";
         $user->password = Hash::make($request->password);
+
+        // PROSES PENYIMPANAN IMAGE BILA ADA
+        if(!is_null($request->file('imageprofile'))){
+            // HAPUS GAMBAR YANG SUDAH ADA
+            Storage::delete('public/image_users/'.$user->image);
+            $simpan_image_profile = Storage::putFile('public/image_users',$request->file('imageprofile'));
+            $simpan_image_profile = basename($simpan_image_profile);
+        }else{
+            // HAPUS KALAU ADA GAMBAR
+            Storage::delete('public/image_users/'.$user->image);
+            $simpan_image_profile = Storage::putFile('public/image_users',$request->file('imageprofile'));
+            $simpan_image_profile = basename($simpan_image_profile);
+        }
+
+        // SIMPAN NAMA FOTO KE TABLE USER
+        $user->foto = $simpan_image_profile;
+
+
+        // SIMPAN SEMUA PERUBAHAN
         $user->save();
 
-        return response()->json([
-            'response_code' => 200,
-            'status' => 'success',
-            'message' => 'register berhasil dilakukan',
-            'error' => (Object)[],
-            'user_id' => $user->id,
-            'name' => $request->nama,
-            'email' => $request->email,
-            'nohp' => $request->nohp,
-            'jeniskelamin' => $request->jeniskelamin
-        ],200);
+        return "Oke sukses";
     }
 
     public function failureMethod(){

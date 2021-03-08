@@ -79,7 +79,7 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        'C:\xampp\htdocs\ESpeedBoatAndroid\public\storage' => 'C:\xampp\htdocs\ESpeedBoatAndroid\core\storage\app\public',
     ],
 
 ];
