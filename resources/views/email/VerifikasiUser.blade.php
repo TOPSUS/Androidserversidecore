@@ -15,21 +15,20 @@
 <body>
     <table>
         <tr>
-            <th colspan="7" style="background:#EAF8FF;">
+            <th colspan="7" style="background:#1BA0DC;">
                 <h1>
-                TIRTA ARUNA COTTAGE <br>
+                ESPEEDBOAT<br>
                 E-MAIL
                 </h1>
                 <P>
-                Jln.Banteng No.16 <br>
-                Nomor Hp 081246082357
+                Universitas Udayana <br>
                 </P>
             </th>
         </tr>
         
         <tr>
             <th colspan="7" >
-                <p>Hai !, Mohon untuk mengakses link berikut ini untuk memverifikasi account Espeedboat anda</p>
+                <p>Hai {{ $data['nama'] }}!, Mohon untuk mengakses link berikut ini untuk memverifikasi account Espeedboat anda</p>
             </th>
         </tr>
                 <td colspan="7">
@@ -42,7 +41,7 @@
         </tr>
         
         <tr>
-            <td colspan="7" style="background:#EAF8FF;">
+            <td colspan="7" style="background:#1BA0DC;">
                 <p style="margin-bottom:20px;">Big Regrads</p>
                 <p>TEAM TOPSUS TICKETING</p>
             </td>
