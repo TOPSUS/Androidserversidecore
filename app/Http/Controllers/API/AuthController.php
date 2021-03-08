@@ -122,7 +122,7 @@ class AuthController extends Controller
 
         // SIMPAN NAMA FOTO KE TABLE USER
         $user->foto = $simpan_image_profile;
-        $user->token_login = rand(10,100).$user->id;
+        $user->token_login = rand(10,100);
 
 
         // SIMPAN SEMUA PERUBAHAN
@@ -131,7 +131,7 @@ class AuthController extends Controller
         // BUAT EMAIL
         $data = [
             "nama" => $user->nama,
-            "link" => url([$user->token_login])
+            "link" => url([(String)$user->token_login])
         ];
 
         // KIRIM
