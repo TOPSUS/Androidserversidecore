@@ -18,7 +18,7 @@ class VerifikasiUser extends Mailable
      */
     public function __construct($data)
     {
-        $this->data = $data;
+        return $this->data = $data;
     }
 
     /**
@@ -28,6 +28,6 @@ class VerifikasiUser extends Mailable
      */
     public function build()
     {
-        return $this->view('email/VerifikasiUser',$data);
+        return $this->view('email/VerifikasiUser');
     }
 }

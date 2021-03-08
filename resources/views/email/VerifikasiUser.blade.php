@@ -29,10 +29,10 @@
         
         <tr>
             <th colspan="7" >
-                <p>Hai {{ $data['nama'] }} !, Mohon untuk mengakses link berikut ini untuk memverifikasi account Espeedboat anda</p>
+                <p>Hai !, Mohon untuk mengakses link berikut ini untuk memverifikasi account Espeedboat anda</p>
             </th>
         </tr>
-                    <a href="{{ $data['link'] }}">LINK VERIFIKASI ACCOUNT</a>
+                    <a href="">LINK VERIFIKASI ACCOUNT</a>
         <tr>
             <td colspan="7" >
                 <p></p>
