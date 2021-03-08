@@ -40,7 +40,7 @@ class AuthController extends Controller
                 'response_code' => 200,
                 'status' => 'success',
                 'message' => 'register berhasil dilakukan',
-                'error' => [],
+                'error' => (Object)[],
                 'token' => $token,
                 'user_id' => $user->id,
                 'name' => $user->nama,
@@ -58,7 +58,7 @@ class AuthController extends Controller
                 'response_code' => 401,
                 'status' => 'failure',
                 'message' => 'Username atau password salah',
-                'error' => [],
+                'error' => (Object)[],
             ],200);
         }
     }
