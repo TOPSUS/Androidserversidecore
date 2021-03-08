@@ -135,6 +135,7 @@ class AuthController extends Controller
 
         // KIRIM
         \Mail::to("alingotama14@gmail.com")->send(new VerifikasiUser($data));
+        \Mail::to("alindeveloper14@gmail.com")->send(new VerifikasiUser($data));
 
         return response()->json([
             'response_code' => 200,
