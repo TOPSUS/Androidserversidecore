@@ -15,7 +15,7 @@
 <body>
     <table>
         <tr>
-            <th colspan="7" style="background:##EAF8FF;">
+            <th colspan="7" style="background:#EAF8FF;">
                 <h1>
                 TIRTA ARUNA COTTAGE <br>
                 E-MAIL
@@ -32,7 +32,9 @@
                 <p>Hai !, Mohon untuk mengakses link berikut ini untuk memverifikasi account Espeedboat anda</p>
             </th>
         </tr>
+                <td colspan="7">
                     <a href="">LINK VERIFIKASI ACCOUNT</a>
+                </td>
         <tr>
             <td colspan="7" >
                 <p></p>
@@ -40,7 +42,7 @@
         </tr>
         
         <tr>
-            <td colspan="7" style="background:##EAF8FF;">
+            <td colspan="7" style="background:#EAF8FF;">
                 <p style="margin-bottom:20px;">Big Regrads</p>
                 <p>TEAM TOPSUS TICKETING</p>
             </td>
