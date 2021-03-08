@@ -131,7 +131,7 @@ class AuthController extends Controller
         // BUAT EMAIL
         $data = [
             "nama" => $user->nama,
-            "link" => url([(String)$user->token_login])
+            "link" => url('')."//verify//".$user->token
         ];
 
         // KIRIM

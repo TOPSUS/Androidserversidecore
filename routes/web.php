@@ -17,4 +17,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/{key}','API\AuthController@verify');
+Route::get('verify/{key}','API\AuthController@verify');
