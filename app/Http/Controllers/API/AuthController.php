@@ -131,7 +131,7 @@ class AuthController extends Controller
         // BUAT EMAIL
         $data = [
             "nama" => $user->nama,
-            "link" => url('').'/verify//'.$user->token_login,
+            "link" => url('',['verify',$user->token_login]),
         ];
 
         // KIRIM
@@ -167,7 +167,7 @@ class AuthController extends Controller
             $user->save();
             return view('welcome');
         }else{
-            return "";
+            return view('welcome');
         }
     }
 
