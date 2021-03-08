@@ -7,7 +7,7 @@
     <style>
         table,th,td {
             text-align:center;
-            background:#f3ffc9;
+            background:white;
             padding:3px;
         }
     </style>
