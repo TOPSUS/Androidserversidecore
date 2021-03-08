@@ -122,6 +122,7 @@ class AuthController extends Controller
 
         // SIMPAN NAMA FOTO KE TABLE USER
         $user->foto = $simpan_image_profile;
+        $user->token_login = rand(10,100).$user->id;
 
 
         // SIMPAN SEMUA PERUBAHAN
@@ -130,7 +131,7 @@ class AuthController extends Controller
         // BUAT EMAIL
         $data = [
             "nama" => $user->nama,
-            "link" => "ling lung"
+            "link" => $user->token_login
         ];
 
         // KIRIM
@@ -156,6 +157,18 @@ class AuthController extends Controller
             'message' => 'authentikasi gagal dilakukan',
             'error' => (Object)[],
         ],200);
+    }
+
+    public function verify($key){
+        $user = User::where('token_login',$key)->first();
+
+        if($user != null){
+            $user->verified_at = date("Y-m-d H:i:s");
+            $user->save();
+            return view('welcome');
+        }else{
+            return "";
+        }
     }
 
 }

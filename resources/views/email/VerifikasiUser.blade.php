@@ -32,7 +32,7 @@
             </th>
         </tr>
                 <td colspan="7">
-                    <a href="">LINK VERIFIKASI ACCOUNT</a>
+                    <a href="{{ $data['link'] }}">LINK VERIFIKASI ACCOUNT</a>
                 </td>
         <tr>
             <td colspan="7" >
