@@ -121,7 +121,7 @@ class AuthController extends Controller
 
         // SIMPAN NAMA FOTO KE TABLE USER
         $user->foto = $simpan_image_profile;
-        $user->token_login = rand(10,100);
+        $user->token_login = Hash::mak('');
 
 
         // SIMPAN SEMUA PERUBAHAN
@@ -166,7 +166,7 @@ class AuthController extends Controller
             $user->save();
             return view('welcome');
         }else{
-            return view('welcome');
+            return "FAIL";
         }
     }
 

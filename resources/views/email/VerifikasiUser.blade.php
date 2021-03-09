@@ -28,7 +28,8 @@
         
         <tr>
             <th colspan="7" >
-                <p>Hai {{ $data['nama'] }}!, Mohon untuk mengakses link berikut ini untuk memverifikasi account Espeedboat anda</p>
+                <p>Hai {{ $data['nama'] }}! Sudah siap berlayar >_< ? </p>
+                <p>Tapi sebelum itu mohon akses link berikut ini untuk memverifikasi account Espeedboat anda</p>
             </th>
         </tr>
                 <td colspan="7">
@@ -41,10 +42,10 @@
         </tr>
         
         <tr>
-            <td colspan="7" style="background:#1BA0DC;">
-                <p style="margin-bottom:20px;">Big Regrads</p>
-                <p>TEAM TOPSUS TICKETING</p>
-            </td>
+            <th colspan="7" style="background:#1BA0DC;">
+                <h1 style="margin-bottom:20px;">Big Regrads</h1>
+                <h1>TEAM TOPSUS TICKETING</h1>
+            </th>
         </tr>
     </table>
 </body>
