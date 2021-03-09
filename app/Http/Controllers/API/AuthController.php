@@ -121,7 +121,7 @@ class AuthController extends Controller
 
         // SIMPAN NAMA FOTO KE TABLE USER
         $user->foto = $simpan_image_profile;
-        $user->token_login = Hash::mak('');
+        $user->token_login = Hash::make(date('y-m-d h:i:s').$user->id);
 
 
         // SIMPAN SEMUA PERUBAHAN
