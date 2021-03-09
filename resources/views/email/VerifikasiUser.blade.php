@@ -43,8 +43,8 @@
         
         <tr>
             <th colspan="7" style="background:#1BA0DC;">
-                <h1 style="margin-bottom:20px;">Big Regrads</h1>
-                <h1>TEAM TOPSUS TICKETING</h1>
+                <small style="margin-bottom:20px;">Big Regrads</small>
+                <small>---TEAM TOPSUS TICKETING---</small>
             </th>
         </tr>
     </table>
