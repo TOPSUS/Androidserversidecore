@@ -119,9 +119,19 @@ class AuthController extends Controller
             $simpan_image_profile = 'default.png';
         }
 
+        function generateRandomString($length = 20) {
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $randomString = '';
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            }
+            return $randomString;
+        }
+
         // SIMPAN NAMA FOTO KE TABLE USER
         $user->foto = $simpan_image_profile;
-        $user->token_login = Hash::make(date('y-m-d h:i:s').$user->id);
+        $user->token_login = generateRandomString();
 
 
         // SIMPAN SEMUA PERUBAHAN
