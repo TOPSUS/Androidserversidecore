@@ -52,6 +52,7 @@ class AuthController extends Controller
                 'chat_id' => $user->chat_id,
                 'pin' => $user->pin,
                 'email' => $user->email,
+                'foto' => $user->foto,
                 'nohp' => $user->nohp,
                 'jeniskelamin' => $user->jeniskelamin
             ],200);
