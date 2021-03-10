@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    {{ public_path() }}
+                    VERIFIKASI SUKSES
                 </div>
             </div>
         </div>
