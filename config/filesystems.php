@@ -50,7 +50,7 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'root' => storage_path('app/public_html'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
@@ -79,7 +79,7 @@ return [
     */
 
     'links' => [
-        'C:\xampp\htdocs\ESpeedBoatAndroid\public\storage' => 'C:\xampp\htdocs\ESpeedBoatAndroid\core\storage\app\public',
+        'C:\xampp\htdocs\ESpeedBoatAndroid\public_html\storage' => storage_path('app\public_html'),
     ],
 
 ];

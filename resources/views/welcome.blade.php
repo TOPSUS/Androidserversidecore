@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    SUKSES VERIFIKASI EMAIL
+                    {{ public_path() }}
                 </div>
             </div>
         </div>
