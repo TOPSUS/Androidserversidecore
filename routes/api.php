@@ -20,5 +20,15 @@ Route::get('/failure','API\AuthController@failureMethod')->name('failure');
 
 
 Route::group(['middleware' => 'auth:api'],function(){
-    Route::post('/userprofile','API\UserController@detail');    
-});
+    // USER
+        // READ USERPROFILE
+            Route::post('/userprofile','API\UserController@detail');
+        // AKHIR
+    // AKHIR
+
+    // BERITA PELABUHAN
+        // READ BERITA PELABUHAN
+            Route::post('/readberitapelabuhan','API\BeritaPelabuhanController@getAllBeritaPelabuhan');
+        // AKHITR
+    // AKHIR
+}); 
