@@ -13,6 +13,7 @@ class UserController extends Controller
 {
     public function detail(Request $request)
     {
+        
         $validator = Validator::make($request->all(),[
             'id' => 'required|numeric',
         ]);
@@ -21,8 +22,8 @@ class UserController extends Controller
             return response()->json([
                 'response_code' => 401,
                 'status' => 'failure',
-                'message' => 'authentikasi gagal dilakukan',
-                'error' => [],
+                'message' => 'validasi gagal id tidak ditemukan',
+                'error' => (Object)[],
             ],200);
         }
 
@@ -31,9 +32,9 @@ class UserController extends Controller
         if($user == null){
             return response()->json([
                 'response_code' => 401,
-                'status' => 'tidak ada user yang dimaksud',
+                'status' => 'failure',
                 'message' => 'tidak ada user yang dimaksud',
-                'error' => [],
+                'error' => (Object)[],
             ],200);
         }
 
@@ -41,7 +42,7 @@ class UserController extends Controller
                 'response_code' => 200,
                 'status' => 'success',
                 'message' => ' berhasil dilakukan',
-                'error' => [],
+                'error' => (Object)[],
                 'token' => '',
                 'user_id' => $user->id,
                 'name' => $user->nama,

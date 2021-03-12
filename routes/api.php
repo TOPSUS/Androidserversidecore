@@ -18,6 +18,7 @@ Route::post('/login','API\AuthController@login');
 Route::post('/register','API\AuthController@register');
 Route::get('/failure','API\AuthController@failureMethod')->name('failure');
 
+
 Route::group(['middleware' => 'auth:api'],function(){
-    Route::post('/userprofile','API\UserController@detail');
+    Route::post('/userprofile','API\UserController@detail');    
 });
