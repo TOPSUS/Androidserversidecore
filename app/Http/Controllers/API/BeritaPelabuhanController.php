@@ -21,6 +21,7 @@ class BeritaPelabuhanController extends Controller
               'id_pelabuhan' => $berita->id_pelabuhan,
               'id_user' => $berita->id_user,
               'judul' => $berita->judul,
+              'foto' => $berita->foto,
               'berita' => $berita->berita,
               'tanggal' => $berita->tanggal,
             ];
