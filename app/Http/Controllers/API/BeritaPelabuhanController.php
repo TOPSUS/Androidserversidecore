@@ -31,7 +31,7 @@ class BeritaPelabuhanController extends Controller
             'status' => 'success',
             'message' => ' berhasil dilakukan',
             'error' => (Object)[],
-            'berita_pelabuahan' => $response_beritas,
+            'berita_pelabuhan' => $response_beritas,
         ]);
         
     }    
