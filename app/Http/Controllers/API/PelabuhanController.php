@@ -32,7 +32,7 @@ class PelabuhanController extends Controller
             'status' => 'success',
             'message' => ' berhasil dilakukan',
             'error' => (Object)[],
-            'berita_pelabuhan' => $response_pelabuhan,
+            'pelabuhan' => $response_pelabuhan,
         ]);
     }
 }
