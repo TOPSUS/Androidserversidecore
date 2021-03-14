@@ -24,6 +24,10 @@ Route::group(['middleware' => 'auth:api'],function(){
         // READ USERPROFILE
             Route::post('/userprofile','API\UserController@detail');
         // AKHIR
+        
+        // EDIT USERPROFILE
+            Route::post('/user/editProfile', 'API\UserController@editProfile');
+        // AKHIR
     // AKHIR
 
     // BERITA PELABUHAN
@@ -36,5 +40,10 @@ Route::group(['middleware' => 'auth:api'],function(){
         // READ BERITA ESPEED
             Route::post('/readberitaespeed','API\BeritaEspeedController@getAllBeritaEpseed');
         // AKHITR
+    // AKHIR
+    // PELABUHAN
+        // READ PELABUHAN
+        Route::post('/readpelabuhan','API\PelabuhanController@readAllPelabuhan');
+        // AKHIR
     // AKHIR
 }); 
