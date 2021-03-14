@@ -18,6 +18,7 @@ class PelabuhanController extends Controller
             $response_pelabuhan[] = [
                 'id' => $pelabuhan->id,
                 'kode_pelabuhan' => $pelabuhan->kode_pelabuhan,
+                'nama_pelabuhan' => $pelabuhan->nama_pelabuhan,
                 'lokasi_pelabuhan' => $pelabuhan->lokasi_pelabuhan,
                 'alamat_kantor' => $pelabuhan->alamat_kantor,
                 'latitude' => $pelabuhan->latitude,
