@@ -31,4 +31,10 @@ Route::group(['middleware' => 'auth:api'],function(){
             Route::post('/readberitapelabuhan','API\BeritaPelabuhanController@getAllBeritaPelabuhan');
         // AKHITR
     // AKHIR
+
+    // BERITA ESPEED
+        // READ BERITA ESPEED
+            Route::post('/readberitaespeed','API\BeritaEspeedController@getAllBeritaEpseed');
+        // AKHITR
+    // AKHIR
 }); 
