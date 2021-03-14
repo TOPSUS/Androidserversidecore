@@ -46,4 +46,6 @@ Route::group(['middleware' => 'auth:api'],function(){
         Route::post('/readpelabuhan','API\PelabuhanController@readAllPelabuhan');
         // AKHIR
     // AKHIR
+
+    // TESTGIT
 }); 
