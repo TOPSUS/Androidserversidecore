@@ -26,6 +26,10 @@ Route::group(['middleware' => 'auth:api'],function(){
         // AKHIR
 
         // EDIT PASSWORD
+            Route::post('/user/editProfile', 'API\UserController@editProfile');
+        // AKHIR
+
+        // EDIT PASSWORD
             Route::post('/user/editPassword', 'API\UserController@editPassword');
         // AKHIR
 
