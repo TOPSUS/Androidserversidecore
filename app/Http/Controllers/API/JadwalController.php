@@ -39,17 +39,22 @@ class JadwalController extends Controller
             $jadwals[$index]->tanggal_beroperasi = $speedboat->tanggal_beroperasi;
         }
 
-        return $jadwals;
-
         if($jadwals != null){
             return response()->json([
                 'response_code' => 200,
                 'status' => 'success',
                 'message' => 'berhasil mendapatkan jadwal',
-                'error' => (Object)[]
-        ],200);
-
-        
+                'error' => (Object)[],
+                'jadwal' => $jadwals
+            ],200);
+        }else{
+            return response()->json([
+                'response_code' => 401,
+                'status' => 'success',
+                'message' => 'gagal terjadi kesalahan',
+                'error' => (Object)[],
+                'jadwal' => []
+            ],200);
         }
         
     }
