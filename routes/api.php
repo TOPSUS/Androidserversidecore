@@ -24,15 +24,24 @@ Route::group(['middleware' => 'auth:api'],function(){
         // READ USERPROFILE
             Route::post('/userprofile','API\UserController@detail');
         // AKHIR
-        
-        // EDIT USERPROFILE
-            Route::post('/user/editProfile', 'API\UserController@editProfile');
+
+        // EDIT PASSWORD
+        Route::post('/user/editPassword', 'API\UserController@editProfile');
         // AKHIR
+
+        // EDIT PIN
+        Route::post('/user/editPin', 'API\UserController@editProfile');
+        // AKHIR
+
+        // ADD PIN
+        Route::post('/user/addPin', 'API\UserController@editProfile');
+        // AKHIR
+
     // AKHIR
 
     // BERITA PELABUHAN
         // READ BERITA PELABUHAN
-            Route::post('/readberitapelabuhan','API\BeritaPelabuhanController@getAllBeritaPelabuhan');
+        Route::post('/readberitapelabuhan','API\BeritaPelabuhanController@getAllBeritaPelabuhan');
         // AKHITR
     // AKHIR
 
