@@ -10,9 +10,9 @@ use App\Jadwal;
 class JadwalController extends Controller
 {
     public function getJadwal(Request $request){
-        $jadwals = Jadwal::whereDate('waktu_berangkat','2021-03-16')
-                            ->where('id_asal_pelabuhan',3)
-                            ->where('id_tujuan_pelabuhan',4)
+        $jadwals = Jadwal::whereDate('waktu_berangkat',$request->date)
+                            ->where('id_asal_pelabuhan',$request->id_asal_pelabuhan)
+                            ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
                             ->get(['id','id_asal_pelabuhan','id_tujuan_pelabuhan','waktu_sampai','waktu_berangkat','id_speedboat','harga']);
         
         foreach ($jadwals as $index => $jadwal) {
