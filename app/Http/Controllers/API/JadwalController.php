@@ -13,8 +13,32 @@ class JadwalController extends Controller
         $jadwals = Jadwal::whereDate('waktu_berangkat','2021-03-16')
                             ->where('id_asal_pelabuhan',3)
                             ->where('id_tujuan_pelabuhan',4)
-                            ->get();
+                            ->get(['id','id_asal','id_tujuan_pelabuhan','waktu_sampai','waktu_berangkat','id_speedboat','harga']);
         
+        foreach ($jadwals as $index => $jadwal) {
+            $pelabuhan_asal = $jadwal->getPelabuhanAsal();
+            $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
+            $speedboat = $jadwal->getBoat();
+            $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini();
+            $sisa = $speedboat->kapasitas - $pembelian_saat_ini;
+
+            $jadwals[$index]->pelabuhan_asal_nama = $pelabuhan_asal->nama_pelabuhan;
+            $jadwals[$index]->pelabuhan_asal_kode = $pelabuhan_asal->kode_pelabuhan;
+            
+            $jadwals[$index]->pelabuhan_tujuan_nama = $pelabuhan_tujuan->nama_pelabuhan;
+            $jadwals[$index]->pelabuhan_tujuan_kode = $pelabuhan_tujuan->kode_pelabuhan;
+         
+            $jadwals[$index]->nama_speedboat = $speedboat->nama_speedboat;
+            $jadwals[$index]->kapasitas = $speedboat->kapasitas;
+            $jadwals[$index]->pemesanan_saat_ini = $pemesanan_saat_ini;
+            $jadwals[$index]->sisa = $sisa;
+            $jadwals[$index]->sisa = $sisa;
+            $jadwals[$index]->deskripsi_boat = $speedboat->deskripsi;
+            $jadwals[$index]->foto_boat = $speedboat->foto;
+            $jadwals[$index]->contact_service = $speedboat->contact_service;
+            $jadwals[$index]->tanggal_beroperasi = $speedboat->tanggal_beroperasi;
+        }
+
         return $jadwals;
 
         if($jadwals != null){
