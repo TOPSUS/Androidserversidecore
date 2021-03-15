@@ -57,21 +57,8 @@ class UserController extends Controller
         if($request->photo!=''){
             $photo = time().'.jpg';
             Storage::putFile('public_html/image_users',base64_decode($request->photo));
-        $user->image = $photo;
+            $user->image = $photo;
         }
-    
-
-        function generateRandomString($length = 20) {
-            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            $charactersLength = strlen($characters);
-            $randomString = '';
-            for ($i = 0; $i < $length; $i++) {
-                $randomString .= $characters[rand(0, $charactersLength - 1)];
-            }
-            return $randomString;
-        }
-
-        $user->token_login = generateRandomString();
 
         // SIMPAN SEMUA PERUBAHAN
         $user->update();
