@@ -170,4 +170,12 @@ class UserController extends Controller
             ]);
         }
     }
+
+    public function logout(Request $request){
+        $request->user()->token()->revoke();
+        return response()->json([
+            'response_code' => 200,
+            'status' => 'success'
+        ]);
+    }
 }
