@@ -55,8 +55,9 @@ class UserController extends Controller
 
         if($request->photo!=''){
             $photo = time().'.jpg';
-            Storage::putFile('public_html/image_users',base64_decode($request->photo));
-            $user->image = $photo;
+            file_put_contents('storage/public_html/image_users'.$photo,base64_decode($request->photo));
+            //Storage::putFile('public_html/image_users',base64_decode($request->photo));
+            $user->foto = $photo;
         }
 
         // SIMPAN SEMUA PERUBAHAN
