@@ -109,11 +109,27 @@ class UserController extends Controller
 
     public function addPin(Request $request)
     {
+        $user = User::find(Auth::user()->id);
 
+        $savedPass = $user->password;
+        $getPass = $request->password;
+        if(Hash::check($getPass, $savedPass)){
+            $user->pin = $request->pin;
+            $user->save();
+            return response()->json([
+                'response_code' => 200,
+                'status' => 'success'
+            ]);
+        }else{
+            return response()->json([
+                'response_code' => 200,
+                'status' => 'failed'
+            ]);
+        }
     }
 
     public function editPin(Request $request)
     {
-        
+
     }
 }
