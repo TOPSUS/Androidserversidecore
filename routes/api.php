@@ -25,7 +25,7 @@ Route::group(['middleware' => 'auth:api'],function(){
             Route::post('/userprofile','API\UserController@detail');
         // AKHIR
 
-        // EDIT PASSWORD
+        // EDIT PROFILE
             Route::post('/user/editProfile', 'API\UserController@editProfile');
         // AKHIR
 
@@ -40,6 +40,10 @@ Route::group(['middleware' => 'auth:api'],function(){
         // ADD PIN
             Route::post('/user/addPin', 'API\UserController@addPin');
         // AKHIR
+
+        // LOG OUT
+            Route::post('/user/logout', 'API\UserController@logout');
+        //AKHIR
 
     // AKHIR
 
