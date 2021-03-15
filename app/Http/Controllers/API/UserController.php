@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 use App\User;
@@ -82,5 +83,27 @@ class UserController extends Controller
             'nohp' => $user->nohp,
             'jeniskelamin' => $user->jeniskelamin
         ],200);
+    }
+
+    public function editPassword(Request $request)
+    {
+        $user = User::find(Auth::user()->id);
+
+        $savedPass = $user->password;
+        $getPass = $request->password;
+        $newPass = Hash::make($request->newPass);
+        if(Hash::check($getPass, $savedPass)){
+            $user->password = $newPass;
+            $user->save();
+            return response()->json([
+                'response_code' => 200,
+                'status' => 'success'
+            ]);
+        }else{
+            return response()->json([
+                'response_code' => 200,
+                'status' => 'failed'
+            ]);
+        }
     }
 }
