@@ -13,7 +13,7 @@ class JadwalController extends Controller
         $jadwals = Jadwal::whereDate('waktu_berangkat','2021-03-16')
                             ->where('id_asal_pelabuhan',3)
                             ->where('id_tujuan_pelabuhan',4)
-                            ->get(['id','id_asal','id_tujuan_pelabuhan','waktu_sampai','waktu_berangkat','id_speedboat','harga']);
+                            ->get(['id','id_asal_pelabuhan','id_tujuan_pelabuhan','waktu_sampai','waktu_berangkat','id_speedboat','harga']);
         
         foreach ($jadwals as $index => $jadwal) {
             $pelabuhan_asal = $jadwal->getPelabuhanAsal();
