@@ -12,23 +12,10 @@ use App\User;
 
 class UserController extends Controller
 {
-    public function detail(Request $request)
+    public function detail()
     {
         
-        $validator = Validator::make($request->all(),[
-            'id' => 'required|numeric',
-        ]);
-
-        if($validator->fails()){
-            return response()->json([
-                'response_code' => 401,
-                'status' => 'failure',
-                'message' => 'validasi gagal id tidak ditemukan',
-                'error' => (Object)[],
-            ],200);
-        }
-
-        $user = User::find($request->id);
+        $user = User::find(Auth::user()->id);
 
         if($user == null){
             return response()->json([
