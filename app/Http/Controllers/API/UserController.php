@@ -113,6 +113,8 @@ class UserController extends Controller
         $user = User::find(Auth::user()->id);
 
         $savedPass = $user->password;
+        $haha = "12341234";
+        $haha = Hash::make($haha);
         $getPass = $request->password;
         if(Hash::check($getPass, $savedPass)){
             $user->password = $request->pin;
@@ -135,7 +137,7 @@ class UserController extends Controller
         }else{
             return response()->json([
                 'response_code' => 200,
-                'status' => 'failed'
+                'status' => $haha
             ]);
         }
     }
