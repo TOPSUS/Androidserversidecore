@@ -98,17 +98,7 @@ class UserController extends Controller
             return response()->json([
                 'response_code' => 200,
                 'status' => 'success',
-                'message' => 'add pin berhasil',
-                'error' => (Object)[],
-                'user_id' => $user->id,
-                'name' => $user->nama,
-                'alamat' => $user->alamat,
-                'chat_id' => $user->chat_id,
-                'pin' => $user->pin,
-                'email' => $user->email,
-                'foto' => $user->foto,
-                'nohp' => $user->nohp,
-                'jeniskelamin' => $user->jeniskelamin
+                'pin' => $user->pin
             ]);
         }else{
             return response()->json([
