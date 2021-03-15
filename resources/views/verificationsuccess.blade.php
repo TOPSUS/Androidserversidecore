@@ -11,7 +11,7 @@
 <Style>
 *{
     font-family: 'Bebas Neue', cursive;
-    letter-spacing:20px;
+    letter-spacing:12px;
 }
 .container-grid{
     position: relative;
