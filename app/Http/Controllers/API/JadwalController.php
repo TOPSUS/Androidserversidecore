@@ -10,6 +10,8 @@ use App\Jadwal;
 class JadwalController extends Controller
 {
     public function getJadwal(Request $request){
-        return 'hai';
+        $jadwals = Jadwal::where('waktu_berangkat','2021-03-16')->get()->toArray();
+        return $jadwals;
+        
     }
 }
