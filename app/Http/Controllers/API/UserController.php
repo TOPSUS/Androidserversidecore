@@ -47,17 +47,6 @@ class UserController extends Controller
     public function editProfile(Request $request)
     {
         $user = User::find(Auth::user()->id);
-        
-        if($user = null){
-            {
-                return response()->json([
-                    'response_code' => 401,
-                    'status' => 'failure',
-                    'message' => 'tidak ada user yang dimaksud',
-                    'error' => (Object)[],
-                ],200);
-            }
-        }
 
         $user->nama = $request->nama;
         $user->alamat = $request->alamat;
