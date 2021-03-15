@@ -20,8 +20,7 @@ class JadwalController extends Controller
                 'response_code' => 200,
                 'status' => 'success',
                 'message' => 'berhasil mendapatkan jadwal',
-                'error' => (Object)[],
-                'jadwal' => 
+                'error' => (Object)[]
         ],200);
 
         
