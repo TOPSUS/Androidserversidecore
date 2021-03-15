@@ -37,7 +37,8 @@ header {
 <body>
     <div class="container-grid">
         <header>
-            <img src="{{ asset('storage/appimage/wing.png') }}" style="width:600px;height:600px;">
+            <img src="{{ asset('storage/appimage/wing.png') }}" style="width:400px;height:400px;">
+            <h1 style="color:blue;">VERIFIKASI SUKSES</h1>
         </header>
     </div>
 </body>
