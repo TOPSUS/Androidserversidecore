@@ -31,7 +31,6 @@ class UserController extends Controller
                 'status' => 'success',
                 'message' => ' berhasil dilakukan',
                 'error' => (Object)[],
-                'token' => '',
                 'user_id' => $user->id,
                 'name' => $user->nama,
                 'alamat' => $user->alamat,
