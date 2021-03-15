@@ -26,22 +26,22 @@ Route::group(['middleware' => 'auth:api'],function(){
         // AKHIR
 
         // EDIT PASSWORD
-        Route::post('/user/editPassword', 'API\UserController@editPassword');
+            Route::post('/user/editPassword', 'API\UserController@editPassword');
         // AKHIR
 
         // EDIT PIN
-        Route::post('/user/editPin', 'API\UserController@editPin');
+            Route::post('/user/editPin', 'API\UserController@editPin');
         // AKHIR
 
         // ADD PIN
-        Route::post('/user/addPin', 'API\UserController@addPin');
+            Route::post('/user/addPin', 'API\UserController@addPin');
         // AKHIR
 
     // AKHIR
 
     // BERITA PELABUHAN
         // READ BERITA PELABUHAN
-        Route::post('/readberitapelabuhan','API\BeritaPelabuhanController@getAllBeritaPelabuhan');
+            Route::post('/readberitapelabuhan','API\BeritaPelabuhanController@getAllBeritaPelabuhan');
         // AKHITR
     // AKHIR
 
@@ -52,7 +52,9 @@ Route::group(['middleware' => 'auth:api'],function(){
     // AKHIR
     // PELABUHAN
         // READ PELABUHAN
-        Route::post('/readpelabuhan','API\PelabuhanController@readAllPelabuhan');
+            Route::post('/readpelabuhan','API\PelabuhanController@readAllPelabuhan');
         // AKHIR
     // AKHIR
 }); 
+
+Route::post('/getjadwal','API\JadwalController@getJadwal');
