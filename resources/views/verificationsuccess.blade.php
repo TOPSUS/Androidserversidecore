@@ -10,7 +10,7 @@
 .container-grid{
     position: relative;
     display: grid;
-    height: 100vw;
+    height: 100vh;
     width: 100%;
     grid-template-areas: 
         "header"
