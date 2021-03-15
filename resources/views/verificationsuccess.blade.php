@@ -36,7 +36,7 @@ header {
 <body>
     <div class="container-grid">
         <header>
-            <img src="{{ asset('appimage/wing.png') }}" alt="">
+            <img src="{{ asset('storage/appimage/wing.png') }}" alt="">
         </header>
     </div>
 </body>
