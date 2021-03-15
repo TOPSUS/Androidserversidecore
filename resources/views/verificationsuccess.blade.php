@@ -14,9 +14,7 @@
     width: 100%;
     grid-template-areas: 
         "header"
-        "section"
     ;
-    grid-template-rows: 50% 50%;
     transition: .7s;
 }
 
@@ -29,6 +27,8 @@ header {
     text-align: center;
     justify-content: center;
     justify-items: center;
+    align-items:center;
+    align-content:center;
     gap:12px;
     font-size: 12px;
 }
