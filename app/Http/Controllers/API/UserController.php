@@ -54,7 +54,7 @@ class UserController extends Controller
         $user->email = $request->email;
 
         if($request->photo!=''){
-            $photo = $request->nama.time().'.jpg';
+            $photo = $request->$user->id.time().'.jpg';
             file_put_contents('storage/image_users/'.$photo,base64_decode($request->photo));
             $user->foto = $photo;
             // $simpan_image_profile = Storage::putFile('public_html/image_users',base64_decode($request->photo));
