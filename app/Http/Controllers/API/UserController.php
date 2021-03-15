@@ -117,7 +117,7 @@ class UserController extends Controller
         $haha = Hash::make($haha);
         $getPass = $request->password;
         if(Hash::check($getPass, $savedPass)){
-            $user->password = $request->pin;
+            $user->pin = $request->pin;
             $user->save();
             return response()->json([
                 'response_code' => 200,
