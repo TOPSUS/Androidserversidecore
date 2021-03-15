@@ -175,7 +175,7 @@ class AuthController extends Controller
         if($user != null){
             $user->verified_at = date("Y-m-d H:i:s");
             $user->save();
-            return view('welcome');
+            return view('verificationsuccess');
         }else{
             return "FAIL";
         }
