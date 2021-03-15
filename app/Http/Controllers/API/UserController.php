@@ -106,4 +106,14 @@ class UserController extends Controller
             ]);
         }
     }
+
+    public function addPin(Request $request)
+    {
+
+    }
+
+    public function editPin(Request $request)
+    {
+        
+    }
 }

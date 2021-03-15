@@ -26,15 +26,15 @@ Route::group(['middleware' => 'auth:api'],function(){
         // AKHIR
 
         // EDIT PASSWORD
-        Route::post('/user/editPassword', 'API\UserController@editProfile');
+        Route::post('/user/editPassword', 'API\UserController@editPassword');
         // AKHIR
 
         // EDIT PIN
-        Route::post('/user/editPin', 'API\UserController@editProfile');
+        Route::post('/user/editPin', 'API\UserController@editPin');
         // AKHIR
 
         // ADD PIN
-        Route::post('/user/addPin', 'API\UserController@editProfile');
+        Route::post('/user/addPin', 'API\UserController@addPin');
         // AKHIR
 
     // AKHIR
