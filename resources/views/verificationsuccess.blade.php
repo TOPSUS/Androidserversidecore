@@ -27,16 +27,17 @@ header {
     height: 100%;
     flex-direction: column;
     text-align: center;
+    justify-content: center;
+    justify-items: center;
     gap:12px;
     font-size: 12px;
-    
 }
 
 </Style>
 <body>
     <div class="container-grid">
         <header>
-            <img src="{{ asset('storage/appimage/wing.png') }}" alt="">
+            <img src="{{ asset('storage/appimage/wing.png') }}" style="width:200px;height:200px;">
         </header>
     </div>
 </body>
