@@ -97,7 +97,8 @@ class UserController extends Controller
             $user->save();
             return response()->json([
                 'response_code' => 200,
-                'status' => 'success'
+                'status' => 'success',
+                'pin' => $user->pin
             ]);
         }else{
             return response()->json([
@@ -114,7 +115,7 @@ class UserController extends Controller
         $savedPass = $user->password;
         $getPass = $request->password;
         if(Hash::check($getPass, $savedPass)){
-            $user->pin = $request->pin;
+            $user->password = $request->pin;
             $user->save();
             return response()->json([
                 'response_code' => 200,
