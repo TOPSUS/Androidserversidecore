@@ -51,7 +51,7 @@ class LupaPasswordController extends Controller
                     'nama' => $user->nama
                 ];
                 
-                EmailSender::dispatch($data)->delay(now()->addMinutes(1));;
+                EmailSender::dispatch($data);
 
                 // RETURN RESPONSE SUKSES
                     return response()->json([
