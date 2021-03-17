@@ -83,7 +83,7 @@ class LupaPasswordController extends Controller
                     'response_code' => 403,
                     'status' => 'failure',
                     'message' => 'access forbiden',
-                    'errors' => $validator->errors()
+                    'errors' => $validator->errors(),
                 ],200);
             };
         // AKHIR
@@ -115,7 +115,6 @@ class LupaPasswordController extends Controller
                     'status' => 'failure',
                     'message' => 'tidak ada user yang cocok',
                     'errors' => $validator->errors(),
-                    'new_pass' => ''
                 ],200);
             }
         // AKHIR
