@@ -20,7 +20,7 @@ class EmailSender implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(array $data)
+    public function __construct($data)
     {
         return $this->data = $data;
     }
@@ -32,6 +32,6 @@ class EmailSender implements ShouldQueue
      */
     public function handle()
     {
-        \Mail::to($data['email'])->send(new EmailVerifikasiLupaPassword($data));
+        \Mail::to($this->data['email'])->send(new EmailVerifikasiLupaPassword($data));
     }
 }
