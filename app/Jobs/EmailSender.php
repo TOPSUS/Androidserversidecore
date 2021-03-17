@@ -8,7 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-use App\Main\EmailVerifikasiLupaPassword;
+use App\Mail\EmailVerifikasiLupaPassword;
 
 class EmailSender implements ShouldQueue
 {
