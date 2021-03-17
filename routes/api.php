@@ -24,6 +24,12 @@ Route::get('/failure','API\AuthController@failureMethod')->name('failure');
             Route::post('/requestemailcode','API\LupaPasswordController@verifikasiEmailLupaPassword');
         // AKHIR
     // AKHIR
+
+    // MENGGUNAKAN TELEGRAM
+        // REQUEST PASSWORD BARU DENGAN TELEGRAM
+            Route::post('/requesttelegramnewpass','API\LupaPasswordController@telegramLupaPassword');
+        // AKHIR
+    // AKHIR
 // AKHIR
 
 Route::group(['middleware' => 'auth:api'],function(){
