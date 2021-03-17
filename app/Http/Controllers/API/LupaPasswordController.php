@@ -15,7 +15,8 @@ class LupaPasswordController extends Controller
      * DENGAN CARA MENGIRIMKAN CODE VERIFIKASI KE EMAIL
      * USER YANG AKAN GANTI EMAIL
      */
-    public function verifikasiEmailLupaPassword(Request $request){
+    public function verifikasiEmailLupaPassword(Request $request)
+    {
         // VALIDASI EMAIL TERLEBIH DAHULU
             $validator = Validator::make($request->all(),[
                 'email' => 'email'
@@ -37,17 +38,8 @@ class LupaPasswordController extends Controller
             $user = User::where('email',$request->email)->first();
             
             if($user != null){
-                function generateRandomString($length = 5) {
-                    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                    $charactersLength = strlen($characters);
-                    $randomString = '';
-                    for ($i = 0; $i < $length; $i++) {
-                        $randomString .= $characters[rand(0, $charactersLength - 1)];
-                    }
-                    return $randomString;
-                }
 
-                $user->kode_verifikasi_email = generateRandomString();
+                $user->kode_verifikasi_email = $this->generateRandomString();
                 $user->update();
 
                 // RETURN RESPONSE SUKSES
@@ -70,5 +62,73 @@ class LupaPasswordController extends Controller
                 // AKHIR
             }
         // AKHIR
+    }
+
+    /**
+     * 
+     * VERIFIKASI YANG DILAKUKAN DENGAN TELEGRAM
+     * HANYA MENGGUNAKAN SATU METHOD DENGAN PARAMS EMAIL DAN PIN DARI USER
+     * 
+     */
+    public function telegramLupaPassword(Request $request){
+        // VALIDATOR
+            $validator = Validator::make($request->all(),[
+                'email' => 'required|email',
+                'pin' => 'required|numeric',
+            ]);
+            
+            if($validator->fails()){
+                return response()->json([
+                    'response_code' => 403,
+                    'status' => 'failure',
+                    'message' => 'access forbiden',
+                    'errors' => $validator->errors()
+                ],200);
+            };
+        // AKHIR
+
+        // MEMBENTUK PASSWORD BARU
+            $user = User::where('email',$request->email)->where('pin',$request->pin)->first();
+            
+            if($user != null){
+                $newPass = $this->generateRandomString();
+
+                $pass = Hash::make($newPass);
+
+                $user->password = $pass;
+
+                $user->update();
+
+                return response()->json([
+                    'response_code' => 200,
+                    'status' => 'success',
+                    'message' => 'access forbiden',
+                    'errors' => $validator->errors(),
+                    'new_pass' => $newPass
+                ],200);
+            }
+            else{
+                // SAAT TIDAK ADA USER YANG COCOK
+                return response()->json([
+                    'response_code' => 403,
+                    'status' => 'failure',
+                    'message' => 'tidak ada user yang cocok',
+                    'errors' => $validator->errors(),
+                    'new_pass' => ''
+                ],200);
+            }
+        // AKHIR
+
+    }
+
+    // FUNGSI UNTUK GENERATE RANDOM STRING
+    private function generateRandomString($length = 5) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }
