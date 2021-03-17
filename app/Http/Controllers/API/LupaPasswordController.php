@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
+use App\Jobs\EmailSender;
+
 use App\User;
 
 class LupaPasswordController extends Controller
@@ -42,6 +44,14 @@ class LupaPasswordController extends Controller
 
                 $user->kode_verifikasi_email = $this->generateRandomString();
                 $user->update();
+
+                $data = [
+                    'kode_verifikasi' => $user->kode_verifikasi_email,
+                    'email' => $user->email,
+                    'nama' => $user->nama
+                ];
+
+                EmailSender::dispatch($data);
 
                 // RETURN RESPONSE SUKSES
                     return response()->json([
