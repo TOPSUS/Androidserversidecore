@@ -103,7 +103,7 @@ class LupaPasswordController extends Controller
                 return response()->json([
                     'response_code' => 200,
                     'status' => 'success',
-                    'message' => 'access forbiden',
+                    'message' => 'password diperbarui oleh sistem',
                     'errors' => $validator->errors(),
                     'new_pass' => $newPass
                 ],200);
