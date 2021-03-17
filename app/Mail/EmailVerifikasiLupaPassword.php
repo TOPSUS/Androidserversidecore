@@ -28,6 +28,6 @@ class EmailVerifikasiLupaPassword extends Mailable
      */
     public function build()
     {
-        return $this->view('view.verifikasi_email_lupa_password');
+        return $this->view('view/verifikasi_email_lupa_password');
     }
 }
