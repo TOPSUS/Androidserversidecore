@@ -18,6 +18,13 @@ Route::post('/login','API\AuthController@login');
 Route::post('/register','API\AuthController@register');
 Route::get('/failure','API\AuthController@failureMethod')->name('failure');
 
+// LUPA PASSWORD TANPA AUTH
+    // MENGGUNAKAN EMAIL
+        // REQUEST EMAIL VERIFIKASI SEBELUM GANTI PASSORD
+            Route::post('/requestemailcode','API\LupaPasswordController@verifikasiEmailLupaPassword');
+        // AKHIR
+    // AKHIR
+// AKHIR
 
 Route::group(['middleware' => 'auth:api'],function(){
     // USER
@@ -44,7 +51,6 @@ Route::group(['middleware' => 'auth:api'],function(){
         // LOG OUT
             Route::post('/user/logout', 'API\UserController@logout');
         //AKHIR
-
     // AKHIR
 
     // BERITA PELABUHAN
@@ -58,11 +64,16 @@ Route::group(['middleware' => 'auth:api'],function(){
             Route::post('/readberitaespeed','API\BeritaEspeedController@getAllBeritaEpseed');
         // AKHITR
     // AKHIR
+
     // PELABUHAN
         // READ PELABUHAN
             Route::post('/readpelabuhan','API\PelabuhanController@readAllPelabuhan');
         // AKHIR
     // AKHIR
-}); 
 
-Route::post('/getjadwal','API\JadwalController@getJadwal');
+    // PROSES TRANSAKSI
+        // GET JADWAL
+            Route::post('/getjadwal','API\JadwalController@getJadwal');
+        // AKHIR
+    // AKHIR
+}); 
