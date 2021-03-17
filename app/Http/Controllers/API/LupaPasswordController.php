@@ -48,6 +48,7 @@ class LupaPasswordController extends Controller
                 }
 
                 $user->kode_verifikasi_email = generateRandomString();
+                $user->update();
 
                 // RETURN RESPONSE SUKSES
                     return response()->json([
