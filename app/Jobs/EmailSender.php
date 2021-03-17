@@ -32,6 +32,6 @@ class EmailSender implements ShouldQueue
      */
     public function handle()
     {
-        \Mail::to($data['email'])->send(new EmailVerifikasiLupaPassword($data));
+        \Mail::to($this->data['email'])->send(new EmailVerifikasiLupaPassword($this->data));
     }
 }
