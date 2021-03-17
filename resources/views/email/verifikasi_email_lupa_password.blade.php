@@ -30,15 +30,14 @@
             <th colspan="7" >
                 <p>Hai {{ $data['nama'] }}!, lupa password ya ?<br> >_<</p>
                 <p>berikut ini merupakan kode verifikasi email anda :</p>
-                <p>Silahkan masukkan kode diatas ke dalam halaman verifikasi pada aplikasi android</p>
             </th>
         </tr>
                 <td colspan="7">
-                    <p style="background:orange;color:white;">{{ $data['kode_verifikasi'] }}</p>
+                    <p style="background:orange;color:white;font-size:20px;">{{ $data['kode_verifikasi'] }}</p>
                 </td>
         <tr>
             <td colspan="7" >
-                <p></p>
+                <p>Silahkan masukkan kode diatas ke dalam halaman verifikasi pada aplikasi android</p>
             </td>
         </tr>
         
