@@ -14,68 +14,6 @@ use App\User;
 class LupaPasswordController extends Controller
 {
     /**
-     * VERIFIKASI DULU EMAIL YANG MAU GANTI PASSWORD
-     * DENGAN CARA MENGIRIMKAN CODE VERIFIKASI KE EMAIL
-     * USER YANG AKAN GANTI EMAIL
-     */
-    public function verifikasiEmailLupaPassword(Request $request)
-    {
-        // VALIDASI EMAIL TERLEBIH DAHULU
-            $validator = Validator::make($request->all(),[
-                'email' => 'email'
-            ]);
-
-            // RETURN ERROR KALAU INPUT SALAH
-                if($validator->fails()){
-                    return response()->json([
-                        'response_code' => 403,
-                        'status' => 'failure',
-                        'message' => 'access forbiden',
-                        'errors' => $validator->errors()
-                    ],200);
-                }
-            // AKHIR
-        // AKHIR
-        
-        // MENCARI USER DENGAN EMAIL YANG DIMAKSUD DAN MENGIRIMKAN VERIFIIKASI CODE KE EMAIL
-            $user = User::where('email',$request->email)->first();
-            
-            if($user != null){
-
-                $user->kode_verifikasi_email = $this->generateRandomString();
-                $user->update();
-
-                $data = [
-                    'kode_verifikasi' => $user->kode_verifikasi_email,
-                    'email' => $user->email,
-                    'nama' => $user->nama
-                ];
-                
-                EmailSender::dispatch($data)->afterResponse();
-
-                // RETURN RESPONSE SUKSES
-                    return response()->json([
-                        'response_code' => 200,
-                        'status' => 'success',
-                        'message' => 'berhasil generate kode verifikasi silahkan cek email',
-                        'errors' => (Object)[]
-                    ],200);
-                // AKHIR
-            }
-            else{
-                // APABILA USER TIDAK DITEMUKAN DI DALAM DATABASE OLEH SISTEM
-                    return response()->json([
-                        'response_code' => 403,
-                        'status' => 'failure',
-                        'message' => 'user tidak ditemukan dengan email terkait',
-                        'errors' => (Object)[]
-                    ],200);
-                // AKHIR
-            }
-        // AKHIR
-    }
-
-    /**
      * 
      * VERIFIKASI YANG DILAKUKAN DENGAN TELEGRAM
      * HANYA MENGGUNAKAN SATU METHOD DENGAN PARAMS EMAIL DAN PIN DARI USER
@@ -144,6 +82,68 @@ class LupaPasswordController extends Controller
         return $randomString;
     }
 
+        /**
+     * VERIFIKASI DULU EMAIL YANG MAU GANTI PASSWORD
+     * DENGAN CARA MENGIRIMKAN CODE VERIFIKASI KE EMAIL
+     * USER YANG AKAN GANTI EMAIL
+     */
+    public function verifikasiEmailLupaPassword(Request $request)
+    {
+        // VALIDASI EMAIL TERLEBIH DAHULU
+            $validator = Validator::make($request->all(),[
+                'email' => 'email'
+            ]);
+
+            // RETURN ERROR KALAU INPUT SALAH
+                if($validator->fails()){
+                    return response()->json([
+                        'response_code' => 403,
+                        'status' => 'failure',
+                        'message' => 'access forbiden',
+                        'errors' => $validator->errors()
+                    ],200);
+                }
+            // AKHIR
+        // AKHIR
+        
+        // MENCARI USER DENGAN EMAIL YANG DIMAKSUD DAN MENGIRIMKAN VERIFIIKASI CODE KE EMAIL
+            $user = User::where('email',$request->email)->first();
+            
+            if($user != null){
+
+                $user->kode_verifikasi_email = $this->generateRandomString();
+                $user->update();
+
+                $data = [
+                    'kode_verifikasi' => $user->kode_verifikasi_email,
+                    'email' => $user->email,
+                    'nama' => $user->nama
+                ];
+                
+                EmailSender::dispatch($data)->afterResponse();
+
+                // RETURN RESPONSE SUKSES
+                    return response()->json([
+                        'response_code' => 200,
+                        'status' => 'success',
+                        'message' => 'berhasil generate kode verifikasi silahkan cek email',
+                        'errors' => (Object)[]
+                    ],200);
+                // AKHIR
+            }
+            else{
+                // APABILA USER TIDAK DITEMUKAN DI DALAM DATABASE OLEH SISTEM
+                    return response()->json([
+                        'response_code' => 403,
+                        'status' => 'failure',
+                        'message' => 'user tidak ditemukan dengan email terkait',
+                        'errors' => (Object)[]
+                    ],200);
+                // AKHIR
+            }
+        // AKHIR
+    }
+
     // VERIFIKASI CODE YANG DIBERIKAN
     public function verifikasiCodeEmail(Request $request){
         // VALIDASI
@@ -183,6 +183,50 @@ class LupaPasswordController extends Controller
                 ],200);
             }
         // AKHIR
+    }
+
+    // GANTI PASSWORD MENGGUNAKAN EMAIL SETELAH VERIFIKASI
+    public function changePasswordWithEmail(Request $request){
+        // VALIDASI
+            $validator = Validator::make($request->all(),[
+                'email' => 'required|email',
+                'code' => 'required',
+                'password' => 'required|min:3|max:50',
+                'confirm_password' => 'required|same:password'
+            ]);
+
+            if($validator->fails()){
+                return response()->json([
+                    'response_code' => 403,
+                    'status' => 'failure',
+                    'message' => 'wrong format',
+                    'errors' => $validator->errors()
+                ],200);
+            }
+        // AKHIR
+
+        // MEMBUAT PASSWORD BARU
+            $user = User::where('email',$request->email)->where('kode_verifikasi_email',$request->code)
+                            ->first();
+            
+            if($user == null){
+                return response()->json([
+                    'response_code' => 403,
+                    'status' => 'failure',
+                    'message' => 'user not found',
+                    'errors' => (object)[]
+                ],200);
+            }else{
+                $user->password = Hash::make($request->password);
+                $user->update();
+
+                return response()->json([
+                    'response_code' => 200,
+                    'status' => 'success',
+                    'message' => 'pergantian password berhasil dilakukan',
+                    'errors' => (object)[]
+                ],200);
+            }
     }
     
 }

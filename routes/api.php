@@ -27,6 +27,10 @@ Route::get('/failure','API\AuthController@failureMethod')->name('failure');
         // VERIFIKASI CODE DARI USER
             Route::post('/verifikasilupapasswordemail','API\LupaPasswordController@verifikasiCodeEmail');
         // AKHIR
+
+        // MENGUBAH PASSWORD
+            Route::post('/ubahpasswordmenggunakanemail','API\LupaPasswordController@changePasswordWithEmail');
+        // AKHIR
     // AKHIR
 
     // MENGGUNAKAN TELEGRAM
