@@ -178,5 +178,4 @@ class UserController extends Controller
             'status' => 'success'
         ]);
     }
-    // TEST GIT
 }
