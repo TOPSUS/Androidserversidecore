@@ -23,6 +23,10 @@ Route::get('/failure','API\AuthController@failureMethod')->name('failure');
         // REQUEST EMAIL VERIFIKASI SEBELUM GANTI PASSORD
             Route::post('/requestemailcode','API\LupaPasswordController@verifikasiEmailLupaPassword');
         // AKHIR
+
+        // VERIFIKASI CODE DARI USER
+            Route::post('/verifikasilupapasswordemail','API\LupaPasswordController@verifikasiCodeEmail');
+        // AKHIR
     // AKHIR
 
     // MENGGUNAKAN TELEGRAM

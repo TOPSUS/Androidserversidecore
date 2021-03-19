@@ -81,7 +81,8 @@ class LupaPasswordController extends Controller
      * HANYA MENGGUNAKAN SATU METHOD DENGAN PARAMS EMAIL DAN PIN DARI USER
      * 
      */
-    public function telegramLupaPassword(Request $request){
+    public function telegramLupaPassword(Request $request)
+    {
         // VALIDATOR
             $validator = Validator::make($request->all(),[
                 'email' => 'required|email',
@@ -132,7 +133,8 @@ class LupaPasswordController extends Controller
     }
 
     // FUNGSI UNTUK GENERATE RANDOM STRING
-    private function generateRandomString($length = 5) {
+    private function generateRandomString($length = 5) 
+    {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -141,4 +143,43 @@ class LupaPasswordController extends Controller
         }
         return $randomString;
     }
+
+    // VERIFIKASI CODE YANG DIBERIKAN
+    public function verifikasiCodeEmail(Request $request){
+        // VALIDASI
+            $validator = Validator::make($request->all(),[
+                'code' => 'required'
+            ]);
+
+            if($validator->fails()){
+                return response()->json([
+                    'response_code' => 403,
+                    'status' => 'failure',
+                    'message' => 'wrong format',
+                    'errors' => $validator->errors()
+                ],200);
+            }
+        // AKHIR
+
+        // CHECK CODE DARI USER
+            $user = User::where('kode_verifikasi_email',$request->code)->first();
+
+            if($user == null){
+                return response()->json([
+                    'response_code' => 403,
+                    'status' => 'failure',
+                    'message' => 'user not found',
+                    'errors' => (Object)[]
+                ],200);
+            }else{
+                return response()->json([
+                    'response_code' => 200,
+                    'status' => 'success',
+                    'message' => 'berhasil memvalidasi email',
+                    'errors' => (Object)[]
+                ],200);
+            }
+        // AKHIR
+    }
+    
 }
