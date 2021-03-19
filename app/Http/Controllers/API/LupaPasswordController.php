@@ -218,6 +218,7 @@ class LupaPasswordController extends Controller
                 ],200);
             }else{
                 $user->password = Hash::make($request->password);
+                $user->kode_verifikasi_email = "";
                 $user->update();
 
                 return response()->json([
