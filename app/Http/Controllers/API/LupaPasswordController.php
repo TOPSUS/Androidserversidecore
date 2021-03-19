@@ -148,7 +148,8 @@ class LupaPasswordController extends Controller
     public function verifikasiCodeEmail(Request $request){
         // VALIDASI
             $validator = Validator::make($request->all(),[
-                'code' => 'required'
+                'code' => 'required',
+                'email' => 'required|email',
             ]);
 
             if($validator->fails()){
@@ -162,7 +163,9 @@ class LupaPasswordController extends Controller
         // AKHIR
 
         // CHECK CODE DARI USER
-            $user = User::where('kode_verifikasi_email',$request->code)->first();
+            $user = User::where('kode_verifikasi_email',$request->code)
+                            ->where('email',$request->email)
+                            ->first();
 
             if($user == null){
                 return response()->json([
