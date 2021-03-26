@@ -22,8 +22,8 @@ class PemesananController extends Controller
                 'id_jadwal' => $request->id_jadwal,
                 'penumpang' => $penumpang_decode
             ],[
-                'id_pemesan' => 'required',
-                'id_jadwal' => 'required',
+                'id_pemesan' => 'required|numeric',
+                'id_jadwal' => 'required|numeric',
                 'penumpang' => 'required|array'
             ]);
 
