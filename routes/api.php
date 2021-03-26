@@ -89,5 +89,9 @@ Route::group(['middleware' => 'auth:api'],function(){
         // GET JADWAL
             Route::post('/getjadwal','API\JadwalController@getJadwal');
         // AKHIR
+
+        // POST PEMESANAN
+            Route::post('/postpemesanan','API\PemesananController@createPemesanan');
+        // AKHJIR
     // AKHIR
 }); 
