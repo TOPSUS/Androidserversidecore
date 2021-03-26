@@ -91,18 +91,21 @@ class PemesananController extends Controller
                             $detail_pembelian->save();
                             
                         }
+                    // AKHIR
 
                     return response()->json([
                         'response_code' => 200,
                         'status' => 'success',
-                        'message' => $speedboat->kapasitas - $total_pembelian_saat_ini,
+                        'message' => "berhasil melakukan pemesanan",
                         'error' => (Object)[],
                     ],200);    
                 }else{
+
+                    // SAAT KAPASITAS TIDAK CUKUP
                     return response()->json([
                         'response_code' => 402,
                         'status' => 'failure',
-                        'message' => $speedboat->kapasitas - $total_pembelian_saat_ini,
+                        'message' => "ticket tidak speedboat tidak mencukupi",
                         'error' => (Object)[],
                     ],200);
                 }
