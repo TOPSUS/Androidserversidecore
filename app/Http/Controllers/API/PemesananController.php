@@ -54,6 +54,16 @@ class PemesananController extends Controller
                 $total_pembelian_saat_ini = $jadwal->getTotalPembelianSaatini();
                 
                 if(($speedboat->kapasitas - $total_pembelian_saat_ini) >= count($penumpang_decode)){
+                    
+                    // SIMPAN KE DALAM TABLE PEMBELIAN
+                    $pembelian = new Pembelianl;
+                    $pembelian->id_jadwal = $request->id_jadwal;
+                    $pembelian->id_user = $request->id_pemesan;
+                    $pembelian->tanggal = date('Y-m-d');
+                    $pembelian->tota_harga = $jadwal->harga * count($penumpang_decode);
+                    $pembelian->status = 'menunggu pembayaran';
+                    $pembelian->save();
+
                     return response()->json([
                         'response_code' => 200,
                         'status' => 'success',
@@ -67,7 +77,6 @@ class PemesananController extends Controller
                         'message' => $speedboat->kapasitas - $total_pembelian_saat_ini,
                         'error' => (Object)[],
                     ],200);
-    
                 }
         // AKHIR
     }
