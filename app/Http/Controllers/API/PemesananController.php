@@ -70,7 +70,7 @@ class PemesananController extends Controller
                     // SIMPAN KE DALAM DETAIL PEMBELIAN
                         foreach ($penumpang_decode as $index => $penumpang) {
                             // MENCARI KODE CARD DENGAN ID
-                            $card = Card::where('card',$penumpang_decode->type_id_card)->first();
+                            $card = Card::where('card',$penumpang->type_id_card)->first();
 
                             // MEMBUAT KODE TICKET
                             $kode_tiket = date('Ymd').$pembelian->id;
