@@ -17,7 +17,7 @@ class PemesananController extends Controller
             $penumpang_decode = \json_decode($request->penumpang);
 
             $validator = Validator::make([
-                'id_pemesan' => $request->id_pemesanan,
+                'id_pemesan' => $request->id_pemesan,
                 'id_jadwal' => $request->id_jadwal,
                 'penumpang' => $penumpang_decode
             ],[
