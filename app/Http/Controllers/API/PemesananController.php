@@ -14,10 +14,16 @@ class PemesananController extends Controller
 {
     public function createPemesanan(Request $request){
         // VALIDATOR REQUEST
-            $validator = Validator::make($request->all(),[
+            $penumpang_decode = \json_decode($request->penumpang);
+
+            $validator = Validator::make([
+                $request->id_pemesanan,
+                $request->id_jadwal,
+                $penumpang_decode
+            ],[
                 'id_pemesan' => 'required',
                 'id_jadwal' => 'required',
-                'penumpang' => 'required'
+                'penumpang' => 'array'
             ]);
 
             if($validator->fails()){
