@@ -57,14 +57,14 @@ class PemesananController extends Controller
                     return response()->json([
                         'response_code' => 200,
                         'status' => 'success',
-                        'message' => 'berhasil create pemesanan',
+                        'message' => $speedboat->kapasitas - $total_pembelian_saat_ini,
                         'error' => (Object)[],
                     ],200);    
                 }else{
                     return response()->json([
                         'response_code' => 402,
                         'status' => 'failure',
-                        'message' => 'gagal jumlah ticket tersisa kurang',
+                        'message' => $speedboat->kapasitas - $total_pembelian_saat_ini,
                         'error' => (Object)[],
                     ],200);
     
