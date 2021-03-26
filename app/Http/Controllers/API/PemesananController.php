@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 use App\Pembelian;
+use App\DetailPembelian;
+use App\Card;
 use App\Jadwal;
 
 class PemesananController extends Controller
@@ -56,13 +58,39 @@ class PemesananController extends Controller
                 if(($speedboat->kapasitas - $total_pembelian_saat_ini) >= count($penumpang_decode)){
                     
                     // SIMPAN KE DALAM TABLE PEMBELIAN
-                    $pembelian = new Pembelian;
-                    $pembelian->id_jadwal = $request->id_jadwal;
-                    $pembelian->id_user = $request->id_pemesan;
-                    $pembelian->tanggal = date('Y-m-d');
-                    $pembelian->total_harga = $jadwal->harga * count($penumpang_decode);
-                    $pembelian->status = 'menunggu pembayaran';
-                    $pembelian->save();
+                        $pembelian = new Pembelian;
+                        $pembelian->id_jadwal = $request->id_jadwal;
+                        $pembelian->id_user = $request->id_pemesan;
+                        $pembelian->tanggal = date('Y-m-d');
+                        $pembelian->total_harga = $jadwal->harga * count($penumpang_decode);
+                        $pembelian->status = 'menunggu pembayaran';
+                        $pembelian->save();
+                    // AKHIR
+
+                    // SIMPAN KE DALAM DETAIL PEMBELIAN
+                        foreach ($penumpang_decode as $index => $penumpang) {
+                            // MENCARI KODE CARD DENGAN ID
+                            $card = Card::where('card',$penumpang_decode->type_id_card)->first();
+
+                            // MEMBUAT KODE TICKET
+                            $kode_tiket = date('Ymd').$pembelian->id;
+
+                            if($card == null){
+                                $card = Card::find(1);
+                            }
+
+                            $detail_pembelian = new DetailPembelian;
+                            $detail_pembelian->id_pembelian = $pembelian->id;
+                            $detail_pembelian->id_card = $card->id;
+                            $detail_pembelian->kode_tiket = $kode_tiket;
+                            $detail_pembelian->nama_pemegang_tiket = $penumpang->nama_pemegang_ticket;
+                            $detail_pembelian->no_id_card = $penumpang->no_id_card;
+                            $detail_pembelian->harga = $jadwal->harga;
+                            $detail_pembelian->QRCode = "";
+                            $detail_pembelian->status = "Not Used";
+                            $detail_pembelian->save();
+                            
+                        }
 
                     return response()->json([
                         'response_code' => 200,
