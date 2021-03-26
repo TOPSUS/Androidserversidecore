@@ -56,7 +56,7 @@ class PemesananController extends Controller
                 if(($speedboat->kapasitas - $total_pembelian_saat_ini) >= count($penumpang_decode)){
                     
                     // SIMPAN KE DALAM TABLE PEMBELIAN
-                    $pembelian = new Pembelianl;
+                    $pembelian = new Pembelian;
                     $pembelian->id_jadwal = $request->id_jadwal;
                     $pembelian->id_user = $request->id_pemesan;
                     $pembelian->tanggal = date('Y-m-d');
