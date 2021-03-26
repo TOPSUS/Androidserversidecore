@@ -60,7 +60,7 @@ class PemesananController extends Controller
                     $pembelian->id_jadwal = $request->id_jadwal;
                     $pembelian->id_user = $request->id_pemesan;
                     $pembelian->tanggal = date('Y-m-d');
-                    $pembelian->tota_harga = $jadwal->harga * count($penumpang_decode);
+                    $pembelian->total_harga = $jadwal->harga * count($penumpang_decode);
                     $pembelian->status = 'menunggu pembayaran';
                     $pembelian->save();
 
