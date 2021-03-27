@@ -99,4 +99,10 @@ Route::group(['middleware' => 'auth:api'],function(){
             Route::post('/postpemesanan','API\PemesananController@createPemesanan');
         // AKHJIR
     // AKHIR
+
+    //RIWAYAT TRANSAKSI
+        //GET TRANSAKSI LIST
+            Route::post('/getPembelian', 'API\PembelianController@getpembelian');
+        //AKHIR
+    //AKHIR
 }); 
