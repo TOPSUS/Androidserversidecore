@@ -107,6 +107,7 @@ class PemesananController extends Controller
                         'status' => 'success',
                         'message' => "berhasil melakukan pemesanan",
                         'error' => (Object)[],
+                        'pembelian' => $pembelian
                     ],200);    
                 }else{
 
