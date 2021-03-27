@@ -19,7 +19,7 @@ class PembelianController extends Controller
     public function getPembelian(Request $request){
         $user = User::find(Auth::user()->id);
         $pembelians = Pembelian::where('status', $request->status)->where('id_user', $user->id)->get(
-            ['id', 'id_jadwal', 'id_user', 'tanggal', 'total_harga', 'created_at']
+            ['id', 'id_jadwal', 'id_user', 'tanggal', 'total_harga']
         );
 
         foreach ($pembelians as $index => $pembelian) {
