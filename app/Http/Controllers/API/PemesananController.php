@@ -28,10 +28,12 @@ class PemesananController extends Controller
             $validator = Validator::make([
                 'id_pemesan' => $request->id_pemesan,
                 'id_jadwal' => $request->id_jadwal,
+                'id_metode_pembayaran' => $request->id_metode_pembayaran,
                 'penumpang' => $penumpang_decode
             ],[
                 'id_pemesan' => 'required|numeric',
                 'id_jadwal' => 'required|numeric',
+                'id_metode_pembayaran' => 'required|numeric',
                 'penumpang' => 'required|array'
             ]);
 
@@ -67,6 +69,7 @@ class PemesananController extends Controller
                         $pembelian = new Pembelian;
                         $pembelian->id_jadwal = $request->id_jadwal;
                         $pembelian->id_user = $request->id_pemesan;
+                        $pembelian->id_metode_pembayaran = $request->id_metode_pembayaran;
                         $pembelian->tanggal = date('Y-m-d');
                         $pembelian->total_harga = $jadwal->harga * count($penumpang_decode);
                         $pembelian->status = 'menunggu pembayaran';
