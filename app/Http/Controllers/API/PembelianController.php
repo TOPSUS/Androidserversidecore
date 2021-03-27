@@ -45,7 +45,7 @@ class PembelianController extends Controller
                 'status' => 'success',
                 'message' => 'berhasil mendapatkan pembelian',
                 'error' => (Object)[],
-                'transaksi' => $pembelians
+                'pembelian' => $pembelians
             ],200);
         }else{
             return response()->json([
@@ -53,7 +53,7 @@ class PembelianController extends Controller
                 'status' => 'success',
                 'message' => 'gagal terjadi kesalahan',
                 'error' => (Object)[],
-                'transaksi' => []
+                'pembelian' => []
             ],200);
         }
     }
