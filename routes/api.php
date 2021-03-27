@@ -18,6 +18,7 @@ Route::post('/login','API\AuthController@login');
 Route::post('/register','API\AuthController@register');
 Route::get('/failure','API\AuthController@failureMethod')->name('failure');
 
+
 // LUPA PASSWORD TANPA AUTH
     // MENGGUNAKAN EMAIL
         // REQUEST EMAIL VERIFIKASI SEBELUM GANTI PASSORD
@@ -88,6 +89,10 @@ Route::group(['middleware' => 'auth:api'],function(){
     // PROSES TRANSAKSI
         // GET JADWAL
             Route::post('/getjadwal','API\JadwalController@getJadwal');
+        // AKHIR
+
+        // GET METODE PEMBAYARAN
+            Route::post('/getmetodepembayaran','API\PemesananController@showMetodePembayaran');
         // AKHIR
 
         // POST PEMESANAN

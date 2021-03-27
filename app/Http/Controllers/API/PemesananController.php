@@ -12,10 +12,16 @@ use App\Pembelian;
 use App\DetailPembelian;
 use App\Card;
 use App\Jadwal;
+use App\MetodePembayaran;
 
 class PemesananController extends Controller
 {
+    /**
+     * METODE YANG DIPANGGIL SAAT USER TELAH METODE PEMBAYARAN YANG AKAN DIGUNAKAN
+     * PADA LAMAN METODE PEMBAYARAN MOBILE
+     */
     public function createPemesanan(Request $request){
+
         // VALIDATOR REQUEST
             $penumpang_decode = \json_decode($request->penumpang);
 
@@ -109,6 +115,25 @@ class PemesananController extends Controller
                         'error' => (Object)[],
                     ],200);
                 }
+        // AKHIR
+    }
+
+    /**
+     * 
+     * METHOD YANG DIGUNAKAN UNTUK MENGAMBIL METODE PEMBAYARAN
+     * 
+     */
+    public function showMetodePembayaran(){
+        // MENGAMBIL SEMUA METHOD
+            $metode_pembayaras = MetodePembayaran::all();
+
+            return response()->json([
+                'response_code' => 200,
+                'status' => 'success',
+                'message' => "berhasil mendapatkan semua metode pembayaran",
+                'error' => (Object)[],
+                'metode_pembayaran' => $metode_pembayaras
+            ],200); 
         // AKHIR
     }
 }
