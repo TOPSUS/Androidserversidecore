@@ -18,7 +18,10 @@ class PembelianController extends Controller
 {
     public function getPembelian(Request $request){
         $user = User::find(Auth::user()->id);
-        $pembelians = Pembelian::where('status', $request->status)->where('id_user', $user->id)->get(
+        $pembelians = Pembelian::where('id_user', $user->id)->where(function($q) {
+            $q->where('status', 'menunggu pembayaran')
+              ->orWhere('status', 'menunggu konfirmasi');
+        })->get(
             ['id', 'id_jadwal', 'id_user', 'tanggal', 'total_harga', 'status']
         );
 
