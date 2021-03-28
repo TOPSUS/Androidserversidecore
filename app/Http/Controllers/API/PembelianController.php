@@ -22,11 +22,11 @@ class PembelianController extends Controller
             $pembelians = Pembelian::where('id_user', $user->id)->where(function($q) {
                 $q->where('status', 'menunggu pembayaran')
                   ->orWhere('status', 'menunggu konfirmasi');
-            })->get(
+            })->orderBy('id', 'DESC')->get(
                 ['id', 'id_jadwal', 'id_user', 'tanggal', 'total_harga', 'status']
             );
         }else if($request->status == "terkonfirmasi"){
-            $pembelians = Pembelian::where('id_user', $user->id)->where('status', $request->status)->get(
+            $pembelians = Pembelian::where('id_user', $user->id)->where('status', $request->status)->orderBy('id', 'DESC')->get(
                 ['id', 'id_jadwal', 'id_user', 'tanggal', 'total_harga', 'status']
             );
         }else if($request->status == "done"){
@@ -34,7 +34,7 @@ class PembelianController extends Controller
                 $q->where('status', 'digunakan')
                   ->orWhere('status', 'dibatalkan')
                   ->orWhere('status', 'expired');
-            })->get(
+            })->orderBy('id', 'DESC')->get(
                 ['id', 'id_jadwal', 'id_user', 'tanggal', 'total_harga', 'status']
             );
         }
