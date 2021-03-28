@@ -75,4 +75,64 @@ class PembelianController extends Controller
             ],200);
         }
     }
+
+    public function getdetailpembelian(Request $request){
+        //GET USER
+        $user = User::find(Auth::user()->id);
+
+        //GET PEMBELIAN
+        $pembelian = Pembelian::where('id', $request->id)->first();
+
+        //GET JADWAL PEMBELIAN, PELABUHAN, WAKTU, KAPAL
+        $jadwal = $pembelian->getJadwal();
+
+        $speedboat = $jadwal->getBoat()->nama_speedboat;
+        $tanggal = $jadwal->tanggal;
+        $harga = $pembelian->total_harga;
+        $pelabuhan_asal = $jadwal->getPelabuhanAsal()->nama_pelabuhan;
+        $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan()->nama_pelabuhan;
+        $waktu_berangkat = $jadwal->waktu_berangkat;
+        $waktu_sampai = $jadwal->waktu_sampai;
+        $status_transaksi = $pembelian->status;
+        $sisa_waktu = "haha";
+        $nama_pemesan = $user->nama;
+        $email_pemesan = $user->email;
+        $telepon_pemesan = $user->nohp;
+        $tiket = "NOPE";
+        $bukti = "NOPE";
+
+        $penumpangs = DetailPembelian::where('id_pembelian', $request->id)->get(['nama_pemegang_tiket']);
+
+        if($pembelian != null){
+            return response()->json([
+                'response_code' => 200,
+                'status' => 'success',
+                'message' => 'berhasil mendapatkan pembelian',
+                'error' => (Object)[],
+                'kapal' => $speedboat,
+                'tanggal' => $tanggal,
+                'harga' => $harga,
+                'pelabuhan_asal' => $pelabuhan_asal,
+                'pelabuhan_tujuan' => $pelabuhan_tujuan,
+                'waktu_berangkat' => $waktu_berangkat,
+                'waktu_sampai' => $waktu_sampai,
+                'status_transaksi' => $status_transaksi,
+                'sisa_waktu' =>$sisa_waktu,
+                'nama_pemesan' => $nama_pemesan,
+                'email_pemesan' => $email_pemesan,
+                'telepon_pemesan' => $telepon_pemesan,
+                'tiket' => $tiket,
+                'nukti' => $bukti,
+                'penumpang' => $penumpangs
+            ],200);
+        }else{
+            return response()->json([
+                'response_code' => 401,
+                'status' => 'success',
+                'message' => 'gagal terjadi kesalahan',
+                'error' => (Object)[],
+                'pembelian' => []
+            ],200);
+        }
+    }
 }
