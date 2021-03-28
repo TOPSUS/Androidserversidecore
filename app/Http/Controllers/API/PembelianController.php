@@ -131,7 +131,7 @@ class PembelianController extends Controller
                 'email_pemesan' => $email_pemesan,
                 'telepon_pemesan' => $telepon_pemesan,
                 'tiket' => $tiket,
-                'nukti' => $bukti,
+                'bukti' => $bukti,
                 'penumpang' => $penumpangs
             ],200);
         }else{
