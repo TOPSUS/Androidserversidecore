@@ -101,7 +101,16 @@ class PembelianController extends Controller
         $tiket = "NOPE";
         $bukti = "NOPE";
 
-        $penumpangs = DetailPembelian::where('id_pembelian', $request->id)->get(['nama_pemegang_tiket']);
+        $penumpangs = DetailPembelian::where('id_pembelian', $request->id)->get(['nama_pemegang_tiket', 'id_card', 'no_id_card']);
+        foreach ($penumpangs as $index => $penumpang) {
+            $nama_penumpang = $penumpang->nama_pemegang_tiket;
+            $id_card = $penumpang->getCard()->card;
+            $card = $penumpang->no_id_card;
+
+
+            $penumpangs[$index]->id_card = $id_card;
+            $penumpangs[$index]->no_id_card = $card;
+        }
 
         if($pembelian != null){
             return response()->json([
