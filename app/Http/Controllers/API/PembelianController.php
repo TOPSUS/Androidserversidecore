@@ -94,7 +94,7 @@ class PembelianController extends Controller
         $waktu_berangkat = $jadwal->waktu_berangkat;
         $waktu_sampai = $jadwal->waktu_sampai;
         $status_transaksi = $pembelian->status;
-        $sisa_waktu = "haha";
+        $sisa_waktu = 3;
         $nama_pemesan = $user->nama;
         $email_pemesan = $user->email;
         $telepon_pemesan = $user->nohp;
