@@ -25,8 +25,16 @@ class PembelianController extends Controller
             })->get(
                 ['id', 'id_jadwal', 'id_user', 'tanggal', 'total_harga', 'status']
             );
-        }else{
+        }else if($request->status == "terkonfirmasi"){
             $pembelians = Pembelian::where('id_user', $user->id)->where('status', $request->status)->get(
+                ['id', 'id_jadwal', 'id_user', 'tanggal', 'total_harga', 'status']
+            );
+        }else if($request->status == "done"){
+            $pembelians = Pembelian::where('id_user', $user->id)->where(function($q) {
+                $q->where('status', 'digunakan')
+                  ->orWhere('status', 'dibatalkan')
+                  ->orWhere('status', 'expired');
+            })->get(
                 ['id', 'id_jadwal', 'id_user', 'tanggal', 'total_harga', 'status']
             );
         }
