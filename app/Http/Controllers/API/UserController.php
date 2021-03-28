@@ -113,8 +113,6 @@ class UserController extends Controller
         $user = User::find(Auth::user()->id);
 
         $savedPass = $user->password;
-        $haha = "12341234";
-        $haha = Hash::make($haha);
         $getPass = $request->password;
         if(Hash::check($getPass, $savedPass)){
             $user->pin = $request->pin;
@@ -137,13 +135,47 @@ class UserController extends Controller
         }else{
             return response()->json([
                 'response_code' => 200,
-                'status' => $haha
+                'status' => 'failed'
             ]);
         }
     }
 
     public function editPin(Request $request)
     {
+        $user = User::find(Auth::user()->id);
 
+        $savedPin = $user->pin;
+        if($savedPin == $request->oldpin){
+            $user->pin = $request->pin;
+            $user->save();
+            return response()->json([
+                'response_code' => 200,
+                'status' => 'success',
+                'message' => 'edit pin berhasil',
+                'error' => (Object)[],
+                'user_id' => $user->id,
+                'name' => $user->nama,
+                'alamat' => $user->alamat,
+                'chat_id' => $user->chat_id,
+                'pin' => $user->pin,
+                'email' => $user->email,
+                'foto' => $user->foto,
+                'nohp' => $user->nohp,
+                'jeniskelamin' => $user->jeniskelamin
+            ]);
+        }else{
+            return response()->json([
+                'response_code' => 200,
+                'status' => 'failed'
+            ]);
+        }
+    }
+
+    public function logout(Request $request){
+        $request->user()->token()->revoke();
+        return response()->json([
+            'response_code' => 200,
+            'status' => 'success'
+        ]);
     }
 }

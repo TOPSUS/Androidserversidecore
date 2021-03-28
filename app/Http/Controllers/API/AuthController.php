@@ -82,7 +82,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(),[
             'nama' => 'required',
             'alamat' => 'required|min:3|max:200',
-            'jeniskelamin' => 'in:Laki-laki,Peremuan',
+            'jeniskelamin' => 'in:Laki-laki,Perempuan',
             'nohp' => 'required|min:8|max:15',
             'email' => 'required|unique:tb_user,email',
             'imageprofile' => 'nullable|image|max:1000',
@@ -175,7 +175,7 @@ class AuthController extends Controller
         if($user != null){
             $user->verified_at = date("Y-m-d H:i:s");
             $user->save();
-            return view('welcome');
+            return view('verificationsuccess');
         }else{
             return "FAIL";
         }

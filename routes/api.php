@@ -19,10 +19,36 @@ Route::post('/register','API\AuthController@register');
 Route::get('/failure','API\AuthController@failureMethod')->name('failure');
 
 
+// LUPA PASSWORD TANPA AUTH
+    // MENGGUNAKAN EMAIL
+        // REQUEST EMAIL VERIFIKASI SEBELUM GANTI PASSORD
+            Route::post('/requestemailcode','API\LupaPasswordController@verifikasiEmailLupaPassword');
+        // AKHIR
+
+        // VERIFIKASI CODE DARI USER
+            Route::post('/verifikasilupapasswordemail','API\LupaPasswordController@verifikasiCodeEmail');
+        // AKHIR
+
+        // MENGUBAH PASSWORD
+            Route::post('/ubahpasswordmenggunakanemail','API\LupaPasswordController@changePasswordWithEmail');
+        // AKHIR
+    // AKHIR
+
+    // MENGGUNAKAN TELEGRAM
+        // REQUEST PASSWORD BARU DENGAN TELEGRAM
+            Route::post('/requesttelegramnewpass','API\LupaPasswordController@telegramLupaPassword');
+        // AKHIR
+    // AKHIR
+// AKHIR
+
 Route::group(['middleware' => 'auth:api'],function(){
     // USER
         // READ USERPROFILE
             Route::post('/userprofile','API\UserController@detail');
+        // AKHIR
+
+        // EDIT PROFILE
+            Route::post('/user/editProfile', 'API\UserController@editProfile');
         // AKHIR
 
         // EDIT PASSWORD
@@ -37,6 +63,9 @@ Route::group(['middleware' => 'auth:api'],function(){
             Route::post('/user/addPin', 'API\UserController@addPin');
         // AKHIR
 
+        // LOG OUT
+            Route::post('/user/logout', 'API\UserController@logout');
+        //AKHIR
     // AKHIR
 
     // BERITA PELABUHAN
@@ -50,11 +79,24 @@ Route::group(['middleware' => 'auth:api'],function(){
             Route::post('/readberitaespeed','API\BeritaEspeedController@getAllBeritaEpseed');
         // AKHITR
     // AKHIR
+
     // PELABUHAN
         // READ PELABUHAN
             Route::post('/readpelabuhan','API\PelabuhanController@readAllPelabuhan');
         // AKHIR
     // AKHIR
-}); 
 
-Route::post('/getjadwal','API\JadwalController@getJadwal');
+    // PROSES TRANSAKSI
+        // GET JADWAL
+            Route::post('/getjadwal','API\JadwalController@getJadwal');
+        // AKHIR
+
+        // GET METODE PEMBAYARAN
+            Route::post('/getmetodepembayaran','API\PemesananController@showMetodePembayaran');
+        // AKHIR
+
+        // POST PEMESANAN
+            Route::post('/postpemesanan','API\PemesananController@createPemesanan');
+        // AKHJIR
+    // AKHIR
+}); 

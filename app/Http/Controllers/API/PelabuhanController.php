@@ -21,6 +21,7 @@ class PelabuhanController extends Controller
                 'nama_pelabuhan' => $pelabuhan->nama_pelabuhan,
                 'lokasi_pelabuhan' => $pelabuhan->lokasi_pelabuhan,
                 'alamat_kantor' => $pelabuhan->alamat_kantor,
+                'foto' => $pelabuhan->foto,
                 'latitude' => $pelabuhan->latitude,
                 'longtitude' => $pelabuhan->longtitude,
                 'lama_beroperasi' => $pelabuhan->lama_beroperasi,
