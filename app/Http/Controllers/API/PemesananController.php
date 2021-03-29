@@ -115,7 +115,7 @@ class PemesananController extends Controller
                     return response()->json([
                         'response_code' => 402,
                         'status' => 'failure',
-                        'message' => "ticket tidak speedboat tidak mencukupi",
+                        'message' => "ticket speedboat tidak mencukupi",
                         'error' => (Object)[],
                     ],200);
                 }
