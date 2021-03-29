@@ -10,11 +10,14 @@ use App\Jadwal;
 class JadwalController extends Controller
 {
     public function getJadwal(Request $request){
+
+        // PENCARIAN JADWAL DENGAN MODEL JADWAL
         $jadwals = Jadwal::whereDate('tanggal',$request->date)
                             ->where('id_asal_pelabuhan',$request->id_asal_pelabuhan)
                             ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
                             ->get(['id','id_asal_pelabuhan','id_tujuan_pelabuhan','waktu_sampai','waktu_berangkat','id_speedboat','harga']);
-        
+
+        // JADWAL YANG AKAN DITAMPILKAN ADALAH JADWAL YANG WAKTU KEBERANGKATANNYA TERSISA 5 JAM
         foreach ($jadwals as $index => $jadwal) {
             $pelabuhan_asal = $jadwal->getPelabuhanAsal();
             $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
