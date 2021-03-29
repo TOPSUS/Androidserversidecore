@@ -11,7 +11,7 @@ class JadwalController extends Controller
 {
     public function getJadwal(Request $request){
         // MENENTUKAN WAKTU SAAT INI DITAMBAH 2 JAM UNTUK BATAS WAKTU JADWAL YANG AKAN DI TAMPILKAN DI MOBILE
-        $time_int = strtotime(date('h:i:s')) + 120*60;
+        $time_int = strtotime(date('H:i:s')) + 120*60;
 
         $limit_time = date('H:i:s', $time_int);
 
