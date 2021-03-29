@@ -10,9 +10,13 @@ use App\Jadwal;
 class JadwalController extends Controller
 {
     public function getJadwal(Request $request){
+        // MENENTUKAN WAKTU SAAT INI DITAMBAH 2 JAM UNTUK BATAS WAKTU JADWAL YANG AKAN DI TAMPILKAN DI MOBILE
+        $time_int = strtotime(date('h:i:s')) + 120*60;
+
+        $limit_time = date('H:i:s', $time_int);
 
         // PENCARIAN JADWAL DENGAN MODEL JADWAL
-        $jadwals = Jadwal::whereDate('tanggal',$request->date)
+        $jadwals = Jadwal::whereDate('tanggal',$request->date)->whereTime('waktu_berangkat','>',$limit_time)
                             ->where('id_asal_pelabuhan',$request->id_asal_pelabuhan)
                             ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
                             ->get(['id','id_asal_pelabuhan','id_tujuan_pelabuhan','waktu_sampai','waktu_berangkat','id_speedboat','harga']);
