@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use App\Pelabuhan;
 class PelabuhanController extends Controller
 {
-    public function readAllPelabuhan(){
-        $pelabuhans = Pelabuhan::all();
+    public function readAllPelabuhanSpeedBoat(){
+        $pelabuhans = Pelabuhan::where('tipe_pelabuhan','Speedboat')->orWhere('tipe_pelabuhan','Speedboat & Kapal')->get();
 
         $response_pelabuhan = [];
 

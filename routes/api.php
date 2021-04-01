@@ -82,7 +82,7 @@ Route::group(['middleware' => 'auth:api'],function(){
 
     // PELABUHAN
         // READ PELABUHAN
-            Route::post('/readpelabuhan','API\PelabuhanController@readAllPelabuhan');
+            Route::post('/readpelabuhan','API\PelabuhanController@readAllPelabuhanSpeedBoat');
         // AKHIR
     // AKHIR
 
