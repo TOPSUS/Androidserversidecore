@@ -100,7 +100,7 @@ Route::group(['middleware' => 'auth:api'],function(){
         // AKHJIR
 
         // POST BUKTI PEMBAYARAN
-            Route::post('/postbuktipembayaran','API\PemesananController@uploadButkiPembelian');
+            Route::post('/postbuktipembayaran','API\PembelianController@uploadButkiPembelian');
         // AKHIR
     // AKHIR
 
