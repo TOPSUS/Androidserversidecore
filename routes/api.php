@@ -98,6 +98,10 @@ Route::group(['middleware' => 'auth:api'],function(){
         // POST PEMESANAN
             Route::post('/postpemesanan','API\PemesananController@createPemesanan');
         // AKHJIR
+
+        // POST BUKTI PEMBAYARAN
+            Route::post('/postbuktipembayaran','API\PemesananController@uploadButkiPembelian');
+        // AKHIR
     // AKHIR
 
     //RIWAYAT TRANSAKSI

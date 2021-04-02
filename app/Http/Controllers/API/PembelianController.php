@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+
 use Carbon\Carbon;
 use App\Pembelian;
 use App\DetailPembelian;
@@ -143,5 +144,61 @@ class PembelianController extends Controller
                 'pembelian' => []
             ],200);
         }
+    }
+
+    // MENGUPLOAD BUKTI PEMBELIAN TICKET
+    public function uploadButkiPembelian(Request $request){
+        // LARAVEL VALIDATOR
+            $validator = Validator::make($request->all(),[
+                'id_pembelian' => 'required|numeric',
+                'image_bukti_pembayaran' => 'required|image|max:1000'
+            ]);
+
+            if($validator->fails()){
+                return response()->json([
+                    'response_code' => 402,
+                    'status' => 'failure',
+                    'message' => 'terdapat format yang salah',
+                    'error' => $validator->errors(),
+                ],200);
+            }
+        // AKHIR
+
+        // MAIN PROCESS UPDATE PEMBELIAN TABLE DAN SIMPAN BUKTI PEMBAYARAN
+            // CARI RECORD PEMBELIAN DENGAN ID
+                $pembelian = Pembelian::find($request->id);
+
+                // APABILA KOSONG PEMBELIANNYA MAKA AKAN DIRETURN HASIL BERIKUT
+                if($pembelian == null){
+                    return response()->json([
+                        'response_code' => 402,
+                        'status' => 'failure',
+                        'message' => 'id yang dimaksud tidak ditemukan',
+                        'error' => (Object)[],
+                    ],200);
+                }
+                
+                // HAPUS FILE YANG SAMA DARI PEMBELIAN INI APABILA ADA DAN SIMPAN FILE BUKTI BARU
+                Storage::delete('public_html/image_users/'.($pembelian->bukti == null ? " " : $pembelian->bukti));
+                $bukti_pembayaran = Storage::putFile('public_html/bukti_pembayaran',$request->file('image_bukti_pembayaran'));
+                $bukti_pembayaran = basename($bukti_pembayaran);
+
+                // SIMAPN PEMBELIAN
+                $pembelian->status = 'menunggu konfirmasi';
+                $pembelian->bukti = $bukti_pembayaran;
+                $pembelian->update();
+
+            // AKHIR
+            
+            // RETURN BERHASIL MENYIMPAN BUKTI PEMBAYARAN
+            return response()->json([
+                'response_code' => 200,
+                'status' => 'success',
+                'message' => 'berhasil menyimpan file pembayaran',
+                'error' => (Object)[],
+            ],200);
+
+        // AKHIR
+
     }
 }
