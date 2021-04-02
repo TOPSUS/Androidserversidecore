@@ -169,7 +169,6 @@ class PembelianController extends Controller
             // CARI RECORD PEMBELIAN DENGAN ID
                 $pembelian = Pembelian::find($request->id_pembelian);
             
-
                 // APABILA KOSONG PEMBELIANNYA MAKA AKAN DIRETURN HASIL BERIKUT
                 if($pembelian == null){
                     return response()->json([
@@ -193,7 +192,7 @@ class PembelianController extends Controller
                 }
                 
                 // HAPUS FILE YANG SAMA DARI PEMBELIAN INI APABILA ADA DAN SIMPAN FILE BUKTI BARU
-                Storage::delete('public_html/image_users/'.($pembelian->bukti == null ? " " : $pembelian->bukti));
+                Storage::delete('public_html/bukti_pembayaran/'.($pembelian->bukti == null ? " " : $pembelian->bukti));
                 $bukti_pembayaran = Storage::putFile('public_html/bukti_pembayaran',$request->file('image_bukti_pembayaran'));
                 $bukti_pembayaran = basename($bukti_pembayaran);
 
