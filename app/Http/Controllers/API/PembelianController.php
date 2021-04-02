@@ -166,7 +166,7 @@ class PembelianController extends Controller
 
         // MAIN PROCESS UPDATE PEMBELIAN TABLE DAN SIMPAN BUKTI PEMBAYARAN
             // CARI RECORD PEMBELIAN DENGAN ID
-                $pembelian = Pembelian::find($request->id);
+                $pembelian = Pembelian::find($request->id_pembelian);
             
 
                 // APABILA KOSONG PEMBELIANNYA MAKA AKAN DIRETURN HASIL BERIKUT
