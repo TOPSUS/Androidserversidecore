@@ -167,6 +167,7 @@ class PembelianController extends Controller
         // MAIN PROCESS UPDATE PEMBELIAN TABLE DAN SIMPAN BUKTI PEMBAYARAN
             // CARI RECORD PEMBELIAN DENGAN ID
                 $pembelian = Pembelian::find($request->id);
+            
 
                 // APABILA KOSONG PEMBELIANNYA MAKA AKAN DIRETURN HASIL BERIKUT
                 if($pembelian == null){
@@ -174,6 +175,18 @@ class PembelianController extends Controller
                         'response_code' => 402,
                         'status' => 'failure',
                         'message' => 'id yang dimaksud tidak ditemukan',
+                        'error' => (Object)[],
+                    ],200);
+                }
+
+                // CEK APAKAH BENAR TRANSAKSI INI MILIK USER YANG SEDANG LOGIN
+                $user = Auth::user();
+
+                if($pembelian->id_user != $user->id){
+                    return response()->json([
+                        'response_code' => 403,
+                        'status' => 'failure',
+                        'message' => 'id user yang memanggil transaksi berbeda',
                         'error' => (Object)[],
                     ],200);
                 }
