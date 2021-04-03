@@ -241,7 +241,7 @@ class PembelianController extends Controller
                         'response_code' => 402,
                         'status' => 'failure',
                         'message' => 'id pembelian tidak ditemukan',
-                        'error' => $validator->errors(),
+                        'error' => (Object)[],
                     ],200);
                 }
             // AKHIR
@@ -253,10 +253,10 @@ class PembelianController extends Controller
             
             // RETURN SUKSES RESPONSE
                 return response()->json([
-                    'response_code' => 402,
-                    'status' => 'failure',
-                    'message' => 'id pembelian tidak ditemukan',
-                    'error' => $validator->errors(),
+                    'response_code' => 200,
+                    'status' => 'success',
+                    'message' => 'pembelian berhasil dibatalkan',
+                    'error' => (Object)[],
                 ],200);
             // AKHIR
 
