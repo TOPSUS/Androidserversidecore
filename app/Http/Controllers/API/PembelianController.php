@@ -246,6 +246,16 @@ class PembelianController extends Controller
                 }
             // AKHIR
 
+            // CHECK APAKAH STATUSNYA BELUM "DIBATALKAN"
+                if($pembelian->status == 'dibatalkan'){
+                    return response()->json([
+                        'response_code' => 200,
+                        'status' => 'success',
+                        'message' => 'pembelian sudah dibatalkan sebelumnya',
+                        'error' => (Object)[],
+                    ],200);
+                }
+
             // MENGUBAH STATUS MENJADI DIBATALKAN PEMBELIAN
                 $pembelian->status = 'dibatalkan';
                 $pembelian->update();
