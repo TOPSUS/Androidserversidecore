@@ -102,6 +102,10 @@ Route::group(['middleware' => 'auth:api'],function(){
         // POST BUKTI PEMBAYARAN
             Route::post('/postbuktipembayaran','API\PembelianController@uploadButkiPembelian');
         // AKHIR
+
+        // POST BATALKAN PEMBELIAN
+            Route::post('/batalkanpembelian','API\PembelianController@batalkanPembelian');
+        // AKHIR
     // AKHIR
 
     //RIWAYAT TRANSAKSI

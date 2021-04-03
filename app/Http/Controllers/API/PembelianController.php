@@ -214,4 +214,52 @@ class PembelianController extends Controller
         // AKHIR
 
     }
+
+    // BATALKAN PEMBELIAN TICKET ATAU JADWAL
+    public function batalkanPembelian(Request $request){
+        // LARAVEL VALIDATOR
+            $validator = Validator::make($request->all(),[
+                'id_pembelian' => 'required|numeric'
+            ]);
+
+            if($validator->fails()){
+                return response()->json([
+                    'response_code' => 402,
+                    'status' => 'failure',
+                    'message' => 'terdapat format yang salah',
+                    'error' => $validator->errors(),
+                ],200);
+            }
+        // AKHIR
+
+        // MAIN LOGIC
+            // MENCARI PEMBELIAN DENGAN ID YANG DIMAKSUD
+                $pembelian = Pembelian::find($request->id);
+
+                if($pembelian == null){
+                    return response()->json([
+                        'response_code' => 402,
+                        'status' => 'failure',
+                        'message' => 'id pembelian tidak ditemukan',
+                        'error' => $validator->errors(),
+                    ],200);
+                }
+            // AKHIR
+
+            // MENGUBAH STATUS MENJADI DIBATALKAN PEMBELIAN
+                $pembelian->status == 'dibatalkan';
+                $pembelian-update();
+            // AKHIR
+            
+            // RETURN SUKSES RESPONSE
+                return response()->json([
+                    'response_code' => 402,
+                    'status' => 'failure',
+                    'message' => 'id pembelian tidak ditemukan',
+                    'error' => $validator->errors(),
+                ],200);
+            // AKHIR
+
+        // AKHIR
+    }
 }
