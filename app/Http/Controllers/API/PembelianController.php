@@ -247,7 +247,7 @@ class PembelianController extends Controller
             // AKHIR
 
             // MENGUBAH STATUS MENJADI DIBATALKAN PEMBELIAN
-                $pembelian->status == 'dibatalkan';
+                $pembelian->status = 'dibatalkan';
                 $pembelian->update();
             // AKHIR
             
