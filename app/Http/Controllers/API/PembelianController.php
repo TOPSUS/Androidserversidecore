@@ -234,7 +234,7 @@ class PembelianController extends Controller
 
         // MAIN LOGIC
             // MENCARI PEMBELIAN DENGAN ID YANG DIMAKSUD
-                $pembelian = Pembelian::find($request->id);
+                $pembelian = Pembelian::find($request->id_pembelian);
 
                 if($pembelian == null){
                     return response()->json([
