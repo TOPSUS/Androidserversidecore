@@ -89,16 +89,16 @@ class PembelianController extends Controller
         $sisaWaktu = $pembelian->created_at->format("H:i:s");
         $sisaWaktu = Carbon::createFromFormat("H:i:s",$sisaWaktu)
         ->addMinutes(60)->format("H:i:s");
-        $sisaWaktu = Carbon::parse($sisaWaktu)->diffInMilliseconds(Carbon::now(), false); 
+        $sisaWaktu = Carbon::now()->diffInMilliseconds($sisaWaktu, false);
         if($pembelian->status != "menunggu pembayaran"){
             $sisaWaktu = 0;
         }
-        // if((int)$sisaWaktu < 60000 && $pembelian->status == "menunggu pembayaran")  {
-        //     $pembelian->status = "expired";
-        //     $pembelian->save();
-        //     $pembelian = Pembelian::where('id', $request->id)->first();
-        //     $sisaWaktu = 0;
-        // }
+        if((int)$sisaWaktu < 60000 && $pembelian->status == "menunggu pembayaran")  {
+            $pembelian->status = "expired";
+            $pembelian->save();
+            $pembelian = Pembelian::where('id', $request->id)->first();
+            $sisaWaktu = 0;
+        }
 
         //GET JADWAL PEMBELIAN, PELABUHAN, WAKTU, KAPAL
         $jadwal = $pembelian->getJadwal();
