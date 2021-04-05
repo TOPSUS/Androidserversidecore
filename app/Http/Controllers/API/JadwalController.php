@@ -28,12 +28,11 @@ class JadwalController extends Controller
         $limit_time = date('H:i:s', $time_int);
 
         // PENCARIAN JADWAL DENGAN MODEL JADWAL
-        $jadwals = Jadwal::whereDate('tanggal',$request->date)->whereTime('waktu_berangkat','>',$limit_time)
+        $jadwals = Jadwal::whereHas('getKapal',function($query) use ($request){
+                            $query->where('tipe_kapal',$request->tipe_kapal);
+                            })->whereDate('tanggal',$request->date)->whereTime('waktu_berangkat','>',$limit_time)
                             ->where('id_asal_pelabuhan',$request->id_asal_pelabuhan)
                             ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
-                            ->whereHas('getKapal',function($query) use ($request){
-                                $query->where('tipe_kapal',$request->tipe_kapal);
-                            })
                             ->get(['id','id_asal_pelabuhan','id_tujuan_pelabuhan','waktu_berangkat','tanggal','id_kapal','harga']);
         
         return $jadwals;
