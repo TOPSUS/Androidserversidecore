@@ -297,4 +297,28 @@ class PembelianController extends Controller
 
         // AKHIR
     }
+
+    public function setpembelianstatus(Request $request){
+
+        $pembelian = Pembelian::where('id', $request->id)->first();
+
+        if($pembelian == null){
+            return response()->json([
+                'response_code' => 402,
+                'status' => 'failure',
+                'message' => 'id pembelian tidak ditemukan',
+                'error' => (Object)[],
+            ],200);
+        }
+
+        $pembelian->status = $request->status;
+        $pembelian->save();
+
+        return response()->json([
+            'response_code' => 200,
+            'status' => 'success',
+            'message' => 'pembelian expired',
+            'error' => (Object)[],
+        ],200);
+    }
 }
