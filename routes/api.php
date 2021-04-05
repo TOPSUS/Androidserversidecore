@@ -112,8 +112,8 @@ Route::group(['middleware' => 'auth:api'],function(){
         //GET TRANSAKSI LIST
             Route::post('/getPembelian', 'API\PembelianController@getpembelian');
         //AKHIR
-            Route::post('/getDetailPembelian', 'API\PembelianController@getdetailpembelian');
         //GET DETAIL TRANSAKSI
+            Route::post('/getDetailPembelian', 'API\PembelianController@getdetailpembelian');
         //AKHIR
     //AKHIR
 }); 

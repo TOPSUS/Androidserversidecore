@@ -95,7 +95,6 @@ class PemesananController extends Controller
                             $detail_pembelian->nama_pemegang_tiket = $penumpang->nama_pemegang_ticket;
                             $detail_pembelian->no_id_card = $penumpang->no_id_card;
                             $detail_pembelian->harga = $jadwal->harga;
-                            $detail_pembelian->QRCode = "";
                             $detail_pembelian->status = "Not Used";
                             $detail_pembelian->save();
                             
