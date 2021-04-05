@@ -22,6 +22,16 @@ class JadwalController extends Controller
             'tipe_kapal' => 'required|in:speedboat,feri'
         ]);
 
+        if($validator->fails()){
+            return response()->json([
+                'response_code' => 401,
+                'status' => 'success',
+                'message' => 'gagal terjadi kesalahan',
+                'error' => $validator->errors(),
+                'jadwal' => []
+            ],200);
+        }
+
         // MENENTUKAN WAKTU SAAT INI DITAMBAH 2 JAM UNTUK BATAS WAKTU JADWAL YANG AKAN DI TAMPILKAN DI MOBILE
         $time_int = strtotime(date('H:i:s')) + 120*60;
 
@@ -34,8 +44,7 @@ class JadwalController extends Controller
                             ->where('id_asal_pelabuhan',$request->id_asal_pelabuhan)
                             ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
                             ->get(['id','id_asal_pelabuhan','id_tujuan_pelabuhan','waktu_berangkat','tanggal','id_kapal','harga']);
-        
-        return $jadwals;
+    
 
         // JADWAL YANG DICARI ADALAH JADWAL SESUAI tipe_kapal / TIPE KAPAL DAN BATAS WAKTU 2 JAM
             foreach ($jadwals as $index => $jadwal) {
@@ -76,8 +85,8 @@ class JadwalController extends Controller
         }else{
             return response()->json([
                 'response_code' => 401,
-                'status' => 'success',
-                'message' => 'gagal terjadi kesalahan',
+                'status' => 'failure',
+                'message' => 'gagal jadwals null',
                 'error' => (Object)[],
                 'jadwal' => []
             ],200);
