@@ -101,9 +101,17 @@ class PembelianController extends Controller
         $rekening = $pembayaran->nomor_rekening;
         $logo_metode = $pembayaran->logo_metode;
 
+        //getSisaWaktu
+        $sisaWaktu = $pembelian->created_at->format("H:i:s");
+        $sisaWaktu = Carbon::createFromFormat("H:i:s",$sisaWaktu)
+        ->addMinutes(60)->format("H:i:s");
+        $sisaWaktu = Carbon::now()->diffInMinutes($sisaWaktu);  
+        // $waktuSekarang = Carbon::now();
+        // $waktuSekarang = Carbon::createFromFormat("H:i:s",$waktuSekarang)->diffInMinutes();  
+
 
         $status_transaksi = $pembelian->status;
-        $sisa_waktu = 3;
+        $sisa_waktu = $sisaWaktu;
         $nama_pemesan = $user->nama;
         $email_pemesan = $user->email;
         $telepon_pemesan = $user->nohp;
