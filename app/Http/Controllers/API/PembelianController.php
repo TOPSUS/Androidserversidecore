@@ -48,7 +48,6 @@ class PembelianController extends Controller
             $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
             $speedboat = $jadwal->getBoat();
             $waktu_asal = $jadwal->waktu_berangkat;
-            $waktu_sampai = $jadwal->waktu_sampai;
 
             $pembelians[$index]->pelabuhan_asal_nama = $pelabuhan_asal->nama_pelabuhan;
             $pembelians[$index]->pelabuhan_tujuan_nama = $pelabuhan_tujuan->nama_pelabuhan;
@@ -56,7 +55,10 @@ class PembelianController extends Controller
 
             $pembelians[$index]->tanggal = $jadwal->tanggal;
             $pembelians[$index]->waktu_berangkat = $waktu_asal;
-            $pembelians[$index]->waktu_sampai = $waktu_sampai;
+            
+            $pembelians[$index]->waktu_sampai = Carbon::createFromFormat("H:i:s",$pembelian->waktu_berangkat)
+                                                ->addMinutes($jadwal->estimasi_waktu)->format("H:i:s");
+
         }
 
         if($pembelians != null){
@@ -94,7 +96,8 @@ class PembelianController extends Controller
         $pelabuhan_asal = $jadwal->getPelabuhanAsal()->nama_pelabuhan;
         $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan()->nama_pelabuhan;
         $waktu_berangkat = $jadwal->waktu_berangkat;
-        $waktu_sampai = $jadwal->waktu_sampai;
+        $waktu_sampai = Carbon::createFromFormat("H:i:s",$waktu_berangkat)
+                        ->addMinutes($jadwal->estimasi_waktu)->format("H:i:s");
         $status_transaksi = $pembelian->status;
         $sisa_waktu = 3;
         $nama_pemesan = $user->nama;
