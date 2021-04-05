@@ -61,7 +61,7 @@ class JadwalController extends Controller
 
                 // BUAT WAKTU SAMPAI DENGAN CARBON;
                 $string_waktu_berangkat = $jadwal->tanggal." ".$jadwal->waktu_berangkat;
-                return $jadwal;
+                return $string_waktu_berangkat;
                 $jadwals[$index]->wakktu_sampai = Carbon::createFromFormat("y-m-d H:i:s",$string_waktu_berangkat);
             }
         }else{
