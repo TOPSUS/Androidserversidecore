@@ -43,9 +43,9 @@ class JadwalController extends Controller
                                 })
                             ->where(function($query) use ($limit_time){
                                     $datetime = $query->tanggal." ".$query->time;
-                                    $query->where($limit_time,'>',$datetime);
+                                    $query->whereDate($limit_time,'>',$datetime);
                                 })
-                            ->whereDate('tanggal',$request->date)->whereTime('waktu_berangkat','>',$limit_time)
+                            // ->whereDate('tanggal',$request->date)->whereTime('waktu_berangkat','>',$limit_time)
                             ->where('id_asal_pelabuhan',$request->id_asal_pelabuhan)
                             ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
                             ->get(['id','id_asal_pelabuhan','id_tujuan_pelabuhan','waktu_berangkat','tanggal','id_kapal','harga','estimasi_waktu']);
