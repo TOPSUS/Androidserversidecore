@@ -43,8 +43,7 @@ class JadwalController extends Controller
                             })->whereDate('tanggal',$request->date)->whereTime('waktu_berangkat','>',$limit_time)
                             ->where('id_asal_pelabuhan',$request->id_asal_pelabuhan)
                             ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
-                            ->get(['id','id_asal_pelabuhan','id_tujuan_pelabuhan','waktu_berangkat','tanggal','id_kapal','harga']);
-    
+                            ->get(['id','id_asal_pelabuhan','id_tujuan_pelabuhan','waktu_berangkat','tanggal','id_kapal','harga','estimasi_waktu']);
 
         // JADWAL YANG DICARI ADALAH JADWAL SESUAI tipe_kapal / TIPE KAPAL DAN BATAS WAKTU 2 JAM
             foreach ($jadwals as $index => $jadwal) {
@@ -71,7 +70,6 @@ class JadwalController extends Controller
 
                 // BUAT WAKTU SAMPAI DENGAN CARBON;
                 $string_waktu_berangkat = $jadwal->tanggal." ".$jadwal->waktu_berangkat;
-                $jadwals[$index]->estimasi_waktu = $jadwal->estimasi_waktu;
                 $jadwals[$index]->wakktu_sampai = Carbon::createFromFormat("Y-m-d H:i:s",$string_waktu_berangkat)
                                                     ->addMinutes($jadwal->estimasi_waktu)->format("H:i:s");
             }
