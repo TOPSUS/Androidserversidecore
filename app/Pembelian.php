@@ -23,4 +23,8 @@ class Pembelian extends Model
     public function getBoat(){
         return $this->hasOne('App\SpeedBoat','id','id_speedboat')->first();
     }
+
+    public function getPembayaran(){
+        return $this->hasOne('App\MetodePembayaran','id','id_metode_pembayaran')->first();
+    }
 }

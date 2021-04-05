@@ -96,6 +96,12 @@ class PembelianController extends Controller
         $waktu_berangkat = $jadwal->waktu_berangkat;
         $waktu_sampai = Carbon::createFromFormat("H:i:s",$waktu_berangkat)
                         ->addMinutes($jadwal->estimasi_waktu)->format("H:i:s");
+        $pembayaran = $pembelian->getPembayaran();
+        $metode_pembayaran = $pembayaran->nama_metode;
+        $rekening = $pembayaran->nomor_rekening;
+        $logo_metode = $pembayaran->logo_metode;
+
+
         $status_transaksi = $pembelian->status;
         $sisa_waktu = 3;
         $nama_pemesan = $user->nama;
@@ -135,6 +141,9 @@ class PembelianController extends Controller
                 'telepon_pemesan' => $telepon_pemesan,
                 'tiket' => $tiket,
                 'bukti' => $bukti,
+                'metode_pembayaran' => $metode_pembayaran,
+                'rekening' => $rekening,
+                'logo_metode' => $logo_metode,
                 'penumpang' => $penumpangs
             ],200);
         }else{
