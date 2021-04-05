@@ -122,7 +122,7 @@ class PembelianController extends Controller
                 'status' => 'success',
                 'message' => 'berhasil mendapatkan pembelian',
                 'error' => (Object)[],
-                'kapal' => $speedboat,
+                'speedboat' => $speedboat,
                 'tanggal' => $tanggal,
                 'harga' => $harga,
                 'pelabuhan_asal' => $pelabuhan_asal,
