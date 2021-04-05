@@ -9,7 +9,7 @@ use App\Pelabuhan;
 class PelabuhanController extends Controller
 {
     public function readAllPelabuhanSpeedBoat(){
-        $pelabuhans = Pelabuhan::where('tipe_pelabuhan','Speedboat')->orWhere('tipe_pelabuhan','Speedboat & Kapal')->get();
+        $pelabuhans = Pelabuhan::where('tipe_pelabuhan','speedboat')->orWhere('tipe_pelabuhan','speedboat & feri')->get();
 
         $response_pelabuhan = [];
 
