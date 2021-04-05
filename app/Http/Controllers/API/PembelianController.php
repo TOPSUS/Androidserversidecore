@@ -89,11 +89,11 @@ class PembelianController extends Controller
         $sisaWaktu = $pembelian->created_at->format("H:i:s");
         $sisaWaktu = Carbon::createFromFormat("H:i:s",$sisaWaktu)
         ->addMinutes(60)->format("H:i:s");
-        $sisaWaktu = Carbon::parse($sisaWaktu)->diffInMinutes(Carbon::now(), false); 
+        $sisaWaktu = Carbon::parse($sisaWaktu)->diffInMilliseconds(Carbon::now(), false); 
         if($pembelian->status != "menunggu pembayaran"){
             $sisaWaktu = 0;
         }
-        if((int)$sisaWaktu < 1 && $pembelian->status == "menunggu pembayaran")  {
+        if((int)$sisaWaktu < 60000 && $pembelian->status == "menunggu pembayaran")  {
             $pembelian->status = "expired";
             $pembelian->save();
             $pembelian = Pembelian::where('id', $request->id)->first();
@@ -317,7 +317,7 @@ class PembelianController extends Controller
         return response()->json([
             'response_code' => 200,
             'status' => 'success',
-            'message' => 'pembelian expired',
+            'message' => 'pembelian status berhasil diubah',
             'error' => (Object)[],
         ],200);
     }
