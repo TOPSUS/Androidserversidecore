@@ -37,32 +37,33 @@ class JadwalController extends Controller
 
         if($request->tipe_jasa == "speedboat"){
 
-        foreach ($jadwals as $index => $jadwal) {
-            $pelabuhan_asal = $jadwal->getPelabuhanAsal();
-            $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
-            $speedboat = $jadwal->getBoat();
-            $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini();
-            $sisa = $speedboat->kapasitas - $pemesanan_saat_ini;
+            foreach ($jadwals as $index => $jadwal) {
+                $pelabuhan_asal = $jadwal->getPelabuhanAsal();
+                $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
+                $speedboat = $jadwal->getBoat();
+                $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini();
+                $sisa = $speedboat->kapasitas - $pemesanan_saat_ini;
 
-            $jadwals[$index]->pelabuhan_asal_nama = $pelabuhan_asal->nama_pelabuhan;
-            $jadwals[$index]->pelabuhan_asal_kode = $pelabuhan_asal->kode_pelabuhan;
+                $jadwals[$index]->pelabuhan_asal_nama = $pelabuhan_asal->nama_pelabuhan;
+                $jadwals[$index]->pelabuhan_asal_kode = $pelabuhan_asal->kode_pelabuhan;
+                
+                $jadwals[$index]->pelabuhan_tujuan_nama = $pelabuhan_tujuan->nama_pelabuhan;
+                $jadwals[$index]->pelabuhan_tujuan_kode = $pelabuhan_tujuan->kode_pelabuhan;
             
-            $jadwals[$index]->pelabuhan_tujuan_nama = $pelabuhan_tujuan->nama_pelabuhan;
-            $jadwals[$index]->pelabuhan_tujuan_kode = $pelabuhan_tujuan->kode_pelabuhan;
-        
-            $jadwals[$index]->nama_speedboat = $speedboat->nama_speedboat;
-            $jadwals[$index]->kapasitas = $speedboat->kapasitas;
-            $jadwals[$index]->pemesanan_saat_ini = $pemesanan_saat_ini;
-            $jadwals[$index]->sisa = $sisa;
-            $jadwals[$index]->deskripsi_boat = $speedboat->deskripsi;
-            $jadwals[$index]->foto_boat = $speedboat->foto;
-            $jadwals[$index]->contact_service = $speedboat->contact_service;
-            $jadwals[$index]->tanggal_beroperasi = $speedboat->tanggal_beroperasi;
+                $jadwals[$index]->nama_speedboat = $speedboat->nama_speedboat;
+                $jadwals[$index]->kapasitas = $speedboat->kapasitas;
+                $jadwals[$index]->pemesanan_saat_ini = $pemesanan_saat_ini;
+                $jadwals[$index]->sisa = $sisa;
+                $jadwals[$index]->deskripsi_boat = $speedboat->deskripsi;
+                $jadwals[$index]->foto_boat = $speedboat->foto;
+                $jadwals[$index]->contact_service = $speedboat->contact_service;
+                $jadwals[$index]->tanggal_beroperasi = $speedboat->tanggal_beroperasi;
 
-            // BUAT WAKTU SAMPAI DENGAN CARBON;
-            $string_waktu_berangkat = $jadwal->tanggal." ".$jadwal->waktu_berangkat;
-            $jadwals[$index]->wakktu_sampai = Carbon::createFromFormat("y-m-d H:i:s",$string_waktu_berangkat);
-        }
+                // BUAT WAKTU SAMPAI DENGAN CARBON;
+                $string_waktu_berangkat = $jadwal->tanggal." ".$jadwal->waktu_berangkat;
+                return $string_waktu_berangkat;
+                $jadwals[$index]->wakktu_sampai = Carbon::createFromFormat("y-m-d H:i:s",$string_waktu_berangkat);
+            }
         }else{
             
             foreach ($jadwals as $index => $jadwal) {
