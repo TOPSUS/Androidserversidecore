@@ -31,7 +31,7 @@ class JadwalController extends Controller
         $jadwals = Jadwal::whereDate('tanggal',$request->date)->whereTime('waktu_berangkat','>',$limit_time)
                             ->where('id_asal_pelabuhan',$request->id_asal_pelabuhan)
                             ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
-                            ->whereHas('App\Speedboat',function($query){
+                            ->whereHas('getKapal',function($query){
                                 $query->where('tipe_kapal',$request->tipe_kapal);
                             })
                             ->get(['id','id_asal_pelabuhan','id_tujuan_pelabuhan','waktu_berangkat','tanggal','id_kapal','harga']);
