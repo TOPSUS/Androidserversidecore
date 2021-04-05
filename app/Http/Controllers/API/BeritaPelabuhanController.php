@@ -22,7 +22,7 @@ class BeritaPelabuhanController extends Controller
               'id_user' => $berita->id_user,
               'judul' => $berita->judul,
               'foto' => $berita->foto,
-              'berita' => strip_tags($berita->berita),
+              'berita' => htmlspecialchars_decode($berita->berita),
               'tanggal' => $berita->tanggal,
             ];
         }
