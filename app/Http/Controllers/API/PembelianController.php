@@ -41,8 +41,6 @@ class PembelianController extends Controller
             );
         }
 
-        return $pembelians;
-
 
         foreach ($pembelians as $index => $pembelian) {
             $jadwal = $pembelian->getJadwal();
