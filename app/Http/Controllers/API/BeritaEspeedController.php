@@ -21,7 +21,7 @@ class BeritaEspeedController extends Controller
                 'id_speedboat' => $berita->id_speedboat,
                 'id_user' => $berita->id_user,
                 'judul' => $berita->judul,
-                'berita' => string_tags($berita->berita),
+                'berita' => $berita->berita,
                 'tanggal' => $berita->tanggal,
                 'foto' => $berita->foto,
             ]; 
