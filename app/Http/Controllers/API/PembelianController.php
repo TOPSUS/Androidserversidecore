@@ -90,6 +90,7 @@ class PembelianController extends Controller
         $jadwal = $pembelian->getJadwal();
 
         $speedboat = $jadwal->getKapal()->first()->nama_speedboat;
+        return $speedboat;
         $tanggal = $jadwal->tanggal;
         $harga = $pembelian->total_harga;
         $pelabuhan_asal = $jadwal->getPelabuhanAsal()->nama_pelabuhan;
