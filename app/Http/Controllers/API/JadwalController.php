@@ -20,7 +20,6 @@ class JadwalController extends Controller
             'tipe_jasa' => 'required|in:speedboat,feri'
         ]);
 
-
         // MENENTUKAN WAKTU SAAT INI DITAMBAH 2 JAM UNTUK BATAS WAKTU JADWAL YANG AKAN DI TAMPILKAN DI MOBILE
         $time_int = strtotime(date('H:i:s')) + 120*60;
 
