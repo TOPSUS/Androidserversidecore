@@ -17,7 +17,11 @@ class Jadwal extends Model
     }
 
     public function getBoat(){
-        return $this->hasOne('App\SpeedBoat','id','id_speedboat')->first();
+        return $this->hasOne('App\SpeedBoat','id','id_kapal')->where('tipe_kapal','speedboat')->first();
+    }
+
+    public function getKapal(){
+        return $this->hasOne('App\SpeedBoat','id','id_kapal')->where('tipe_kapal','feri')->first();
     }
 
     public function getTotalPembelianSaatini(){
