@@ -33,15 +33,14 @@ class JadwalController extends Controller
         }
 
         // MENENTUKAN WAKTU SAAT INI DITAMBAH 2 JAM UNTUK BATAS WAKTU JADWAL YANG AKAN DI TAMPILKAN DI MOBILE
-        $time_int = strtotime(date('Y/m/d H:i:s')) + 120*60;
+        $time_int = strtotime(date('H:i:s')) + 120*60;
 
-        $limit_time = date('Y-m-d H:i:s', $time_int);
+        $limit_time = date('H:i:s', $time_int);
 
         // PENCARIAN JADWAL DENGAN MODEL JADWAL
         $jadwals = Jadwal::whereHas('getKapal',function($query) use ($request){
-                                    $query->where('tipe_kapal',$request->tipe_kapal);
-                                })
-                            ->whereDate('tanggal',$request->date)->whereTime('waktu_berangkat','>',$limit_time)
+                            $query->where('tipe_kapal',$request->tipe_kapal);
+                            })->whereDate('tanggal',$request->date)->whereTime('waktu_berangkat','>',$limit_time)
                             ->where('id_asal_pelabuhan',$request->id_asal_pelabuhan)
                             ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
                             ->get(['id','id_asal_pelabuhan','id_tujuan_pelabuhan','waktu_berangkat','tanggal','id_kapal','harga','estimasi_waktu']);
