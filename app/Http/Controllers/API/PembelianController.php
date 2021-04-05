@@ -86,9 +86,9 @@ class PembelianController extends Controller
         //GET PEMBELIAN
         $pembelian = Pembelian::where('id', $request->id)->first();
         //getSisaWaktu
-        $sisaWaktu = $pembelian->created_at->format("H:i:s");
-        $sisaWaktu = Carbon::createFromFormat("H:i:s",$sisaWaktu)
-        ->addMinutes(60)->format("H:i:s");
+        $sisaWaktu = $pembelian->created_at->format('Y-m-d H:i:s');
+        $sisaWaktu = Carbon::createFromFormat('Y-m-d H:i:s',$sisaWaktu)
+        ->addMinutes(60)->format('Y-m-d H:i:s');
         $sisaWaktu = Carbon::now()->diffInMilliseconds($sisaWaktu, false);
         if($pembelian->status != "menunggu pembayaran"){
             $sisaWaktu = 0;
