@@ -84,6 +84,9 @@ Route::group(['middleware' => 'auth:api'],function(){
         // READ PELABUHAN
             Route::post('/readpelabuhan','API\PelabuhanController@readAllPelabuhan');
         // AKHIR
+
+        // READ GOLOGAN PELABUHAN DENGAN PARAMS ID_PELABUHAN
+            Route::post('/readgologan','API\PelabuhanController@readAllPelabuhan');
     // AKHIR
 
     // PROSES TRANSAKSI

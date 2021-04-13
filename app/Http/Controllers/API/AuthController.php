@@ -23,7 +23,8 @@ class AuthController extends Controller
     public function login(Request $request){
         $validator = Validator::make($request->all(),[
             'email' => 'required|email|min:3|max:50',
-            'password' => 'required|min:3|max:50'
+            'password' => 'required|min:3|max:50',
+            'fcm_token' => 'required'
         ]);
 
         if($validator->fails()){
@@ -38,6 +39,20 @@ class AuthController extends Controller
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             $user = Auth::user();
 
+            // UPDATE FCM_TOKEN
+                // CARI DULU YANG MENGGUNAKAN TOKEN SEBELUMNYA
+                    User::whereIn('fcm_token',$request->fcm_token)->update(['fcm_token',null]);
+                
+                // UPDATE USER TERBARU
+                    $user->fcm_token = $request->fcm_token;
+                    $user->update();
+
+            // CLEAR TOKEN PASSPORT USER SEBELUMNYA
+            $user->tokens->each(function($token,$key){
+                    $token->delete();
+            });
+
+            // MASUKKAN TOKEN PASSPORT BARU
             $token =  $user->createToken('nApp')->accessToken;
 
             return response()->json([
