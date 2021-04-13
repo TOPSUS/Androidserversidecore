@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Pelabuhan;
 class PelabuhanController extends Controller
 {
-    public function readAllPelabuhanSpeedBoat(Request $request){
+    public function readAllPelabuhan(Request $request){
         // LARAVEL VALIDATION
             $validator = Validator::make($request->all(),[
                 'tipe_kapal' => 'required|in:speedboat,feri'
