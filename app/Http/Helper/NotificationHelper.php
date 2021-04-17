@@ -5,22 +5,30 @@ use App\User;
 use App\UserNotification;
 use GuzzleHttp\Client;
 
+use Validator;
+
 class NotificationHelper{
+    // STATUS YANG TERSEDIA
+    const STATUS_NORMAL = 0;
+    const STATUS_SUKSES = 1;
+    const STATUS_WARNING = 2;
+    const STATUS_DANGER = 3;
+    const STATUS_SISTEM = 4;
     
     /**
      * METHOD STATIC YANG DAPAT DIAKSES DARI MANAPUN DI DALAM CONTROLLER
      * UNTUK MELAKUKAN PENGIRIMAN NOTIFIKASI MENGGUNAKAN FIREBASE CLOUD MESSAGING
      */
     public static function createNotification(int $user_id,String $fcm_token,String $title = "",String $body="",
-                                                String $status = "0",String $type = "0",
-                                                String $notification_by = "0"){
+                                                int $status = 0,int $type = 0,
+                                                int $notification_by = 0){
         // VALIASI INPUT PARAMETER
         $validator = Validator::make([$user_id,$fcm_token,$title,$body,$status,$type,$notification_by],
                         [
                             0 => 'required|numeric',
                             1 => 'required',
-                            2 => 'required',
-                            3 => 'required',
+                            2 => 'required|max:30',
+                            3 => 'required|max:100',
                             4 => 'required|numeric',
                             5 => 'required|numeric',
                             6 => 'required|numeric',
@@ -78,7 +86,6 @@ class NotificationHelper{
                 "body" => $fields,
             ]);
             $response =  $request->getBody()->getContents();
-            return $response;
         }
         catch (Exception $e){
             return $e;

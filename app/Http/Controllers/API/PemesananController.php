@@ -13,6 +13,7 @@ use App\DetailPembelian;
 use App\Card;
 use App\Jadwal;
 use App\MetodePembayaran;
+use App\Http\Helper\NotificationHelper;
 
 class PemesananController extends Controller
 {
@@ -63,6 +64,7 @@ class PemesananController extends Controller
                 $speedboat = $jadwal->getBoat();
                 $total_pembelian_saat_ini = $jadwal->getTotalPembelianSaatini();
                 
+                // CHECK APAKAH ADA KAPASITAS
                 if(($speedboat->kapasitas - $total_pembelian_saat_ini) >= count($penumpang_decode)){
                     
                     // SIMPAN KE DALAM TABLE PEMBELIAN
@@ -100,6 +102,11 @@ class PemesananController extends Controller
                             
                         }
                     // AKHIR
+
+                    // BUAT NOTIFIKASI
+                    $user = Auth::user();
+                    
+                    NotificationHelper::createNotification($user->id,$user->fcm_token,"Pemesanan dilakukan","Pemesanan ticket dengan id "+$pembelian->id+" telah berhasil dilakukan, mohon untuk segera melakukan pembayaran sebelum batas waktu yang diberikan",0,0,0);
 
                     return response()->json([
                         'response_code' => 200,
