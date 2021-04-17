@@ -15,6 +15,7 @@ use App\DetailPembelian;
 use App\User;
 use App\Jadwal;
 use App\MetodePembayaran;
+use App\Http\Helper\NotificationHelper;
 
 class PembelianController extends Controller
 {
@@ -227,6 +228,10 @@ class PembelianController extends Controller
                 $pembelian->update();
 
             // AKHIR
+
+            // BERIKAN NOTIFIKASI BERHASIL UPLOAD BUKTI PEMBAYARAN KE USER
+            NotificationHelper::createNotification($user->id,$user->fcm_token,"Upload Bukti Berhasil","Upload bukti pembayaran dengan id ".$pembelian->id." telah berhasil dilakukan, mohon menunggu hingga pembayaran tervalidasi",
+            NotificationHelper::STATUS_DELIVERED,NotificationHelper::TYPE_SUKSES,NotificationHelper::NOTIFICATION_BY_SYSTEM);
             
             // RETURN BERHASIL MENYIMPAN BUKTI PEMBAYARAN
             return response()->json([
