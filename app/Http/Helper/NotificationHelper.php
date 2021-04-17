@@ -36,8 +36,8 @@ class NotificationHelper{
                         [
                             0 => 'required|numeric',
                             1 => 'required',
-                            2 => 'required|max:30',
-                            3 => 'required|max:100',
+                            2 => 'required|max:100',
+                            3 => 'required|max:500',
                             4 => 'required|numeric',
                             5 => 'required|numeric',
                             6 => 'required|numeric',

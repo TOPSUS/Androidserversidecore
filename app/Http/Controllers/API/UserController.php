@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 use App\User;
-use App\Http\Helper\NotificationHelper;
 
 class UserController extends Controller
 {
@@ -18,9 +17,6 @@ class UserController extends Controller
     {
         
         $user = User::find(Auth::user()->id);
-        
-        NotificationHelper::createNotification($user->id,$user->fcm_token,"Pemesanan dilakukan","Pemesanan ticket dengan id ".$pembelian->id." telah berhasil dilakukan, mohon untuk segera melakukan pembayaran sebelum batas waktu yang diberikan",
-        0,0,0);
 
         if($user == null){
             return response()->json([
