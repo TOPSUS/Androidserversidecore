@@ -106,7 +106,7 @@ class PemesananController extends Controller
                     // BUAT NOTIFIKASI
                     $user = Auth::user();
                     NotificationHelper::createNotification($user->id,$user->fcm_token,"Pemesanan dilakukan","Pemesanan ticket dengan id ".$pembelian->id." telah berhasil dilakukan, mohon untuk segera melakukan pembayaran sebelum batas waktu yang diberikan",
-                    NotificationHelper::STATUS_DELIVERED,NotificationHelper::TYPE_NORMAL,NotificationHelper::NOTIFICATION_BY_SYSTEM);
+                    0,0,0);
 
                     return response()->json([
                         'response_code' => 200,
