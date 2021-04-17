@@ -8,12 +8,21 @@ use GuzzleHttp\Client;
 use Validator;
 
 class NotificationHelper{
-    // STATUS YANG TERSEDIA
-    const STATUS_NORMAL = 0;
-    const STATUS_SUKSES = 1;
-    const STATUS_WARNING = 2;
-    const STATUS_DANGER = 3;
-    const STATUS_SISTEM = 4;
+    // TYPE YANG TERSEDIA
+    const TYPE_NORMAL = 0;
+    const TYPE_SUKSES = 1;
+    const TYPE_WARNING = 2;
+    const TYPE_DANGER = 3;
+    const TYPE_SISTEM = 4;
+
+    // TYPE YANG TERSEDIA
+    const STATUS_DELIVERED = 0;
+    const STATUS_HISTORY = 1;
+    const STATUS_DELETED = 2;
+
+    // NOTIFICATION_BY YANG TERSEDIA
+    const NOTIFICATION_BY_SYSTEM = 0;
+    const NOTIFICATION_BY_ADMIN = 1;
     
     /**
      * METHOD STATIC YANG DAPAT DIAKSES DARI MANAPUN DI DALAM CONTROLLER
