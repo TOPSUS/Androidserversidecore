@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login','API\AuthController@login');
 Route::post('/register','API\AuthController@register');
 Route::get('/failure','API\AuthController@failureMethod')->name('failure');
-Route::post('/user/logout', 'API\UserController@logout');
 
 
 // LUPA PASSWORD TANPA AUTH
@@ -63,6 +62,10 @@ Route::group(['middleware' => 'auth:api'],function(){
         // ADD PIN
             Route::post('/user/addPin', 'API\UserController@addPin');
         // AKHIR
+
+        // LOG OUT
+            Route::post('/user/logout', 'API\UserController@logout');
+        //AKHIR
     // AKHIR
 
     // BERITA PELABUHAN
