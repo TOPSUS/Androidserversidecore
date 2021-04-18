@@ -85,8 +85,9 @@ Route::group(['middleware' => 'auth:api'],function(){
             Route::post('/readpelabuhan','API\PelabuhanController@readAllPelabuhan');
         // AKHIR
 
-        // READ GOLOGAN PELABUHAN DENGAN PARAMS ID_PELABUHAN
-            Route::post('/readgologan','API\PelabuhanController@readAllPelabuhan');
+        // READ GOLONGAN PELABUHAN
+            Route::post('/readgologan','API\GolonganController@getGolonganByPelabuhanId');
+        // AKHIR
     // AKHIR
 
     // PROSES TRANSAKSI
@@ -125,4 +126,4 @@ Route::group(['middleware' => 'auth:api'],function(){
             Route::post('/getDetailPembelian', 'API\PembelianController@getdetailpembelian');
         //AKHIR
     // AKHIR
-}); 
+});
