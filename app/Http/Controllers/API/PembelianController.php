@@ -283,7 +283,7 @@ class PembelianController extends Controller
         $user = Auth::user();
 
         // BERIKAN NOTIFIKASI BERHASIL UPLOAD BUKTI PEMBAYARAN KE USER
-        NotificationHelper::createNotification($user->id, $user->fcm_token, "Transaksi dibatalkan", "Transaksi dengan id " . $id_pembelian . " telah dibatalkan.",NotificationHelper::STATUS_DELIVERED, NotificationHelper::TYPE_DANGER, NotificationHelper::NOTIFICATION_BY_SYSTEM);
+        NotificationHelper::createNotification($user->id, $user->fcm_token, "Transaksi dibatalkan", "Transaksi dengan id " . $request->id_pembelian . " telah dibatalkan.",NotificationHelper::STATUS_DELIVERED, NotificationHelper::TYPE_DANGER, NotificationHelper::NOTIFICATION_BY_SYSTEM);
 
         // CHECK APAKAH STATUSNYA BELUM "DIBATALKAN"
         if ($pembelian->status == 'dibatalkan') {
