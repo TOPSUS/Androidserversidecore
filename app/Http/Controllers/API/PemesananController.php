@@ -30,12 +30,18 @@ class PemesananController extends Controller
                 'id_pemesan' => $request->id_pemesan,
                 'id_jadwal' => $request->id_jadwal,
                 'id_metode_pembayaran' => $request->id_metode_pembayaran,
-                'penumpang' => $penumpang_decode
+                'penumpang' => $penumpang_decode,
+                'tipe_kapal' => $request->tipe_kapal,
+                'id_golongan' => $request->id_golongan,
+                'nomor_polisi' => $request->nomor_polisi
             ],[
                 'id_pemesan' => 'required|numeric',
                 'id_jadwal' => 'required|numeric',
                 'id_metode_pembayaran' => 'required|numeric',
-                'penumpang' => 'required|array'
+                'penumpang' => 'required|array',
+                'tipe_kapal' => 'required|in:speedboat,feri',
+                'id_golongan' => 'nullable|numeric',
+                'nomor_polisi' => 'nullable'
             ]);
 
             if($validator->fails()){
@@ -48,7 +54,7 @@ class PemesananController extends Controller
             }
         // AKHIR
 
-        // MAIN LOGIC BUAT SEBUAH PEMESANAN                        
+        // MAIN LOGIC BUAT SEBUAH PEMESANAN
             // CEK APAKAN JADWAL MASIH TERSEDIA UNTUK SEMUA PENUMPANG
                 $jadwal = Jadwal::find($request->id_jadwal);
                 
@@ -61,7 +67,7 @@ class PemesananController extends Controller
                     ],200);
                 }
                 
-                $speedboat = $jadwal->getBoat();
+                $speedboat = $jadwal->getKapal()->where('tipe_kapal',$request->tipe_kapal);
                 $total_pembelian_saat_ini = $jadwal->getTotalPembelianSaatini();
                 
                 // CHECK APAKAH ADA KAPASITAS
@@ -73,8 +79,29 @@ class PemesananController extends Controller
                         $pembelian->id_user = $request->id_pemesan;
                         $pembelian->id_metode_pembayaran = $request->id_metode_pembayaran;
                         $pembelian->tanggal = date('Y-m-d');
-                        $pembelian->total_harga = $jadwal->harga * count($penumpang_decode);
+                        
                         $pembelian->status = 'menunggu pembayaran';
+
+                        // APABILA TIPE KAPAL FERI DAN MENGGUNAKAN KENDARAAN
+                        if($request->tipe_kapal == 'feri' && $request->id_golongan != null){
+                            $golongan = Golongan::find($request->id);
+
+                            if($golongan == null){
+                                return response()->json([
+                                    'response_code' => 401,
+                                    'status' => 'failure',
+                                    'message' => 'Tidak ditemukan  golongan yang dimaksud',
+                                    'error' => (Object)[],
+                                ],200);
+                            }
+
+                            $pembelian->total_harga = $golongan->harga + ((count($penumpang_decode)-1)*$jadwal->harga);
+                            $pembelian->id_golongan;
+                            $pembelian->nomor_polisi = $request->nomor_polisi;
+                        }else{
+                            $pembelian->total_harga = $jadwal->harga * count($penumpang_decode);
+                        }
+
                         $pembelian->save();
                     // AKHIR
 
