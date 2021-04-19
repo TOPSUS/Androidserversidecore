@@ -41,11 +41,11 @@ class AuthController extends Controller
 
             // UPDATE FCM_TOKEN
                 // CARI DULU YANG MENGGUNAKAN TOKEN SEBELUMNYA
-                    // User::where('fcm_token',$request->fcm_token)->update(['fcm_token' => null]);
+                    User::where('fcm_token',$request->fcm_token)->update(['fcm_token' => null]);
                 
                 // UPDATE USER TERBARU
                     $user->fcm_token = $request->fcm_token;
-                    $user->update();
+                    $user->save();
 
             // CLEAR TOKEN PASSPORT USER SEBELUMNYA
             $user->tokens->each(function($token,$key){
