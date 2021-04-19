@@ -41,11 +41,7 @@ class AuthController extends Controller
 
             // UPDATE FCM_TOKEN
                 // CARI DULU YANG MENGGUNAKAN TOKEN SEBELUMNYA
-                    $user_with_same_fcm = User::where('fcm_token',$request->fcm_token)->get();
-                    foreach ($user_with_same_fcm as $index => $same_fcm) {
-                        $same_fcm->fcm_token = null;
-                        $same_fcm->save();
-                    }
+                    User::where('fcm_token',$request->fcm_token)->where('id',$user->id)->update(['fcm_token' => null]);
                 
                 // UPDATE USER TERBARU
                     $user->fcm_token = $request->fcm_token;
