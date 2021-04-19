@@ -40,7 +40,7 @@ class JadwalController extends Controller
         // PENCARIAN JADWAL DENGAN MODEL JADWAL
         $jadwals = Jadwal::whereHas('getKapal',function($query) use ($request){
                             $query->where('tipe_kapal',$request->tipe_kapal);
-                            })->whereDate('tanggal',$request->date)->whereTime('waktu_berangkat','>',$limit_time)
+                            })->whereDate('tanggal',$request->date)
                             ->where('id_asal_pelabuhan',$request->id_asal_pelabuhan)
                             ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
                             ->get(['id','id_asal_pelabuhan','id_tujuan_pelabuhan','waktu_berangkat','tanggal','id_kapal','harga','estimasi_waktu']);
