@@ -85,7 +85,7 @@ class PemesananController extends Controller
 
                         // APABILA TIPE KAPAL FERI DAN MENGGUNAKAN KENDARAAN
                         if($request->tipe_kapal == 'feri' && $request->id_golongan != null){
-                            $golongan = Golongan::find($request->id);
+                            $golongan = Golongan::find($request->id_golongan);
 
                             if($golongan == null){
                                 return response()->json([
