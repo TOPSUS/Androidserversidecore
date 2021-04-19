@@ -97,7 +97,7 @@ class PemesananController extends Controller
                             }
 
                             $pembelian->total_harga = $golongan->harga + ((count($penumpang_decode)-1)*$jadwal->harga);
-                            $pembelian->id_golongan;
+                            $pembelian->id_golongan = $request->id_golongan;
                             $pembelian->nomor_polisi = $request->nomor_polisi;
                         }else{
                             $pembelian->total_harga = $jadwal->harga * count($penumpang_decode);
