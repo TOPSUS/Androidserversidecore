@@ -67,7 +67,7 @@ class PemesananController extends Controller
                     ],200);
                 }
                 
-                $speedboat = $jadwal->getKapal()->where('tipe_kapal',$request->tipe_kapal);
+                $speedboat = $jadwal->getKapal()->where('tipe_kapal',$request->tipe_kapal)->first();
                 $total_pembelian_saat_ini = $jadwal->getTotalPembelianSaatini();
                 
                 // CHECK APAKAH ADA KAPASITAS
