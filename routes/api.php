@@ -112,10 +112,8 @@ Route::group(['middleware' => 'auth:api'],function(){
         // AKHIR
 
         // POST STATUS PEMBELIAN
-        Route::post('/setpembelianstatus','API\PembelianController@setpembelianstatus');
+            Route::post('/setpembelianstatus','API\PembelianController@setpembelianstatus');
         // AKHIR
-
-        
     // AKHIR
 
     // RIWAYAT TRANSAKSI
