@@ -13,6 +13,7 @@ use App\DetailPembelian;
 use App\Card;
 use App\Jadwal;
 use App\MetodePembayaran;
+use App\Golongan;
 use App\Http\Helper\NotificationHelper;
 
 class PemesananController extends Controller
