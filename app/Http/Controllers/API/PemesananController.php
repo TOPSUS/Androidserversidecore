@@ -124,6 +124,14 @@ class PemesananController extends Controller
                             $detail_pembelian->kode_tiket = $kode_tiket;
                             $detail_pembelian->nama_pemegang_tiket = $penumpang->nama_pemegang_ticket;
                             $detail_pembelian->no_id_card = $penumpang->no_id_card;
+
+                            // APABILA TIPE DARI JASA YANG DIMINTA ADALAH KENDARAAN MAKA PENUMPANG PERTAMA HARGA NYA SESUAI DENGAN GOLONGAN
+                            if($request->tipe_kapal == 'feri' && $request->id_golongan != null && $index == 0){
+                                $detail_pembelian->harga = $golongan->harga;
+                            }else{
+                                $detail_pembelian->harga = $jadwal->harga;
+                            }
+
                             $detail_pembelian->harga = $jadwal->harga;
                             $detail_pembelian->status = "Not Used";
                             $detail_pembelian->save();
