@@ -132,7 +132,6 @@ class PemesananController extends Controller
                                 $detail_pembelian->harga = $jadwal->harga;
                             }
 
-                            $detail_pembelian->harga = $jadwal->harga;
                             $detail_pembelian->status = "Not Used";
                             $detail_pembelian->save();
                             
