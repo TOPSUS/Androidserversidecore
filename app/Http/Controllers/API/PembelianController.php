@@ -139,7 +139,7 @@ class PembelianController extends Controller
             $bukti = $pembelian->bukti;
         }
 
-        
+
         //CEK NOPOL
         if($pembelian->nomor_polisi == NULL){
             $nomor_polisi = "NOPE";
@@ -150,6 +150,7 @@ class PembelianController extends Controller
         //CEK GOLONGAN
         if($pembelian->id_golongan == NULL){
             $golongan = "NOPE";
+            $harga_golongan = "NOPE";
         }else if($pembelian->id_golongan != NULL){
             $golongan = $pembelian->getGolongan();
             $golongan = $golongan->golongan;
