@@ -124,8 +124,40 @@ class PembelianController extends Controller
         $nama_pemesan = $user->nama;
         $email_pemesan = $user->email;
         $telepon_pemesan = $user->nohp;
-        $tiket = "NOPE";
-        $bukti = "NOPE";
+
+        //CEK TIKET
+        if($pembelian->file_tiket == NULL){
+            $tiket = "NOPE";
+        }else if($pembelian->file_tiket != NULL){
+            $tiket = $pembelian->file_tiket;
+        }
+
+        //CEK BUKTI
+        if($pembelian->bukti == NULL){
+            $bukti = "NOPE";
+        }else if($pembelian->bukti != NULL){
+            $bukti = $pembelian->bukti;
+        }
+
+        
+        //CEK NOPOL
+        if($pembelian->nomor_polisi == NULL){
+            $nomor_polisi = "NOPE";
+        }else if($pembelian->nomor_polisi != NULL){
+            $nomor_polisi = $pembelian->nomor_polisi;
+        }
+
+        //CEK GOLONGAN
+        if($pembelian->id_golongan == NULL){
+            $golongan = "NOPE";
+        }else if($pembelian->id_golongan != NULL){
+            $golongan = $pembelian->getGolongan();
+            $golongan = $golongan->golongan;
+            $harga_golongan = $pembelian->getGolongan();
+            $harga_golongan = $harga_golongan->harga;
+        }
+
+
 
         $penumpangs = DetailPembelian::where('id_pembelian', $request->id)->get(['nama_pemegang_tiket', 'id_card', 'no_id_card']);
         foreach ($penumpangs as $index => $penumpang) {
@@ -161,6 +193,9 @@ class PembelianController extends Controller
                 'metode_pembayaran' => $metode_pembayaran,
                 'rekening' => $rekening,
                 'logo_metode' => $logo_metode,
+                'nomor_polisi' => $nomor_polisi,
+                'golongan' => $golongan,
+                'harga_golongan' => $harga_golongan,
                 'penumpang' => $penumpangs
             ], 200);
         } else {

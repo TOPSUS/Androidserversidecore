@@ -27,4 +27,8 @@ class Pembelian extends Model
     public function getPembayaran(){
         return $this->hasOne('App\MetodePembayaran','id','id_metode_pembayaran')->first();
     }
+
+    public function getGolongan(){
+        return $this->hasOne('App\Golongan','id','id_golongan')->first();
+    }
 }

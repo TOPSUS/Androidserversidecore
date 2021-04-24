@@ -172,10 +172,20 @@ class UserController extends Controller
     }
 
     public function logout(Request $request){
-        $request->user()->token()->revoke();
-        return response()->json([
-            'response_code' => 200,
-            'status' => 'success'
-        ]);
+        $user = User::find(Auth::user()->id);
+        if($user != NULL){
+            $request->user()->token()->revoke();
+            $user->fcm_token="NULL";
+            return response()->json([
+                'response_code' => 200,
+                'status' => 'success'
+            ]);
+        }else{
+            $user->fcm_token="NULL";
+            return response()->json([
+                'response_code' => 200,
+                'status' => 'success'
+            ]);
+        }
     }
 }
