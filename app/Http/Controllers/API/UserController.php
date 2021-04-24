@@ -175,14 +175,14 @@ class UserController extends Controller
         $user = User::find(Auth::user()->id);
         if($user != NULL){
             $request->user()->token()->revoke();
-            $user->fcm_token="NULL";
+            $user->fcm_token=NULL;
             $user->update();
             return response()->json([
                 'response_code' => 200,
                 'status' => 'success'
             ]);
         }else{
-            $user->fcm_token="NULL";
+            $user->fcm_token=NULL;
             $user->update();
             return response()->json([
                 'response_code' => 200,
