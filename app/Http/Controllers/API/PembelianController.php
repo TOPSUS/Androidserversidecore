@@ -140,23 +140,26 @@ class PembelianController extends Controller
         }
 
 
-        //CEK NOPOL
-        if($pembelian->nomor_polisi == NULL){
-            $nomor_polisi = "NOPE";
-        }else if($pembelian->nomor_polisi != NULL){
-            $nomor_polisi = $pembelian->nomor_polisi;
-        }
+        $nomor_polisi = "NOPE";
+        $golongan = "NOPE";
+        $harga_golongan = "NOPE";
+        // //CEK NOPOL
+        // if($pembelian->nomor_polisi == NULL){
+        //     $nomor_polisi = "NOPE";
+        // }else if($pembelian->nomor_polisi != NULL){
+        //     $nomor_polisi = $pembelian->nomor_polisi;
+        // }
 
-        //CEK GOLONGAN
-        if($pembelian->id_golongan == NULL){
-            $golongan = "NOPE";
-            $harga_golongan = "NOPE";
-        }else if($pembelian->id_golongan != NULL){
-            $golongan = $pembelian->getGolongan();
-            $golongan = $golongan->golongan;
-            $harga_golongan = $pembelian->getGolongan();
-            $harga_golongan = $harga_golongan->harga;
-        }
+        // //CEK GOLONGAN
+        // if($pembelian->id_golongan == NULL){
+        //     $golongan = "NOPE";
+        //     $harga_golongan = "NOPE";
+        // }else if($pembelian->id_golongan != NULL){
+        //     $golongan = $pembelian->getGolongan();
+        //     $golongan = $golongan->golongan;
+        //     $harga_golongan = $pembelian->getGolongan();
+        //     $harga_golongan = $harga_golongan->harga;
+        // }
 
 
 
