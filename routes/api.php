@@ -124,4 +124,10 @@ Route::group(['middleware' => 'auth:api'],function(){
             Route::post('/getDetailPembelian', 'API\PembelianController@getdetailpembelian');
         //AKHIR
     // AKHIR
+
+    // REVIEW TRANSAKSI
+        // SET REVIEW
+            Route::post('/setReview', 'API\ReviewController@setReview');
+        // AKHIR
+    // AKHIR
 });
