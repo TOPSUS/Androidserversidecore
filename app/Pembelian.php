@@ -31,4 +31,8 @@ class Pembelian extends Model
     public function getGolongan(){
         return $this->hasOne('App\Golongan','id','id_golongan')->first();
     }
+
+    public function getReview(){
+        return $this->hasOne('App\Review','id_pembelian','id')->first();
+    }
 }

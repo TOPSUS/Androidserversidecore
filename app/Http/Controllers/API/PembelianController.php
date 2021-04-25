@@ -19,6 +19,7 @@ use App\Http\Helper\NotificationHelper;
 
 class PembelianController extends Controller
 {
+    //GET PEMBELIAN LIST
     public function getPembelian(Request $request)
     {
         $user = User::find(Auth::user()->id);
@@ -41,6 +42,10 @@ class PembelianController extends Controller
             })->orderBy('id', 'DESC')->get(
                 ['id', 'id_jadwal', 'id_user', 'tanggal', 'total_harga', 'status']
             );
+        } else if($request->status == "digunakan"){
+            $pembelians = Pembelian::where('id_user', $user->id)->where('status', $request->status)->orderBy('id', 'DESC')->get(
+                ['id', 'id_jadwal', 'id_user', 'tanggal', 'total_harga', 'status']
+            );
         }
 
 
@@ -50,10 +55,16 @@ class PembelianController extends Controller
             $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
             $speedboat = $jadwal->getKapal()->first();
             $waktu_asal = $jadwal->waktu_berangkat;
-
+            $review = $pembelian->getReview();
+            if($review==NULL){
+                $review = "NOPE";
+            }else if($review != NULL){
+                $review = $review->score;
+            }
             $pembelians[$index]->pelabuhan_asal_nama = $pelabuhan_asal->nama_pelabuhan;
             $pembelians[$index]->pelabuhan_tujuan_nama = $pelabuhan_tujuan->nama_pelabuhan;
             $pembelians[$index]->nama_speedboat = $speedboat->nama_kapal;
+            $pembelians[$index]->review = $review;
 
             $pembelians[$index]->tanggal = $jadwal->tanggal;
             $pembelians[$index]->waktu_berangkat = $waktu_asal;
@@ -209,6 +220,7 @@ class PembelianController extends Controller
             ], 200);
         }
     }
+
 
     // MENGUPLOAD BUKTI PEMBELIAN TICKET
     public function uploadButkiPembelian(Request $request)
