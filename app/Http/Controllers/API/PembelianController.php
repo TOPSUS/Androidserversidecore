@@ -169,6 +169,16 @@ class PembelianController extends Controller
             $harga_golongan = $harga_golongan->harga;
         }
 
+        //CEK REVIEW
+        $review_kapal = $pembelian->getReview();
+        if($review_kapal==NULL){
+            $rating = 0;
+            $review = "";
+        }else if($review_kapal != NULL){
+            $rating = $review_kapal->score;
+            $review = $review_kapal->review;
+        }
+
 
 
         $penumpangs = DetailPembelian::where('id_pembelian', $request->id)->get(['nama_pemegang_tiket', 'id_card', 'no_id_card']);
@@ -208,6 +218,8 @@ class PembelianController extends Controller
                 'nomor_polisi' => $nomor_polisi,
                 'golongan' => $golongan,
                 'harga_golongan' => $harga_golongan,
+                'rating' => $rating,
+                'review' => $review,
                 'penumpang' => $penumpangs
             ], 200);
         } else {
