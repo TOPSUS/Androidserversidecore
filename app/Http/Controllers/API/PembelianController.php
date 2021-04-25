@@ -57,7 +57,7 @@ class PembelianController extends Controller
             $waktu_asal = $jadwal->waktu_berangkat;
             $review = $pembelian->getReview();
             if($review==NULL){
-                $review = "NOPE";
+                $review = 0;
             }else if($review != NULL){
                 $review = $review->score;
             }
