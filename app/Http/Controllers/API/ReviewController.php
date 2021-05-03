@@ -37,6 +37,7 @@ class ReviewController extends Controller
         $pembelian->update();
         
         $point = DB::table('tb_speedboat_point')
+        ->select('id', 'id_user', 'id_speedboat', 'point')
         ->where('id_user', $user->id)
         ->where('id_speedboat', $jadwal->getKapal()->first()->id)
         ->first();
@@ -45,7 +46,7 @@ class ReviewController extends Controller
             DB::table('tb_speedboat_point')->insert([
                 ['id_user' => $user->id, 'id_speedboat' => $jadwal->getKapal()->first()->id, 'point' => $poin]
             ]);
-        }else{
+        }else($poin != NULL){
             DB::table('tb_speedboat_point')
               ->where('id', $point->id)
               ->update(['point' => $poin->point+$poin]);
