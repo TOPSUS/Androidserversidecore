@@ -135,5 +135,9 @@ Route::group(['middleware' => 'auth:api'],function(){
         // GET LIST POIN
         Route::post('/getPoin', 'API\RewardController@getPoin');
         // AKHIR
+
+        // GET LIST Reward
+        Route::post('/getReward', 'API\RewardController@getReward');
+        // AKHIR
     // AKHIR
 });
