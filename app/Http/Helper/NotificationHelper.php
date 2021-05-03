@@ -9,16 +9,16 @@ use Validator;
 
 class NotificationHelper{
     // TYPE YANG TERSEDIA
+    const STATUS_DELIVERED = 0;
+    const STATUS_HISTORY = 1;
+    const STATUS_DELETED = 2;
+
+    // TYPE YANG TERSEDIA
     const TYPE_NORMAL = 0;
     const TYPE_SUKSES = 1;
     const TYPE_WARNING = 2;
     const TYPE_DANGER = 3;
     const TYPE_SISTEM = 4;
-
-    // TYPE YANG TERSEDIA
-    const STATUS_DELIVERED = 0;
-    const STATUS_HISTORY = 1;
-    const STATUS_DELETED = 2;
 
     // NOTIFICATION_BY YANG TERSEDIA
     const NOTIFICATION_BY_SYSTEM = 0;
@@ -34,13 +34,13 @@ class NotificationHelper{
         // VALIASI INPUT PARAMETER
         $validator = Validator::make([$user_id,$fcm_token,$title,$body,$status,$type,$notification_by],
                         [
-                            0 => 'required|numeric',
+                            0 => 'required|integer',
                             1 => 'required',
                             2 => 'required|max:100',
                             3 => 'required|max:500',
-                            4 => 'required|numeric',
-                            5 => 'required|numeric',
-                            6 => 'required|numeric',
+                            4 => 'required|integer|between:0,2',
+                            5 => 'required|integer|between:0,4',
+                            6 => 'required|integer|between:0,1',
                         ]
                         );
         
