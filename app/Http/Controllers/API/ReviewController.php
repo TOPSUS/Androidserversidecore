@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 use App\User;
 use App\Review;
@@ -34,6 +35,21 @@ class ReviewController extends Controller
         $poin = $jadwal->getKapal()->first()->poin;
         $pembelian->poin=$poin;
         $pembelian->update();
+        
+        $point = DB::table('tb_speedboat_point')
+        ->where('id_user', $user->id)
+        ->where('id_speedboat', $jadwal->getKapal()->first()->id)
+        ->first();
+
+        if($poin == NULL){
+            DB::table('tb_speedboat_point')->insert([
+                ['id_user' => $user->id, 'id_speedboat' => $jadwal->getKapal()->first()->id, 'point' => $poin]
+            ]);
+        }else{
+            DB::table('tb_speedboat_point')
+              ->where('id', $point->id)
+              ->update(['point' => $poin->point+$poin]);
+        }
 
         
         $review = Review::where('id_pembelian', $request->id)->first();
