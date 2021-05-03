@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Pembelian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +28,12 @@ class ReviewController extends Controller
                 'error' => (Object)[],
             ],200);
         }
+
+        $pembelian = Pembelian::find($request->id);
+        $jadwal = $pembelian->getJadwal();
+        $poin = $jadwal->getKapal()->first()->poin;
+        $pembelian->poin=$poin;
+        $pembelian->update();
 
         
         $review = Review::where('id_pembelian', $request->id)->first();

@@ -130,4 +130,10 @@ Route::group(['middleware' => 'auth:api'],function(){
             Route::post('/setReview', 'API\ReviewController@setReview');
         // AKHIR
     // AKHIR
+
+    // POIN REWARD
+        // GET LIST POIN
+        Route::post('/getPoin', 'API\RewardController@getPoin');
+        // AKHIR
+    // AKHIR
 });
