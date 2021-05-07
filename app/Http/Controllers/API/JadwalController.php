@@ -42,21 +42,23 @@ class JadwalController extends Controller
                             ->where('id_asal_pelabuhan',$request->id_asal_pelabuhan)
                             ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
                             ->get(['id','id_asal_pelabuhan','id_tujuan_pelabuhan','waktu_berangkat','tanggal','id_kapal','harga','estimasi_waktu']);
-        
-        // REMOVE JADWAL YANG JAM KEBERANGKATAN SUDAH MENDEKATI 2 JAM
-        foreach ($jadwals as $index => $jadwal) {
+
+        $jadwals = $jadwals->filter(function($jadwal) use($limit_waktu){
+
+            $carbon_jadwal = Carbon::parse($jadwal->tanggal." ".$jadwal->waktu_berangkat);
+
+            if($carbon_jadwal->diffInMilliseconds($limit_waktu,false) > 0){
+                return false;
+            }else{
+                return true;
+            }
             
-        }
+        })
+        
+        
 
         // JADWAL YANG DICARI ADALAH JADWAL SESUAI tipe_kapal / TIPE KAPAL DAN BATAS WAKTU 2 JAM
             foreach ($jadwals as $index => $jadwal) {
-                $datetime_berangkat = $jadwal->tanggal." ".$jadwal->waktu_berangkat;
-                $carbon_jadwal = Carbon::parse($jadwal->tanggal." ".$jadwal->waktu_berangkat);
-                
-                if($carbon_jadwal->diffInMilliseconds($limit_waktu,false) > 0){
-                    $jadwals->forget($index);
-                    continue;
-                }else{
                     $pelabuhan_asal = $jadwal->getPelabuhanAsal();
                     $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
                     $speedboat = $jadwal->getKapal()->first();
@@ -82,7 +84,6 @@ class JadwalController extends Controller
                     $string_waktu_berangkat = $jadwal->tanggal." ".$jadwal->waktu_berangkat;
                     $jadwals[$index]->waktu_sampai = Carbon::createFromFormat("Y-m-d H:i:s",$string_waktu_berangkat)
                                                         ->addMinutes($jadwal->estimasi_waktu)->format("H:i:s");
-                }
             }
 
         if($jadwals != null){
