@@ -46,7 +46,7 @@ class RewardController extends Controller
 
         $pembelians = DB::table('tb_speedboat_point')
         ->join('tb_kapal', 'tb_speedboat_point.id_speedboat', '=', 'tb_kapal.id')
-        ->select('id_speedboat as id_kapal', 'nama_kapal', 'point as total_point')
+        ->select('id_speedboat as id_kapal', 'nama_kapal', 'point as total_poin')
         ->where('id_user', $user->id)
         ->get();
 
