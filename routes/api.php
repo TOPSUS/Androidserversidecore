@@ -139,5 +139,9 @@ Route::group(['middleware' => 'auth:api'],function(){
         // GET LIST Reward
         Route::post('/getReward', 'API\RewardController@getReward');
         // AKHIR
+
+        // TUKAR POINT
+        Route::post('/tukarReward', 'API\RewardController@tukarReward');
+        // AKHIR
     // AKHIR
 });
