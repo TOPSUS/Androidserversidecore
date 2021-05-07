@@ -33,9 +33,7 @@ class JadwalController extends Controller
         }
 
         // MENENTUKAN WAKTU SAAT INI DITAMBAH 2 JAM UNTUK BATAS WAKTU JADWAL YANG AKAN DI TAMPILKAN DI MOBILE
-        $time_int = strtotime(date('H:i:s')) + 120*60;
-
-        $limit_time = date('H:i:s', $time_int);
+        $limit_waktu = Carbon::now()->addHours(2);
 
         // PENCARIAN JADWAL DENGAN MODEL JADWAL
         $jadwals = Jadwal::whereHas('getKapal',function($query) use ($request){
@@ -44,6 +42,16 @@ class JadwalController extends Controller
                             ->where('id_asal_pelabuhan',$request->id_asal_pelabuhan)
                             ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
                             ->get(['id','id_asal_pelabuhan','id_tujuan_pelabuhan','waktu_berangkat','tanggal','id_kapal','harga','estimasi_waktu']);
+        
+        // REMOVE JADWAL YANG JAM KEBERANGKATAN SUDAH MENDEKATI 2 JAM
+        foreach ($jadwals as $index => $jadwal) {
+            $datetime_berangkat = $jadwal->tanggal." ".$jadwal->waktu_berangkat;
+            $carbon_jadwal = Carbon::parse($jadwal->tanggal." ".$jadwal->waktu_berangkat);
+            
+            if($carbon_jadwal->diffInMilliseconds($limit_waktu,false) > 0){
+                $jadwals->forget($index);
+            }
+        }
 
         // JADWAL YANG DICARI ADALAH JADWAL SESUAI tipe_kapal / TIPE KAPAL DAN BATAS WAKTU 2 JAM
             foreach ($jadwals as $index => $jadwal) {
