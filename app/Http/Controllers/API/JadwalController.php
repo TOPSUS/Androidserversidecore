@@ -44,9 +44,7 @@ class JadwalController extends Controller
                             ->get(['id','id_asal_pelabuhan','id_tujuan_pelabuhan','waktu_berangkat','tanggal','id_kapal','harga','estimasi_waktu']);
 
         $jadwals = $jadwals->filter(function($jadwal) use($limit_waktu){
-
             $carbon_jadwal = Carbon::parse($jadwal->tanggal." ".$jadwal->waktu_berangkat);
-
             if($carbon_jadwal->diffInMilliseconds($limit_waktu,false) > 0){
                 return false;
             }else{

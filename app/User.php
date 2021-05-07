@@ -39,4 +39,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * USER NOTIFICATION
+     */
+    public function getAllNotification(){
+        return $this->hasMany('App\UserNotification','user_id','id');
+    }
+
+    /**
+     * USER PEMBELIAN
+     */
+    public function getAllPembelian(){
+        return $this->hasMany('App\Pembelian','id_user','id');
+    }
 }
