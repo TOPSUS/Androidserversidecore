@@ -52,7 +52,7 @@ class JadwalController extends Controller
             }else{
                 return true;
             } 
-        });
+        })->values();
         
         
 
