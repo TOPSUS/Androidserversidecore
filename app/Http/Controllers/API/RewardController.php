@@ -75,15 +75,11 @@ class RewardController extends Controller
             ],200);
         }
 
-        $kapal = DB::table('tb_pembelian')
-        ->join('tb_jadwal', 'tb_pembelian.id_jadwal', '=', 'tb_jadwal.id')
-        ->join('tb_kapal', 'tb_jadwal.id_kapal', '=', 'tb_kapal.id')
-        ->select('id_kapal', 'nama_kapal', DB::raw('SUM(tb_pembelian.poin) as total_poin'))
+        $kapal = DB::table('tb_speedboat_point')
+        ->join('tb_kapal', 'tb_speedboat_point.id_speedboat', '=', 'tb_kapal.id')
+        ->select('id_speedboat as id_kapal', 'nama_kapal', 'point as total_poin')
         ->where('id_user', $user->id)
-        ->where('id_golongan', NULL)
-        ->where('status', 'digunakan')
         ->where('id_kapal', $request->id)
-        ->groupBy('tb_jadwal.id_kapal')
         ->first();
 
         $rewards = Reward::where('id_speedboat', $request->id)->get(['id', 'id_speedboat', 'reward', 'berlaku', 'minimal_point', 'foto']);
