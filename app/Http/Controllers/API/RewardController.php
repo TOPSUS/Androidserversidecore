@@ -44,7 +44,9 @@ class RewardController extends Controller
         //     ->groupBy('tb_jadwal.id_kapal')
         //     ->get();
 
-        $pembelians = DB::table('tb_speedboat_point')->select('id', 'id_user' , 'id_speedboat', 'point')
+        $pembelians = DB::table('tb_speedboat_point')
+        ->join('tb_kapal', 'tb_speedboat_point.id_speedboat', '=', 'tb_kapal.id')
+        ->select('id_speedboat as id_kapal', 'nama_kapal', 'point as total_point')
         ->where('id_user', $user->id)
         ->get();
 
