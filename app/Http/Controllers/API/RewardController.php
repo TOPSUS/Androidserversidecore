@@ -79,7 +79,7 @@ class RewardController extends Controller
         ->join('tb_kapal', 'tb_speedboat_point.id_speedboat', '=', 'tb_kapal.id')
         ->select('id_speedboat as id_kapal', 'nama_kapal', 'point as total_poin')
         ->where('id_user', $user->id)
-        ->where('id_kapal', $request->id)
+        ->where('id_speedboat', $request->id)
         ->first();
 
         $rewards = Reward::where('id_speedboat', $request->id)->get(['id', 'id_speedboat', 'reward', 'berlaku', 'minimal_point', 'foto']);
