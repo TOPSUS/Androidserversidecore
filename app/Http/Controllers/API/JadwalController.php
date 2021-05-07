@@ -42,44 +42,47 @@ class JadwalController extends Controller
                             ->where('id_asal_pelabuhan',$request->id_asal_pelabuhan)
                             ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
                             ->get(['id','id_asal_pelabuhan','id_tujuan_pelabuhan','waktu_berangkat','tanggal','id_kapal','harga','estimasi_waktu']);
-        
-        // REMOVE JADWAL YANG JAM KEBERANGKATAN SUDAH MENDEKATI 2 JAM
-        foreach ($jadwals as $index => $jadwal) {
-            $datetime_berangkat = $jadwal->tanggal." ".$jadwal->waktu_berangkat;
+
+        $jadwals = $jadwals->filter(function($jadwal) use($limit_waktu){
+
             $carbon_jadwal = Carbon::parse($jadwal->tanggal." ".$jadwal->waktu_berangkat);
-            
+
             if($carbon_jadwal->diffInMilliseconds($limit_waktu,false) > 0){
-                $jadwals->forget($index);
-            }
-        }
+                return false;
+            }else{
+                return true;
+            } 
+        })->values();
+        
+        
 
         // JADWAL YANG DICARI ADALAH JADWAL SESUAI tipe_kapal / TIPE KAPAL DAN BATAS WAKTU 2 JAM
             foreach ($jadwals as $index => $jadwal) {
-                $pelabuhan_asal = $jadwal->getPelabuhanAsal();
-                $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
-                $speedboat = $jadwal->getKapal()->first();
-                $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini();
-                $sisa = $speedboat->kapasitas - $pemesanan_saat_ini;
+                    $pelabuhan_asal = $jadwal->getPelabuhanAsal();
+                    $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
+                    $speedboat = $jadwal->getKapal()->first();
+                    $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini();
+                    $sisa = $speedboat->kapasitas - $pemesanan_saat_ini;
 
-                $jadwals[$index]->pelabuhan_asal_nama = $pelabuhan_asal->nama_pelabuhan;
-                $jadwals[$index]->pelabuhan_asal_kode = $pelabuhan_asal->kode_pelabuhan;
+                    $jadwals[$index]->pelabuhan_asal_nama = $pelabuhan_asal->nama_pelabuhan;
+                    $jadwals[$index]->pelabuhan_asal_kode = $pelabuhan_asal->kode_pelabuhan;
+                    
+                    $jadwals[$index]->pelabuhan_tujuan_nama = $pelabuhan_tujuan->nama_pelabuhan;
+                    $jadwals[$index]->pelabuhan_tujuan_kode = $pelabuhan_tujuan->kode_pelabuhan;
                 
-                $jadwals[$index]->pelabuhan_tujuan_nama = $pelabuhan_tujuan->nama_pelabuhan;
-                $jadwals[$index]->pelabuhan_tujuan_kode = $pelabuhan_tujuan->kode_pelabuhan;
-            
-                $jadwals[$index]->nama_speedboat = $speedboat->nama_kapal;
-                $jadwals[$index]->kapasitas = $speedboat->kapasitas;
-                $jadwals[$index]->pemesanan_saat_ini = $pemesanan_saat_ini;
-                $jadwals[$index]->sisa = $sisa;
-                $jadwals[$index]->deskripsi_boat = $speedboat->deskripsi;
-                $jadwals[$index]->foto_boat = $speedboat->foto;
-                $jadwals[$index]->contact_service = $speedboat->contact_service;
-                $jadwals[$index]->tanggal_beroperasi = $speedboat->tanggal_beroperasi;
+                    $jadwals[$index]->nama_speedboat = $speedboat->nama_kapal;
+                    $jadwals[$index]->kapasitas = $speedboat->kapasitas;
+                    $jadwals[$index]->pemesanan_saat_ini = $pemesanan_saat_ini;
+                    $jadwals[$index]->sisa = $sisa;
+                    $jadwals[$index]->deskripsi_boat = $speedboat->deskripsi;
+                    $jadwals[$index]->foto_boat = $speedboat->foto;
+                    $jadwals[$index]->contact_service = $speedboat->contact_service;
+                    $jadwals[$index]->tanggal_beroperasi = $speedboat->tanggal_beroperasi;
 
-                // BUAT WAKTU SAMPAI DENGAN CARBON;
-                $string_waktu_berangkat = $jadwal->tanggal." ".$jadwal->waktu_berangkat;
-                $jadwals[$index]->waktu_sampai = Carbon::createFromFormat("Y-m-d H:i:s",$string_waktu_berangkat)
-                                                    ->addMinutes($jadwal->estimasi_waktu)->format("H:i:s");
+                    // BUAT WAKTU SAMPAI DENGAN CARBON;
+                    $string_waktu_berangkat = $jadwal->tanggal." ".$jadwal->waktu_berangkat;
+                    $jadwals[$index]->waktu_sampai = Carbon::createFromFormat("Y-m-d H:i:s",$string_waktu_berangkat)
+                                                        ->addMinutes($jadwal->estimasi_waktu)->format("H:i:s");
             }
 
         if($jadwals != null){
