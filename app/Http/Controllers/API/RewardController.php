@@ -34,15 +34,19 @@ class RewardController extends Controller
         
 
         //$pembelians = Pembelian::where('id_user', $user->id)->where('id_golongan', NULL)->where('status', 'digunakan')->selectRaw("id_jadwal, SUM(poin) as total_poin")->getJadwal()->groupBy('id_kapal')->get();
-        $pembelians = DB::table('tb_pembelian')
-            ->join('tb_jadwal', 'tb_pembelian.id_jadwal', '=', 'tb_jadwal.id')
-            ->join('tb_kapal', 'tb_jadwal.id_kapal', '=', 'tb_kapal.id')
-            ->select('id_kapal', 'nama_kapal', DB::raw('SUM(tb_pembelian.poin) as total_poin'))
-            ->where('id_user', $user->id)
-            ->where('id_golongan', NULL)
-            ->where('status', 'digunakan')
-            ->groupBy('tb_jadwal.id_kapal')
-            ->get();
+        // $pembelians = DB::table('tb_pembelian')
+        //     ->join('tb_jadwal', 'tb_pembelian.id_jadwal', '=', 'tb_jadwal.id')
+        //     ->join('tb_kapal', 'tb_jadwal.id_kapal', '=', 'tb_kapal.id')
+        //     ->select('id_kapal', 'nama_kapal', DB::raw('SUM(tb_pembelian.poin) as total_poin'))
+        //     ->where('id_user', $user->id)
+        //     ->where('id_golongan', NULL)
+        //     ->where('status', 'digunakan')
+        //     ->groupBy('tb_jadwal.id_kapal')
+        //     ->get();
+
+        $pembelians = DB::table('tb_speedboat_point')->select('id', 'id_user' , 'id_speedboat', 'point')
+        ->where('id_user', $user->id)
+        ->get();
 
        
 
