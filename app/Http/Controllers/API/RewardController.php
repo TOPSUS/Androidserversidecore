@@ -82,7 +82,9 @@ class RewardController extends Controller
         ->where('id_speedboat', $request->id)
         ->first();
 
-        $rewards = Reward::where('id_speedboat', $request->id)->get(['id', 'id_speedboat', 'reward', 'berlaku', 'minimal_point', 'foto']);
+        $today = Carbon::now()->toDateString();
+
+        $rewards = Reward::where('id_speedboat', $request->id)->where('berlaku', '<', $today)->get(['id', 'id_speedboat', 'reward', 'berlaku', 'minimal_point', 'foto']);
 
         return response()->json([
             'response_code' => 200,
