@@ -126,6 +126,7 @@ class RewardController extends Controller
                 'nama_penerima' => $request->nama,
                 'nomor_telepon' => $request->telepon,
                 'status' =>  'menunggu konfirmasi',
+                'id_user' => $user->id,
                 'created_at' =>  Carbon::now()
             ]
         ]);
@@ -143,5 +144,21 @@ class RewardController extends Controller
         ],200);
     }
 
+
+    public function getRiwayatReward(Request $request){
+        $user = User::find(Auth::user()->id);
+
+        if($user == null){
+            return response()->json([
+                'response_code' => 401,
+                'status' => 'failure',
+                'message' => 'tidak ada user yang dimaksud',
+                'error' => (Object)[],
+            ],200);
+        }
+
+        // DB::table('tb_detail_reward')
+        // ->join('tb_kapal', 'tb_speedboat_point.id_speedboat', '=', 'tb_kapal.id')
+    }
     
 }
