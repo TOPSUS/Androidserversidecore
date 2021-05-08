@@ -133,7 +133,7 @@ class RewardController extends Controller
 
         DB::table('tb_speedboat_point')
         ->where('id', $point->id)
-        ->update(['point' => $point->point - 30]);
+        ->update(['point' => $point->point - $reward->minimal_point]);
 
         return response()->json([
             'response_code' => 200,
