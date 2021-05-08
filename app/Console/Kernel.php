@@ -43,7 +43,7 @@ class Kernel extends ConsoleKernel
             
             foreach ($pembelians as $index => $pembelian) {
                 // CARBON PEMBELIAN CREATED_AT
-                $carbon_pembelian = Carbon::parse($pembelian->created_at);
+                $carbon_pembelian = Carbon::parse($pembelian->created_at)->addHours(1);
                 
                 // APABILA LEWAT MAKA UBAH STATUS JADI EXPIRED
                 if($carbon_pembelian->diffInMilliseconds($current_time,false) > 0){
