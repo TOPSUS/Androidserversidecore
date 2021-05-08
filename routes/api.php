@@ -143,5 +143,13 @@ Route::group(['middleware' => 'auth:api'],function(){
         // TUKAR POINT
         Route::post('/tukarReward', 'API\RewardController@tukarReward');
         // AKHIR
+
+        // RIWAYAT POINT
+        Route::post('/getRiwayatReward', 'API\RewardController@getRiwayatReward');
+        //AKHIR
+
+        // TERIMA REWARD
+        Route::post('/terimaReward', 'API\RewardController@terimaReward');
+        //AKHIR
     // AKHIR
 });
