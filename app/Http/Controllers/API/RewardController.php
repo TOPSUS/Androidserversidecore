@@ -157,8 +157,25 @@ class RewardController extends Controller
             ],200);
         }
 
-        // DB::table('tb_detail_reward')
-        // ->join('tb_kapal', 'tb_speedboat_point.id_speedboat', '=', 'tb_kapal.id')
+        $riwayats = DB::table('tb_detail_reward')
+        ->join('tb_reward_speedboat', 'tb_detail_reward.id_speedboat_reward', '=', 'tb_reward_speedboat.id')
+        ->join('tb_kapal', 'tb_reward_speedboat.id_speedboat', '=', 'tb_kapal.id')
+        ->select('tb_detail_reward.id as id', 'tb_kapal.nama_kapal', 'tb_detail_reward.status', 'tb_reward_speedboat.foto', 'tb_reward_speedboat.reward', 'tb_detail_reward.created_at')
+        ->get();
+
+        foreach($riwayats as $riwayat){
+            $riwayat->created_at = explode(' ', $riwayat->created_at);
+            $riwayat->created_at = $riwayat->created_at[0];
+        }
+
+        return response()->json([
+            'response_code' => 200,
+            'status' => 'success',
+            'message' => ' berhasil dilakukan',
+            'error' => (Object)[],
+            'riwayat' => $riwayats
+        ],200);
+        
     }
     
 }
