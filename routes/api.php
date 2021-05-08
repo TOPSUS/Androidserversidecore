@@ -147,5 +147,9 @@ Route::group(['middleware' => 'auth:api'],function(){
         // RIWAYAT POINT
         Route::post('/getRiwayatReward', 'API\RewardController@getRiwayatReward');
         //AKHIR
+
+        // TERIMA REWARD
+        Route::post('/terimaReward', 'API\RewardController@terimaReward');
+        //AKHIR
     // AKHIR
 });

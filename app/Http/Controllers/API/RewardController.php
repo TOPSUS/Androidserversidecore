@@ -177,5 +177,29 @@ class RewardController extends Controller
         ],200);
         
     }
+
+    public function terimaReward(Request $request){
+        $user = User::find(Auth::user()->id);
+
+        if($user == null){
+            return response()->json([
+                'response_code' => 401,
+                'status' => 'failure',
+                'message' => 'tidak ada user yang dimaksud',
+                'error' => (Object)[],
+            ],200);
+        }
+
+        DB::table('tb_detail_reward')
+        ->where('id', $request->id)
+        ->update(['status' =>'selesai']);
+
+        return response()->json([
+            'response_code' => 200,
+            'status' => 'success',
+            'message' => ' berhasil dilakukan',
+            'error' => (Object)[]
+        ],200);
+    }
     
 }
