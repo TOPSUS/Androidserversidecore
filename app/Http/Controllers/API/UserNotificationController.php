@@ -22,7 +22,7 @@ class UserNotificationController extends Controller
         $user = Auth::user();
 
         // AMBIL NOTIFIKASI USER LIMIT 20 NOTIFIKASI TERAKHIR
-        $user_notification = UserNotification::where('user_id',$user->id)->limit(20)->orderBy('id','ASC')
+        $user_notification = UserNotification::where('user_id',$user->id)->limit(20)->orderBy('id','DESC')
                                     ->get([
                                         'id as id_server_notification',
                                         'title',
