@@ -27,6 +27,7 @@ class UserNotificationController extends Controller
                                         'id as id_server_notification',
                                         'title',
                                         'body as message',
+                                        'notification_by',
                                         'status',
                                         'type',
                                         'created_at']);
