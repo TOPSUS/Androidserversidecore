@@ -22,7 +22,14 @@ class UserNotificationController extends Controller
         $user = Auth::user();
 
         // AMBIL NOTIFIKASI USER LIMIT 20 NOTIFIKASI TERAKHIR
-        $user_notification = UserNotification::where('user_id',$user->id)->limit(20)->orderBy('id','ASC')->get();
+        $user_notification = UserNotification::where('user_id',$user->id)->limit(20)->orderBy('id','ASC')
+                                    ->get([
+                                        'id as id_server_notification',
+                                        'title',
+                                        'body as message',
+                                        'status',
+                                        'type',
+                                        'created_at']);
 
         // RETURN SEMUA NOTIFICATION
         return response()->json([
