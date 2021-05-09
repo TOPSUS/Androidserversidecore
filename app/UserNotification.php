@@ -12,4 +12,13 @@ class UserNotification extends Model
     protected $fillable = [
         'user_id', 'title', 'body','notification_by','status','type'
     ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+    ];
 }
