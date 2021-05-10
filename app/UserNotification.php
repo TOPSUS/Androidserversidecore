@@ -36,7 +36,7 @@ class UserNotification extends Model
 
     public function getDeteledAtAttribute()
     {
-        return \Carbon\Carbon::parse($this->attributes['updated_at'])
+        return \Carbon\Carbon::parse($this->attributes['deleted_at'])
         ->format('Y-m-d H:i:s');
     }
 }
