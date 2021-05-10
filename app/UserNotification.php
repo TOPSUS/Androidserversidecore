@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserNotification extends Model
 {
-    use dateTimeFormater;
-
     protected $table = "tb_user_notification";
 
     // ATRIBUTE YANG DAPAT DI FILLABLE
@@ -21,14 +19,24 @@ class UserNotification extends Model
      * @var array
      */
     protected $casts = [
-        'created_at' => 'datetime',
+        'created_at' => 'datetime:Y-m-d H:I:s',
     ];
-}
 
-trait dateTimeFormater
-{
-    protected function serializeDate(\DateTimeInterface $date)
+    public function getCreatedAtAttribute()
     {
-        return $date->format("Y-m-d H:i:s");
+        return \Carbon\Carbon::parse($this->attributes['created_at'])
+        ->format('Y-m-d H:i:s');
+    }
+
+    public function getUpdatedAtAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['updated_at'])
+        ->format('Y-m-d H:i:s');
+    }
+
+    public function getDeteledAtAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['updated_at'])
+        ->format('Y-m-d H:i:s');
     }
 }
