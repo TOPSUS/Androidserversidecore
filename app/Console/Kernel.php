@@ -64,12 +64,9 @@ class Kernel extends ConsoleKernel
                     // ECHO KE CONSOLE
                     echo "PEMBELIAN ID : ".$pembelian->id." EXPIRED PADA ".$current_time->toDateTimeString()."\n";
                 }
-
             }
-
         // DONE
         echo "DONE";
-            
         });
     }
 
