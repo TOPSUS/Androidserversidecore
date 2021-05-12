@@ -54,11 +54,15 @@ class Kernel extends ConsoleKernel
                     $user = User::find($pembelian->id_user);
 
                     // NOTIFIKASI KE SISI USER BAHWA TRANSAKSI TELAH EXPIRED
-                    NotificationHelper::createNotification($user->id, $user->fcm_token, "Transaksi Expired",
-                                                "Transaksi anda dengan ID ".$pembelian->id." telah Expired",0,3,0);
+                    try{
+                        NotificationHelper::createNotification($user->id, $user->fcm_token, "Transaksi Expired",
+                        "Transaksi anda dengan ID ".$pembelian->id." telah Expired",0,3,0);
+                    }catch (\Exception $ignored){
+
+                    }
                     
                     // ECHO KE CONSOLE
-                    echo "PEMBELIAN ID :".$pembelian->id." EXPIRED PADA ".$current_time->toDateTimeString()."\n";
+                    echo "PEMBELIAN ID : ".$pembelian->id." EXPIRED PADA ".$current_time->toDateTimeString()."\n";
                 }
 
             }
