@@ -133,23 +133,29 @@ Route::group(['middleware' => 'auth:api'],function(){
 
     // POIN REWARD
         // GET LIST POIN
-        Route::post('/getPoin', 'API\RewardController@getPoin');
+            Route::post('/getPoin', 'API\RewardController@getPoin');
         // AKHIR
 
         // GET LIST Reward
-        Route::post('/getReward', 'API\RewardController@getReward');
+            Route::post('/getReward', 'API\RewardController@getReward');
         // AKHIR
 
         // TUKAR POINT
-        Route::post('/tukarReward', 'API\RewardController@tukarReward');
+            Route::post('/tukarReward', 'API\RewardController@tukarReward');
         // AKHIR
 
         // RIWAYAT POINT
-        Route::post('/getRiwayatReward', 'API\RewardController@getRiwayatReward');
+            Route::post('/getRiwayatReward', 'API\RewardController@getRiwayatReward');
         //AKHIR
 
         // TERIMA REWARD
-        Route::post('/terimaReward', 'API\RewardController@terimaReward');
+            Route::post('/terimaReward', 'API\RewardController@terimaReward');
         //AKHIR
+    // AKHIR
+
+    // NOTIFICATION 
+        // READ ALL NOTIFICATION
+            Route::post('/getnotification','API\UserNotificationController@getAllNotification');
+        // AKHIR
     // AKHIR
 });

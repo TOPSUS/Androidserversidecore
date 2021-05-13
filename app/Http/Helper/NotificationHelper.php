@@ -28,14 +28,14 @@ class NotificationHelper{
      * METHOD STATIC YANG DAPAT DIAKSES DARI MANAPUN DI DALAM CONTROLLER
      * UNTUK MELAKUKAN PENGIRIMAN NOTIFIKASI MENGGUNAKAN FIREBASE CLOUD MESSAGING
      */
-    public static function createNotification(int $user_id,String $fcm_token,String $title = "",String $body="",
+    public static function createNotification(int $user_id,$fcm_token,String $title = "",String $body="",
                                                 int $status = 0,int $type = 0,
                                                 int $notification_by = 0){
         // VALIASI INPUT PARAMETER
         $validator = Validator::make([$user_id,$fcm_token,$title,$body,$status,$type,$notification_by],
                         [
                             0 => 'required|integer',
-                            1 => 'required',
+                            1 => 'nullable',
                             2 => 'required|max:100',
                             3 => 'required|max:500',
                             4 => 'required|integer|between:0,2',
@@ -47,6 +47,11 @@ class NotificationHelper{
         // APABILA GAGAL LANGSUNG RETURN FALSE
         if($validator->fails()){
             return false;
+        }
+
+        // CHECK APAKAH FCM_TOKEN KOSONG, KALAU KOSONG UBAH KE BENTUK STRING EMPTY ""
+        if($fcm_token == null){
+            $fcm_token = "";
         }
 
         // BUAT NOTIFICATION TERLEBIH DAHULU DI DALAM SISTEM DATABASE
@@ -97,7 +102,7 @@ class NotificationHelper{
             $response =  $request->getBody()->getContents();
         }
         catch (Exception $e){
-            return $e;
+            return false;
         }
 
         // MENERIMAN RESPONSE DARI FIREBASE ENDPOINT DAN MENGUBAH JSON KE DALAM BENTUK PHP OBJECT
