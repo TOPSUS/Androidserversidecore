@@ -31,7 +31,7 @@ class BeritaEspeedController extends Controller
             'response_code' => '200',
             'status' => 'success',
             'error' => (Object)[],
-            'berita_pelabuhan' => $response_beritas 
+            'berita_espeed' => $response_beritas
         ]);
         
     }
