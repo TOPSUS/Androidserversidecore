@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Card extends Model
 {
-    use SoftDelete;
+    use SoftDeletes;
     protected $table = "tb_card";
 }
