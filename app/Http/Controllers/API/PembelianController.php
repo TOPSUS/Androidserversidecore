@@ -50,7 +50,7 @@ class PembelianController extends Controller
 
 
         foreach ($pembelians as $index => $pembelian) {
-            $jadwal = $pembelian->hasOne('App\Jadwal','id','id_jadwal')->withTrashed()->first();
+            $jadwal = $pembelian->getJadwal();
             $pelabuhan_asal = $jadwal->getPelabuhanAsal();
             $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
             $speedboat = $jadwal->getKapal()->first();
