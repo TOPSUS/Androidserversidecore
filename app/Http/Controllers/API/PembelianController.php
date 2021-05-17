@@ -51,11 +51,11 @@ class PembelianController extends Controller
 
         foreach ($pembelians as $index => $pembelian) {
             $jadwal = $pembelian->hasOne('App\Jadwal','id','id_jadwal')->withTrashed()->first();
-            $pelabuhan_asal = $jadwal->getPelabuhanAsal();
-            $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
-            $speedboat = $jadwal->getKapal()->first();
+            $pelabuhan_asal = $jadwal->hasOne('App\Pelabuhan','id','id_asal_pelabuhan')->withTrashed()->first();
+            $pelabuhan_tujuan = $jadwal->hasOne('App\Pelabuhan','id','id_tujuan_pelabuhan')->withTrashed()->first();
+            $speedboat = $jadwal->hasOne('App\SpeedBoat','id','id_kapal')->withTrashed()->first();
             $waktu_asal = $jadwal->waktu_berangkat;
-            $review = $pembelian->getReview();
+            $review = $pembelian->hasOne('App\Review','id_pembelian','id')->withTrashed()->first();
             if($review==NULL){
                 $review = 0;
             }else if($review != NULL){
@@ -115,16 +115,16 @@ class PembelianController extends Controller
         }
 
         //GET JADWAL PEMBELIAN, PELABUHAN, WAKTU, KAPAL
-        $jadwal = $pembelian->getJadwal();
-        $speedboat = $jadwal->getKapal()->first()->nama_kapal;
+        $jadwal = $pembelian->hasOne('App\Jadwal','id','id_jadwal')->withTrashed()->first();
+        $speedboat = $jadwal->hasOne('App\SpeedBoat','id','id_kapal')->withTrashed()->first()->nama_kapal;
         $tanggal = $jadwal->tanggal;
         $harga = $pembelian->total_harga;
-        $pelabuhan_asal = $jadwal->getPelabuhanAsal()->nama_pelabuhan;
-        $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan()->nama_pelabuhan;
+        $pelabuhan_asal = $jadwa->hasOne('App\Pelabuhan','id','id_asal_pelabuhan')->withTrashed()->first()->nama_pelabuhan;
+        $pelabuhan_tujuan = $jadwal->hasOne('App\Pelabuhan','id','id_tujuan_pelabuhan')->withTrashed()->first()->nama_pelabuhan;
         $waktu_berangkat = $jadwal->waktu_berangkat;
         $waktu_sampai = Carbon::createFromFormat("H:i:s", $waktu_berangkat)
             ->addMinutes($jadwal->estimasi_waktu)->format("H:i:s");
-        $pembayaran = $pembelian->getPembayaran();
+        $pembayaran = $pembelian->hasOne('App\MetodePembayaran','id','id_metode_pembayaran')->withTrashed()->first();
         $metode_pembayaran = $pembayaran->nama_metode;
         $rekening = $pembayaran->nomor_rekening;
         $logo_metode = $pembayaran->logo_metode;
@@ -163,14 +163,14 @@ class PembelianController extends Controller
             $golongan = "NOPE";
             $harga_golongan = 0;
         }else if($pembelian->id_golongan != NULL){
-            $golongan = $pembelian->getGolongan();
+            $golongan = $pembelian->hasOne('App\Golongan','id','id_golongan')->withTrashed()->first();
             $golongan = $golongan->golongan;
-            $harga_golongan = $pembelian->getGolongan();
+            $harga_golongan = $pembelian->hasOne('App\Golongan','id','id_golongan')->withTrashed()->first();
             $harga_golongan = $harga_golongan->harga;
         }
 
         //CEK REVIEW
-        $review_kapal = $pembelian->getReview();
+        $review_kapal = $pembelian->hasOne('App\Review','id_pembelian','id')->withTrashed()->first();
         if($review_kapal==NULL){
             $rating = 0;
             $review = "";
@@ -184,7 +184,7 @@ class PembelianController extends Controller
         $penumpangs = DetailPembelian::where('id_pembelian', $request->id)->get(['nama_pemegang_tiket', 'id_card', 'no_id_card']);
         foreach ($penumpangs as $index => $penumpang) {
             $nama_penumpang = $penumpang->nama_pemegang_tiket;
-            $id_card = $penumpang->getCard()->card;
+            $id_card = $penumpang->hasOne('App\Card','id','id_card')->withTrashed()->first();
             $card = $penumpang->no_id_card;
 
 
