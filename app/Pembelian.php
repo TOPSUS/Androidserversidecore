@@ -12,18 +12,6 @@ class Pembelian extends Model
         return $this->hasOne('App\Jadwal','id','id_jadwal')->withTrashed()->first();
     }
 
-    public function getPelabuhanAsal(){
-        return $this->hasOne('App\Pelabuhan','id','id_asal_pelabuhan')->withTrashed()->first();
-    }
-
-    public function getPelabuhanTujuan(){
-        return $this->hasOne('App\Pelabuhan','id','id_tujuan_pelabuhan')->withTrashed()->first();
-    }
-
-    public function getBoat(){
-        return $this->hasOne('App\SpeedBoat','id','id_speedboat')->withTrashed()->first();
-    }
-
     public function getPembayaran(){
         return $this->hasOne('App\MetodePembayaran','id','id_metode_pembayaran')->withTrashed()->first();
     }
@@ -33,6 +21,6 @@ class Pembelian extends Model
     }
 
     public function getReview(){
-        return $this->hasOne('App\Review','id_pembelian','id')->withTrashed()->first();
+        return $this->hasOne('App\Review','id_pembelian','id')->first();
     }
 }
