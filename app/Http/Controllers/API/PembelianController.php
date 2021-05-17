@@ -53,7 +53,7 @@ class PembelianController extends Controller
             $jadwal = $pembelian->getJadwal();
             $pelabuhan_asal = $jadwal->getPelabuhanAsal();
             $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
-            $speedboat = $jadwal->getKapal()->first();
+            $speedboat = $jadwal->getKapal()->withTrashed()->first();
             $waktu_asal = $jadwal->waktu_berangkat;
             $review = $pembelian->getReview();
             if($review==NULL){
