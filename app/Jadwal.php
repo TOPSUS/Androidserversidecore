@@ -11,11 +11,11 @@ class Jadwal extends Model
     protected $table = 'tb_jadwal';
 
     public function getPelabuhanAsal(){
-        return $this->hasOne('App\Pelabuhan','id','id_asal_pelabuhan')->first();
+        return $this->hasOne('App\Pelabuhan','id','id_asal_pelabuhan')->withTrashed()->first();
     }
 
     public function getPelabuhanTujuan(){
-        return $this->hasOne('App\Pelabuhan','id','id_tujuan_pelabuhan')->first();
+        return $this->hasOne('App\Pelabuhan','id','id_tujuan_pelabuhan')->withTrashed()->first();
     }
 
     public function getBoat(){
