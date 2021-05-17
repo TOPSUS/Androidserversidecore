@@ -33,7 +33,7 @@ class JadwalController extends Controller
         }
 
         // MENENTUKAN WAKTU SAAT INI DITAMBAH 2 JAM UNTUK BATAS WAKTU JADWAL YANG AKAN DI TAMPILKAN DI MOBILE
-        $limit_waktu = Carbon::now();
+        $limit_waktu = Carbon::now()->addHours(2);
 
         // PENCARIAN JADWAL DENGAN MODEL JADWAL
         $jadwals = Jadwal::whereHas('getKapal',function($query) use ($request){
