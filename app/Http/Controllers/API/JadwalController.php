@@ -58,7 +58,7 @@ class JadwalController extends Controller
             foreach ($jadwals as $index => $jadwal) {
                     $pelabuhan_asal = $jadwal->getPelabuhanAsal();
                     $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
-                    $speedboat = $jadwal->getKapal()->withTrashed()->first();
+                    $speedboat = $jadwal->getKapal()->first();
                     $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini();
                     $sisa = $speedboat->kapasitas - $pemesanan_saat_ini;
 
