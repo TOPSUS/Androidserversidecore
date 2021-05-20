@@ -100,7 +100,7 @@ class AuthController extends Controller
             'jeniskelamin' => 'in:Laki-laki,Perempuan',
             'nohp' => 'required|min:8|max:15',
             'email' => 'required|unique:tb_user,email',
-            'imageprofile' => 'nullable|image|max:1000',
+            'imageprofile' => 'nullable|image|max:100',
             'password' => 'required',
             'c_password' => 'required',
         ]);
