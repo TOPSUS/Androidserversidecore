@@ -240,7 +240,7 @@ class PembelianController extends Controller
         // LARAVEL VALIDATOR
         $validator = Validator::make($request->all(), [
             'id_pembelian' => 'required|numeric',
-            'image_bukti_pembayaran' => 'required|image|max:1000'
+            'image_bukti_pembayaran' => 'required|image|max:2000'
         ]);
 
         if ($validator->fails()) {
