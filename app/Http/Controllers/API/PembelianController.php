@@ -240,14 +240,14 @@ class PembelianController extends Controller
         // LARAVEL VALIDATOR
         $validator = Validator::make($request->all(), [
             'id_pembelian' => 'required|numeric',
-            'image_bukti_pembayaran' => 'required|image|max:2000'
+            'image_bukti_pembayaran' => 'required|image|max:5000'
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'response_code' => 402,
                 'status' => 'failure',
-                'message' => 'terdapat format yang salah',
+                'message' => 'Image Maksimal 5mb',
                 'error' => $validator->errors(),
             ], 200);
         }
