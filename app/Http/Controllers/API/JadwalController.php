@@ -49,7 +49,7 @@ class JadwalController extends Controller
                             ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
                             ->get();
         
-        $jadwals = $jadwals->filter(function($jadwal) use($limit_waktu){
+        $jadwals = $jadwals->filter(function($jadwal) use($limit_waktu,$request){
 
             $carbon_jadwal = Carbon::parse($request->date." ".$jadwal->waktu_berangkat);
 
