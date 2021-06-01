@@ -98,7 +98,7 @@ class PemesananController extends Controller
                                 ],200);
                             }
 
-                            $pembelian->total_harga = $golongan->harga + ((count($penumpang_decode)-1)*$jadwal->harga);
+                            $pembelian->total_harga = $golongan->harga;
                             $pembelian->id_golongan = $request->id_golongan;
                             $pembelian->nomor_polisi = $request->nomor_polisi;
                         }else{
@@ -128,7 +128,7 @@ class PemesananController extends Controller
                             $detail_pembelian->no_id_card = $penumpang->no_id_card;
 
                             // APABILA TIPE DARI JASA YANG DIMINTA ADALAH KENDARAAN MAKA PENUMPANG PERTAMA HARGA NYA SESUAI DENGAN GOLONGAN
-                            if($request->tipe_kapal == 'feri' && $request->id_golongan != null && $index == 0){
+                            if($request->tipe_kapal == 'feri' && $request->id_golongan != null){
                                 $detail_pembelian->harga = $golongan->harga;
                             }else{
                                 $detail_pembelian->harga = $jadwal->harga;
