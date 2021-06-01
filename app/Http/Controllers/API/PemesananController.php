@@ -57,8 +57,6 @@ class PemesananController extends Controller
             }
         // AKHIR
 
-        return $validator->fails();
-
         // MAIN LOGIC BUAT SEBUAH PEMESANAN
             // CEK APAKAN JADWAL MASIH TERSEDIA UNTUK SEMUA PENUMPANG
                 $jadwal = Jadwal::find($request->id_jadwal);
