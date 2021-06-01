@@ -41,7 +41,7 @@ class PemesananController extends Controller
                 'id_jadwal' => 'required|numeric',
                 'id_metode_pembayaran' => 'required|numeric',
                 'penumpang' => 'required|array',
-                'tanggal_berangkat' => 'required',
+                'tanggal_berangkat' => 'required|date|after:yesterday',
                 'tipe_kapal' => 'required|in:speedboat,feri',
                 'id_golongan' => 'nullable|numeric',
                 'nomor_polisi' => 'nullable'
@@ -57,7 +57,7 @@ class PemesananController extends Controller
             }
         // AKHIR
 
-        return $request->tanggal_berangkat;
+        return $validator->fails();
 
         // MAIN LOGIC BUAT SEBUAH PEMESANAN
             // CEK APAKAN JADWAL MASIH TERSEDIA UNTUK SEMUA PENUMPANG
