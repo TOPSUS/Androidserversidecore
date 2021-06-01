@@ -52,9 +52,9 @@ class JadwalController extends Controller
         foreach ($jadwals as $index => $jadwal) {
             $carbon_jadwal = Carbon::parse($request->date." ".$jadwal->waktu_berangkat);
             if($carbon_jadwal->diffInMilliseconds($limit_waktu,false) > 0){
-                $jadwals[$index]->aktif = false;
+                $jadwals[$index]->isOrderable = false;
             }else{
-                $jadwals[$index]->aktif = true;
+                $jadwals[$index]->isOrderable = true;
             }
         }
         
