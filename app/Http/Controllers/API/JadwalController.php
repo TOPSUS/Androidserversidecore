@@ -60,7 +60,6 @@ class JadwalController extends Controller
             } 
         })->values();
         
-        return $jadwals;
 
         // JADWAL YANG DICARI ADALAH JADWAL SESUAI tipe_kapal / TIPE KAPAL DAN BATAS WAKTU 2 JAM
             foreach ($jadwals as $index => $jadwal) {
@@ -90,6 +89,8 @@ class JadwalController extends Controller
                     $jadwals[$index]->waktu_sampai = Carbon::createFromFormat("Y-m-d H:i:s",$string_waktu_berangkat)
                                                         ->addMinutes($jadwal->estimasi_waktu)->format("H:i:s");
             }
+
+            return $jadwals;
 
         if($jadwals != null){
             return response()->json([
