@@ -47,7 +47,7 @@ class JadwalController extends Controller
                             })
                             ->where('id_asal_pelabuhan',$request->id_asal_pelabuhan)
                             ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
-                            ->get(['id','id_asal_pelabuhan','id_tujuan_pelabuhan','waktu_berangkat','id_kapal','harga','estimasi_waktu']);
+                            ->get();
 
         return $jadwals;
         
