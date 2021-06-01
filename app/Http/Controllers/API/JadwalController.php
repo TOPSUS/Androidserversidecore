@@ -85,7 +85,7 @@ class JadwalController extends Controller
                     $jadwals[$index]->tanggal_beroperasi = $speedboat->tanggal_beroperasi;
 
                     // BUAT WAKTU SAMPAI DENGAN CARBON;
-                    $string_waktu_berangkat = $jadwal->tanggal." ".$jadwal->waktu_berangkat;
+                    $string_waktu_berangkat = $request->date." ".$jadwal->waktu_berangkat;
                     $jadwals[$index]->waktu_sampai = Carbon::createFromFormat("Y-m-d H:i:s",$string_waktu_berangkat)
                                                         ->addMinutes($jadwal->estimasi_waktu)->format("H:i:s");
             }
