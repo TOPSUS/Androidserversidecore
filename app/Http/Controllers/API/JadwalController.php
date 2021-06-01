@@ -47,6 +47,7 @@ class JadwalController extends Controller
                             })
                             ->where('id_asal_pelabuhan',$request->id_asal_pelabuhan)
                             ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
+                            ->orderBy('waktu_berangkat',"DESC")
                             ->get();
 
         foreach ($jadwals as $index => $jadwal) {
@@ -57,7 +58,6 @@ class JadwalController extends Controller
                 $jadwals[$index]->isOrderable = true;
             }
         }
-        
 
         // JADWAL YANG DICARI ADALAH JADWAL SESUAI tipe_kapal / TIPE KAPAL DAN BATAS WAKTU 2 JAM
             foreach ($jadwals as $index => $jadwal) {
