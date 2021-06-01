@@ -39,7 +39,7 @@ class JadwalController extends Controller
         $nama_hari_ini = MyDayNameTranslater::changeDayName(Carbon::create($request->date)->dayName);
 
         // PENCARIAN JADWAL DENGAN MODEL JADWAL
-        $jadwals = Jadwal::whereHas('getKapal',function($query) use ($request){
+        $jadwals = Jadwal::with('getKapal')->whereHas('getKapal',function($query) use ($request){
                             $query->where('tipe_kapal',$request->tipe_kapal);
                             })
                             ->whereHas('getDetailJadwal',function($query) use ($nama_hari_ini){
