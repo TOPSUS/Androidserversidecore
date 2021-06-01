@@ -29,4 +29,8 @@ class Jadwal extends Model
     public function getTotalPembelianSaatini(){
         return $this->hasMany('App\Pembelian','id_jadwal','id')->where('status','Terkonfirmasi')->count();
     }
+
+    public function getDetailJadwal(){
+        return $this->hasMany('App\DetailJadwal','id_jadwal','id');
+    }
 }

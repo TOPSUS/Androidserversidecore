@@ -176,7 +176,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\MyNotificationProvider::class,
-
+        App\Providers\MyDayNameTranslater::class,
     ],
 
     /*

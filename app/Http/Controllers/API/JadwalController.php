@@ -5,9 +5,10 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
+use App\Http\Helper\MyDayNameTranslater;
 use Carbon\Carbon;
 use App\Jadwal;
+use App\DetailJadwal;
 
 class JadwalController extends Controller
 {
@@ -24,7 +25,7 @@ class JadwalController extends Controller
 
         if($validator->fails()){
             return response()->json([
-                'response_code' => 401,
+                'response_code' => 400,
                 'status' => 'success',
                 'message' => 'gagal terjadi kesalahan',
                 'error' => $validator->errors(),
@@ -35,14 +36,21 @@ class JadwalController extends Controller
         // MENENTUKAN WAKTU SAAT INI DITAMBAH 2 JAM UNTUK BATAS WAKTU JADWAL YANG AKAN DI TAMPILKAN DI MOBILE
         $limit_waktu = Carbon::now();
 
+        $nama_hari_ini = MyDayNameTranslater::changeDayName(Carbon::create($request->date)->dayName);
+
         // PENCARIAN JADWAL DENGAN MODEL JADWAL
         $jadwals = Jadwal::whereHas('getKapal',function($query) use ($request){
                             $query->where('tipe_kapal',$request->tipe_kapal);
-                            })->whereDate('tanggal',$request->date)
+                            })
+                            ->whereHas('getDetailJadwal',function($query) use ($nama_hari_ini){
+                            $query->where('hari',$nama_hari_ini);
+                            })
                             ->where('id_asal_pelabuhan',$request->id_asal_pelabuhan)
                             ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
-                            ->get(['id','id_asal_pelabuhan','id_tujuan_pelabuhan','waktu_berangkat','tanggal','id_kapal','harga','estimasi_waktu']);
+                            ->get(['id','id_asal_pelabuhan','id_tujuan_pelabuhan','waktu_berangkat','id_kapal','harga','estimasi_waktu']);
 
+        return $jadwals;
+        
         $jadwals = $jadwals->filter(function($jadwal) use($limit_waktu){
             $carbon_jadwal = Carbon::parse($jadwal->tanggal." ".$jadwal->waktu_berangkat);
             if($carbon_jadwal->diffInMilliseconds($limit_waktu,false) > 0){
