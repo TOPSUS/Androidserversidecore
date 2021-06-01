@@ -65,7 +65,7 @@ class PembelianController extends Controller
             $pembelians[$index]->pelabuhan_tujuan_nama = $pelabuhan_tujuan->nama_pelabuhan;
             $pembelians[$index]->nama_speedboat = $speedboat->nama_kapal;
             $pembelians[$index]->review = $review;
-            
+
             $pembelians[$index]->waktu_berangkat = $waktu_asal;
 
             $pembelians[$index]->waktu_sampai = Carbon::createFromFormat("H:i:s", $pembelian->waktu_berangkat)
@@ -116,7 +116,6 @@ class PembelianController extends Controller
         //GET JADWAL PEMBELIAN, PELABUHAN, WAKTU, KAPAL
         $jadwal = $pembelian->getJadwal();
         $speedboat = $jadwal->getKapal()->withTrashed()->first()->nama_kapal;
-        $tanggal = $jadwal->tanggal;
         $harga = $pembelian->total_harga;
         $pelabuhan_asal = $jadwal->getPelabuhanAsal()->nama_pelabuhan;
         $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan()->nama_pelabuhan;
