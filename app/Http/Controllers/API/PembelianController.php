@@ -65,15 +65,12 @@ class PembelianController extends Controller
             $pembelians[$index]->pelabuhan_tujuan_nama = $pelabuhan_tujuan->nama_pelabuhan;
             $pembelians[$index]->nama_speedboat = $speedboat->nama_kapal;
             $pembelians[$index]->review = $review;
-
-            $pembelians[$index]->tanggal = $jadwal->tanggal;
+            
             $pembelians[$index]->waktu_berangkat = $waktu_asal;
 
             $pembelians[$index]->waktu_sampai = Carbon::createFromFormat("H:i:s", $pembelian->waktu_berangkat)
                 ->addMinutes($jadwal->estimasi_waktu)->format("H:i:s");
         }
-
-        return $pembelians;
 
         if ($pembelians != null) {
             return response()->json([
