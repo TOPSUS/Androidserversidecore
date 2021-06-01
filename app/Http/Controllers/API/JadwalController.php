@@ -48,11 +48,11 @@ class JadwalController extends Controller
                             ->where('id_asal_pelabuhan',$request->id_asal_pelabuhan)
                             ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
                             ->get();
-
-        return $jadwals;
         
         $jadwals = $jadwals->filter(function($jadwal) use($limit_waktu){
-            $carbon_jadwal = Carbon::parse($jadwal->tanggal." ".$jadwal->waktu_berangkat);
+
+            $carbon_jadwal = Carbon::parse($request->date." ".$jadwal->waktu_berangkat);
+
             if($carbon_jadwal->diffInMilliseconds($limit_waktu,false) > 0){
                 return false;
             }else{
@@ -60,7 +60,7 @@ class JadwalController extends Controller
             } 
         })->values();
         
-        
+        return $jadwals;
 
         // JADWAL YANG DICARI ADALAH JADWAL SESUAI tipe_kapal / TIPE KAPAL DAN BATAS WAKTU 2 JAM
             foreach ($jadwals as $index => $jadwal) {
