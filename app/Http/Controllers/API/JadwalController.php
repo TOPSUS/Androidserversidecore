@@ -34,7 +34,7 @@ class JadwalController extends Controller
         }
 
         // MENENTUKAN WAKTU SAAT INI DITAMBAH 2 JAM UNTUK BATAS WAKTU JADWAL YANG AKAN DI TAMPILKAN DI MOBILE
-        $limit_waktu = Carbon::now();
+        $limit_waktu = Carbon::now()->addHours(2);
 
         $nama_hari_ini = MyDayNameTranslater::changeDayName(Carbon::create($request->date)->dayName);
 
