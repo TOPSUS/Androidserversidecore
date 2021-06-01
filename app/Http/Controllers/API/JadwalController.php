@@ -88,8 +88,6 @@ class JadwalController extends Controller
                                                         ->addMinutes($jadwal->estimasi_waktu)->format("H:i:s");
             }
 
-        return $jadwals;
-
         if($jadwals != null){
             return response()->json([
                 'response_code' => 200,
