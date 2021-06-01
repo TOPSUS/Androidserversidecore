@@ -32,6 +32,7 @@ class PemesananController extends Controller
                 'id_jadwal' => $request->id_jadwal,
                 'id_metode_pembayaran' => $request->id_metode_pembayaran,
                 'penumpang' => $penumpang_decode,
+                'tanggal_berangkat' => $request->tanggal_berangkat,
                 'tipe_kapal' => $request->tipe_kapal,
                 'id_golongan' => $request->id_golongan,
                 'nomor_polisi' => $request->nomor_polisi
@@ -40,6 +41,7 @@ class PemesananController extends Controller
                 'id_jadwal' => 'required|numeric',
                 'id_metode_pembayaran' => 'required|numeric',
                 'penumpang' => 'required|array',
+                'tanggal_berangkat' => 'required',
                 'tipe_kapal' => 'required|in:speedboat,feri',
                 'id_golongan' => 'nullable|numeric',
                 'nomor_polisi' => 'nullable'
@@ -54,6 +56,8 @@ class PemesananController extends Controller
                 ],200);
             }
         // AKHIR
+
+        return $request->tanggal_berangkat;
 
         // MAIN LOGIC BUAT SEBUAH PEMESANAN
             // CEK APAKAN JADWAL MASIH TERSEDIA UNTUK SEMUA PENUMPANG
@@ -134,7 +138,6 @@ class PemesananController extends Controller
 
                             $detail_pembelian->status = "Not Used";
                             $detail_pembelian->save();
-                            
                         }
                     // AKHIR
 
