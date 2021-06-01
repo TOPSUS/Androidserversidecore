@@ -81,7 +81,7 @@ class PemesananController extends Controller
                         $pembelian->id_jadwal = $request->id_jadwal;
                         $pembelian->id_user = $request->id_pemesan;
                         $pembelian->id_metode_pembayaran = $request->id_metode_pembayaran;
-                        $pembelian->tanggal = date('Y-m-d');
+                        $pembelian->tanggal = $request->tanggal_berangkat;
                         
                         $pembelian->status = 'menunggu pembayaran';
 
