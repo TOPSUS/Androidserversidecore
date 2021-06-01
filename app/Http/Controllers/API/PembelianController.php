@@ -73,6 +73,8 @@ class PembelianController extends Controller
                 ->addMinutes($jadwal->estimasi_waktu)->format("H:i:s");
         }
 
+        return $pembelians;
+
         if ($pembelians != null) {
             return response()->json([
                 'response_code' => 200,
