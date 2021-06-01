@@ -64,7 +64,7 @@ class JadwalController extends Controller
                     $pelabuhan_asal = $jadwal->getPelabuhanAsal();
                     $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
                     $speedboat = $jadwal->getKapal()->first();
-                    $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini();
+                    $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini($request->date);
                     $sisa = $speedboat->kapasitas - $pemesanan_saat_ini;
 
                     $jadwals[$index]->pelabuhan_asal_nama = $pelabuhan_asal->nama_pelabuhan;

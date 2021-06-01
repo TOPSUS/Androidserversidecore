@@ -71,7 +71,7 @@ class PemesananController extends Controller
                 }
                 
                 $speedboat = $jadwal->getKapal()->where('tipe_kapal',$request->tipe_kapal)->first();
-                $total_pembelian_saat_ini = $jadwal->getTotalPembelianSaatini();
+                $total_pembelian_saat_ini = $jadwal->getTotalPembelianSaatini($request->tanggal_berangkat);
                 
                 // CHECK APAKAH ADA KAPASITAS
                 if(($speedboat->kapasitas - $total_pembelian_saat_ini) >= count($penumpang_decode)){

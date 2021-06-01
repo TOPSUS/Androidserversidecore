@@ -26,8 +26,8 @@ class Jadwal extends Model
         return $this->hasOne('App\SpeedBoat','id','id_kapal');
     }
 
-    public function getTotalPembelianSaatini(){
-        return $this->hasMany('App\Pembelian','id_jadwal','id')->where('status','Terkonfirmasi')->count();
+    public function getTotalPembelianSaatini($tanggal){
+        return $this->hasMany('App\Pembelian','id_jadwal','id')->where('status','Terkonfirmasi')->where('tanggal',$tanggal)->count();
     }
 
     public function getDetailJadwal(){
