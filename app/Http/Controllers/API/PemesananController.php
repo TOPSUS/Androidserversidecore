@@ -129,7 +129,7 @@ class PemesananController extends Controller
 
                             // APABILA TIPE DARI JASA YANG DIMINTA ADALAH KENDARAAN MAKA PENUMPANG PERTAMA HARGA NYA SESUAI DENGAN GOLONGAN
                             if($request->tipe_kapal == 'feri' && $request->id_golongan != null){
-                                $detail_pembelian->harga = $golongan->harga;
+                                $detail_pembelian->harga = 0;
                             }else{
                                 $detail_pembelian->harga = $jadwal->harga;
                             }
