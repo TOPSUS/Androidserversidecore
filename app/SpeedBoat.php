@@ -9,4 +9,8 @@ class SpeedBoat extends Model
 {
     use softDeletes;
     protected $table ='tb_kapal';
+
+    public function getDetailGolongan(){
+        return $this->hasMany('App\DetailGolongan','id_kapal','id');
+    }
 }

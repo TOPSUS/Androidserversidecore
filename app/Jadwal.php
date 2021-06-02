@@ -38,7 +38,8 @@ class Jadwal extends Model
         return Pembelian::where('status','terkonfirmasi')
                             ->where('id_jadwal',$detail_jadwal->id)
                             ->where('id_golongan',null)
-                            ->whereDate("tanggal",$tanggal)->count();
+                            ->whereDate("tanggal",$tanggal)
+                            ->count();
     }
 
     public function getTotalPembelianGolonganSaatIni($tanggal,$id_golongan){
