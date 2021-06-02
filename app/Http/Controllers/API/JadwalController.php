@@ -20,7 +20,6 @@ class JadwalController extends Controller
             'date' => 'required|date',
             'id_asal_pelabuhan' => 'required|numeric',
             'id_tujuan_pelabuhan' => 'required|numeric',
-            'id_golongan' => 'nullable|numeric|exists:tb_golongan,id',
             'tipe_kapal' => 'required|in:speedboat,feri'
         ]);
 
@@ -34,15 +33,9 @@ class JadwalController extends Controller
             ],200);
         }
 
-        // JIKA ADA GOLONGAN MAKA DITAMBAHKAN GOLONGAN
-        if($request->id_golongan != null){
-            $golongan = Golongan::find($request->id_golongan);
-        }
-
         // MENENTUKAN WAKTU SAAT INI DITAMBAH 2 JAM UNTUK BATAS WAKTU JADWAL YANG AKAN DI TAMPILKAN DI MOBILE
         $limit_waktu = Carbon::now()->addHours(2);
 
-        // TRANSLATE NAMA HARI KE INDONESIA
         $nama_hari_ini = MyDayNameTranslater::changeDayName(Carbon::create($request->date)->dayName);
 
         // PENCARIAN JADWAL DENGAN MODEL JADWAL
@@ -68,38 +61,22 @@ class JadwalController extends Controller
 
         // JADWAL YANG DICARI ADALAH JADWAL SESUAI tipe_kapal / TIPE KAPAL DAN BATAS WAKTU 2 JAM
             foreach ($jadwals as $index => $jadwal) {
-                    
                     $pelabuhan_asal = $jadwal->getPelabuhanAsal();
                     $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
                     $speedboat = $jadwal->getKapal()->first();
-
-                    if($request->tipe_kapal == 'speedboat'){
-                        $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini($request->date);
-                        $sisa = $speedboat->kapasitas - $pemesanan_saat_ini;
-
-                        $jadwals[$index]->kapasitas = $speedboat->kapasitas;
-                        $jadwals[$index]->pemesanan_saat_ini = $pemesanan_saat_ini;
-                        $jadwals[$index]->sisa = $sisa;
-                    }else if($request->tipe_kapal == 'feri' && $request->id_golongan != null){
-                        $pemesanan_saat_ini = $jadwal->getTotalPembelianGolonganSaatIni($request->date);
-                    }else{
-                        $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini($request->date);
-                        $sisa = $speedboat->kapasitas - $pemesanan_saat_ini;
-
-                        $jadwals[$index]->kapasitas = $speedboat->kapasitas;
-                        $jadwals[$index]->pemesanan_saat_ini = $pemesanan_saat_ini;
-                        $jadwals[$index]->nama_golongan = $golongan->golongan;
-                    }
-                    
-                    
+                    $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini($request->date);
+                    $sisa = $speedboat->kapasitas - $pemesanan_saat_ini;
 
                     $jadwals[$index]->pelabuhan_asal_nama = $pelabuhan_asal->nama_pelabuhan;
                     $jadwals[$index]->pelabuhan_asal_kode = $pelabuhan_asal->kode_pelabuhan;
-                    $jadwals[$index]->jenis_kapal = $speedboat->tipe_kapal;
+                    
                     $jadwals[$index]->pelabuhan_tujuan_nama = $pelabuhan_tujuan->nama_pelabuhan;
                     $jadwals[$index]->pelabuhan_tujuan_kode = $pelabuhan_tujuan->kode_pelabuhan;
                 
                     $jadwals[$index]->nama_speedboat = $speedboat->nama_kapal;
+                    $jadwals[$index]->kapasitas = $speedboat->kapasitas;
+                    $jadwals[$index]->pemesanan_saat_ini = $pemesanan_saat_ini;
+                    $jadwals[$index]->sisa = $sisa;
                     $jadwals[$index]->deskripsi_boat = $speedboat->deskripsi;
                     $jadwals[$index]->foto_boat = $speedboat->foto;
                     $jadwals[$index]->contact_service = $speedboat->contact_service;
@@ -131,4 +108,3 @@ class JadwalController extends Controller
         
     }
 }
-
