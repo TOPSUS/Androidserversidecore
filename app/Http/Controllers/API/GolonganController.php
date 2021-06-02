@@ -56,7 +56,7 @@ class GolonganController extends Controller
             'id_golongan.required' => 'id golongan tidak tersedia',
             'id_golongan.exists' => "tidak ada golongan"
         ]);
-        return($validator->fails());
+        
         if($validator->fails()){
             return response()->json([
                 'response_code' => 400,
