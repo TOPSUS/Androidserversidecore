@@ -26,7 +26,7 @@ class JadwalController extends Controller
         if($validator->fails()){
             return response()->json([
                 'response_code' => 400,
-                'status' => 'success',
+                'status' => 'failure',
                 'message' => 'gagal terjadi kesalahan',
                 'error' => $validator->errors(),
                 'jadwal' => []

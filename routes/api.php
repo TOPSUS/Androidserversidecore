@@ -88,6 +88,10 @@ Route::group(['middleware' => 'auth:api'],function(){
         // READ GOLONGAN PELABUHAN
             Route::post('/readgologan','API\GolonganController@getGolonganByPelabuhanId');
         // AKHIR
+
+        // GET MAX PENUMPANG DI DALAM PELABUHAN
+            Route::post('/getmaxjumlahpenumpang','API\GolonganController@getMaxJumlahPenumpang');
+        // AKHIR
     // AKHIR
 
     // PROSES TRANSAKSI
@@ -114,6 +118,7 @@ Route::group(['middleware' => 'auth:api'],function(){
         // POST STATUS PEMBELIAN
             Route::post('/setpembelianstatus','API\PembelianController@setpembelianstatus');
         // AKHIR
+
     // AKHIR
 
     // RIWAYAT TRANSAKSI

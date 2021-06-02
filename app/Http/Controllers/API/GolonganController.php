@@ -42,4 +42,47 @@ class GolonganController extends Controller
         ],200);
         
     }
+
+    /**
+     * METHODE YANG DIGUNAKAN UNTUK, MENENTUKAN JUMLAH PENUMPANG YANG DAPAT DITAMPUNG SEBUAH
+     * KAPAL.
+     */
+    public function getMaxJumlahPenumpang(Request $request){
+
+        // VALIDATOR
+        $validator = Validator::make([
+            'id_golongan' => 'required|exists:tb_golongan,id',
+        ],[
+            'id_golongan.required' => 'id golongan tidak tersedia',
+            'id_golongan.exists' => "tidak ada golongan"
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                'response_code' => 400,
+                'status' => 'failure',
+                'message' => 'gagal terjadi kesalahan',
+                'error' => $validator->errors(),
+            ],200);
+        }
+
+        // MAIN LOGIC
+        $max_jumlah_penumpang = Golongan::find($request->id_golongan);
+
+        if($max_jumlah_penumpang == null){
+            return response()->json([
+                'response_code' => 400,
+                'status' => 'failure',
+                'message' => 'gagal terjadi kesalahan',
+                'error' => $validator->errors(),
+            ],200);
+        }else{
+            return response()->json([
+                'response_code' => 200,
+                'status' => 'success',
+                'message' => 'maximal pemesanan didapatkan',
+                'error' => (Object)[],
+            ],200);
+        }
+    }
 }
