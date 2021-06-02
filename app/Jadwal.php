@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
+use App\Http\Helper\MyDayNameTranslater;
+use App\Pembelian;
 
 class Jadwal extends Model
 {
@@ -27,7 +30,26 @@ class Jadwal extends Model
     }
 
     public function getTotalPembelianSaatini($tanggal){
-        return $this->hasMany('App\Pembelian','id_jadwal','id')->where('status','Terkonfirmasi')->where('tanggal',$tanggal)->count();
+
+        $nama_hari = MyDayNameTranslater::changeDayName(Carbon::parse($tanggal)->dayName);
+        
+        $detail_jadwal = $this->getDetailJadwal()->where('hari',$nama_hari)->first();
+        
+        return Pembelian::where('status','terkonfirmasi')
+                            ->where('id_jadwal',$detail_jadwal->id)
+                            ->where('id_golongan',null)
+                            ->whereDate("tanggal",$tanggal)->count();
+    }
+
+    public function getTotalPembelianGolonganSaatIni($tanggal,$id_golongan){
+        $nama_hari = MyDayNameTranslater::changeDayName(Carbon::parse($tanggal)->dayName);
+        $detail_jadwal = $this->getDetailJadwal()->where('hari',$nama_hari)->first();
+
+        return Pembelian::where('status','terkonfirmasi')
+                            ->where('id_jadwal',$detail_jadwal->id)
+                            ->whereNull('id_golongan')
+                            ->whereDate("tanggal",$tanggal)
+                            ->count();
     }
 
     public function getDetailJadwal(){
