@@ -50,7 +50,7 @@ class GolonganController extends Controller
     public function getMaxJumlahPenumpang(Request $request){
 
         // VALIDATOR
-        $validator = Validator::make([
+        $validator = Validator::make($request->all(),[
             'id_golongan' => 'required|exists:tb_golongan,id',
         ],[
             'id_golongan.required' => 'id golongan tidak tersedia',
