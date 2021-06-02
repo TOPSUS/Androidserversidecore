@@ -67,7 +67,7 @@ class GolonganController extends Controller
         }
 
         // MAIN LOGIC
-        $max_jumlah_penumpang = Golongan::find($request->id_golongan);
+        $max_jumlah_penumpang = Golongan::find($request->id_golongan)->max_penumpang;
 
         if($max_jumlah_penumpang == null){
             return response()->json([
@@ -82,6 +82,7 @@ class GolonganController extends Controller
                 'status' => 'success',
                 'message' => 'maximal pemesanan didapatkan',
                 'error' => (Object)[],
+                'maximal_penumpang' => $max_jumlah_penumpang
             ],200);
         }
     }
