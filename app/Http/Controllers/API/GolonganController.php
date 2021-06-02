@@ -61,7 +61,7 @@ class GolonganController extends Controller
             return response()->json([
                 'response_code' => 400,
                 'status' => 'failure',
-                'message' => 'gagal terjadi kesalahan',
+                'message' => 'format tidak sesuai',
                 'error' => $validator->errors(),
             ],200);
         }
