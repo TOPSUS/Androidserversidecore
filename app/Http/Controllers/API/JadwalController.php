@@ -52,12 +52,13 @@ class JadwalController extends Controller
 
                             })
                             ->whereHas('getDetailJadwal',function($query) use ($nama_hari_pesanan){
-                            $query->where('hari',$nama_hari_pesanan);
+                                $query->where('hari',$nama_hari_pesanan);
                             })
                             ->where('id_asal_pelabuhan',$request->id_asal_pelabuhan)
                             ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
                             ->orderBy('waktu_berangkat',"DESC")
                             ->get();
+                            
 
         // JADWAL YANG DICARI ADALAH JADWAL SESUAI tipe_kapal / TIPE KAPAL DAN BATAS WAKTU 2 JAM
         if($request->id_golongan == null){
