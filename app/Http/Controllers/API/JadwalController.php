@@ -64,7 +64,7 @@ class JadwalController extends Controller
                     $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini($request->date);
                     $sisa = ($speedboat->kapasitas - $pemesanan_saat_ini) - $request->jumlah_penumpang;
 
-                    if($sisa >= 0){
+                    if($sisa <= 0){
                         $jadwals[$index]->isOrderable = false;
                         $jadwals[$index]->status = "KAPASITAS FULL";
                     }
@@ -108,7 +108,7 @@ class JadwalController extends Controller
                     
 
                     $carbon_jadwal = Carbon::parse($request->date." ".$jadwal->waktu_berangkat);
-                    if($sisa >= 0){
+                    if($sisa <= 0){
                         $jadwals[$index]->isOrderable = false;
                         $jadwals[$index]->status = "KAPASITAS FULL";
                     }
