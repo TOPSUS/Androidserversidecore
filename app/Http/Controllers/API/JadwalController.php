@@ -46,7 +46,9 @@ class JadwalController extends Controller
 
                                 if($request->id_golongan != null){
                                     $query->whereHas('getDetailGolongan',function($query_2) use ($request){
-                                        $query_2->where('id_golongan',$request->id_golongan);
+                                        $query_2->where('id_golongan',$request->id_golongan)->whereHas('getGolongan',function($query_3) use ($request){
+                                            $query_3->where('id_pelabuhan',$request->id_asal_pelabuhan);
+                                        });
                                     });
                                 }
 
