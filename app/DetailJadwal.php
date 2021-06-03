@@ -9,7 +9,7 @@ class DetailJadwal extends Model
     protected $table = "tb_detail_jadwal";
 
     public function getPembelian(){
-        return $this->hasMany('App\Pembelian','id','id_jadwal');
+        return $this->hasMany('App\Pembelian','id_jadwal','id');
     }
 
     public function getJadwal(){

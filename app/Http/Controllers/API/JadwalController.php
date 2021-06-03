@@ -38,7 +38,7 @@ class JadwalController extends Controller
         // MENENTUKAN WAKTU SAAT INI DITAMBAH 2 JAM UNTUK BATAS WAKTU JADWAL YANG AKAN DI TAMPILKAN DI MOBILE
         $limit_waktu = Carbon::now()->addHours(2);
 
-        $nama_hari_ini = MyDayNameTranslater::changeDayName(Carbon::create($request->date)->dayName);
+        $nama_hari_pesanan = MyDayNameTranslater::changeDayName(Carbon::create($request->date)->dayName);
 
         // PENCARIAN JADWAL DENGAN MODEL JADWAL
         $jadwals = Jadwal::whereHas('getKapal',function($query) use ($request){
@@ -51,8 +51,8 @@ class JadwalController extends Controller
                                 }
 
                             })
-                            ->whereHas('getDetailJadwal',function($query) use ($nama_hari_ini){
-                            $query->where('hari',$nama_hari_ini);
+                            ->whereHas('getDetailJadwal',function($query) use ($nama_hari_pesanan){
+                            $query->where('hari',$nama_hari_pesanan);
                             })
                             ->where('id_asal_pelabuhan',$request->id_asal_pelabuhan)
                             ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
@@ -64,7 +64,6 @@ class JadwalController extends Controller
             foreach ($jadwals as $index => $jadwal) {
                     $carbon_jadwal = Carbon::parse($request->date." ".$jadwal->waktu_berangkat);
                     
-
                     $pelabuhan_asal = $jadwal->getPelabuhanAsal();
                     $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
                     $speedboat = $jadwal->getKapal()->first();
@@ -106,7 +105,9 @@ class JadwalController extends Controller
         }else{     
                 foreach ($jadwals as $index => $jadwal) {
                     $max_jumlah_golongan = $jadwal->getKapal()->first()->getDetailGolongan()->where('id_golongan',$request->id_golongan)->first()->jumlah;
-                    $jumlah_pembelian_golongan_saat_ini = $jadwal->getDetailJadwal()->first()->getPembelian()->whereDate('tanggal',$request->date)->where('status','terkonfirmasi')->count();
+                    
+                    $jumlah_pembelian_golongan_saat_ini = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->first()->getPembelian()->whereDate('tanggal',$request->date)->where('status','terkonfirmasi')->get()->count();
+
                     $sisa = $max_jumlah_golongan - $jumlah_pembelian_golongan_saat_ini;
 
                     $pelabuhan_asal = $jadwal->getPelabuhanAsal();
