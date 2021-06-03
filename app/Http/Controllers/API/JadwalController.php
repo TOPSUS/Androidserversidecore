@@ -21,6 +21,7 @@ class JadwalController extends Controller
             'id_asal_pelabuhan' => 'required|numeric',
             'id_tujuan_pelabuhan' => 'required|numeric',
             'id_golongan' => 'nullable|numeric|exists:tb_golongan,id',
+            'jumlah_penumpang' => 'required|numeric',
             'tipe_kapal' => 'required|in:speedboat,feri'
         ]);
 
@@ -61,7 +62,7 @@ class JadwalController extends Controller
                     $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
                     $speedboat = $jadwal->getKapal()->first();
                     $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini($request->date);
-                    $sisa = $speedboat->kapasitas - $pemesanan_saat_ini;
+                    $sisa = ($speedboat->kapasitas - $pemesanan_saat_ini);
 
                     if($sisa <= 0){
                         $jadwals->forget($index)->values();
@@ -106,13 +107,15 @@ class JadwalController extends Controller
 
                     $carbon_jadwal = Carbon::parse($request->date." ".$jadwal->waktu_berangkat);
                     if($sisa <= 0){
-                        $jadwals->forget($index)->values();
-                        continue;
+                        $jadwals[$index]->isOrderable = false;
+                        $jadwals[$index]->status = "KAPASITAS_FULL";
                     }
                     else if(($carbon_jadwal->diffInMilliseconds($limit_waktu,false) > 0)){
                         $jadwals[$index]->isOrderable = false;
+                        $jadwals[$index]->status = "SUDAH_BERANGKAT";
                     }else{
                         $jadwals[$index]->isOrderable = true;
+                        $jadwals[$index]->status = "BISA_DIPESAN";
                     }
 
                     $jadwals[$index]->pelabuhan_asal_nama = $pelabuhan_asal->nama_pelabuhan;
