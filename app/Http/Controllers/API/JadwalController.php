@@ -58,7 +58,7 @@ class JadwalController extends Controller
                             ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
                             ->orderBy('waktu_berangkat',"DESC")
                             ->get();
-                            
+
 
         // JADWAL YANG DICARI ADALAH JADWAL SESUAI tipe_kapal / TIPE KAPAL DAN BATAS WAKTU 2 JAM
         if($request->id_golongan == null){
@@ -73,7 +73,7 @@ class JadwalController extends Controller
 
                     if($sisa <= 0){
                         $jadwals[$index]->isOrderable = false;
-                        $jadwals[$index]->status = "KAPASITAS FULL";
+                        $jadwals[$index]->status = "KAPASITAS FULL / KURANG";
                     }
                     else if(($carbon_jadwal->diffInMilliseconds($limit_waktu,false) > 0)){
                         $jadwals[$index]->isOrderable = false;
