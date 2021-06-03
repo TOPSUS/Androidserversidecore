@@ -70,8 +70,10 @@ class JadwalController extends Controller
                     }
                     else if(($carbon_jadwal->diffInMilliseconds($limit_waktu,false) > 0)){
                         $jadwals[$index]->isOrderable = false;
+                        $jadwals[$index]->status = "SUDAH_BERANGKAT";
                     }else{
                         $jadwals[$index]->isOrderable = true;
+                        $jadwals[$index]->status = "BISA_DIPESAN";
                     }
 
                     $jadwals[$index]->pelabuhan_asal_nama = $pelabuhan_asal->nama_pelabuhan;
