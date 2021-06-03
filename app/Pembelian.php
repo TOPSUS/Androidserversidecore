@@ -12,6 +12,10 @@ class Pembelian extends Model
         return $this->hasOne('App\Jadwal','id','id_jadwal')->withTrashed()->first();
     }
 
+    public function getDetailJadwal(){
+        return $this->hasOne('App\DetailJadwal','id','id_jadwal');
+    }
+
     public function getPembayaran(){
         return $this->hasOne('App\MetodePembayaran','id','id_metode_pembayaran')->withTrashed()->first();
     }

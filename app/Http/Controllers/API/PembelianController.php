@@ -50,7 +50,7 @@ class PembelianController extends Controller
 
 
         foreach ($pembelians as $index => $pembelian) {
-            $jadwal = $pembelian->getJadwal();
+            $jadwal = $pembelian->getDetailJadwal()->first()->getJadwal()->first();
             $pelabuhan_asal = $jadwal->getPelabuhanAsal();
             $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
             $speedboat = $jadwal->getKapal()->withTrashed()->first();
@@ -114,7 +114,7 @@ class PembelianController extends Controller
         }
 
         //GET JADWAL PEMBELIAN, PELABUHAN, WAKTU, KAPAL
-        $jadwal = $pembelian->getJadwal();
+        $jadwal = $pembelian->getDetailJadwal()->first()->getJadwal()->first();
         $speedboat = $jadwal->getKapal()->withTrashed()->first()->nama_kapal;
         $tanggal = $pembelian->tanggal;
         $harga = $pembelian->total_harga;
