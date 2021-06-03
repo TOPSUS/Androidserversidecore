@@ -42,7 +42,14 @@ class JadwalController extends Controller
 
         // PENCARIAN JADWAL DENGAN MODEL JADWAL
         $jadwals = Jadwal::whereHas('getKapal',function($query) use ($request){
-                            $query->where('tipe_kapal',$request->tipe_kapal);
+                                $query->where('tipe_kapal',$request->tipe_kapal);
+
+                                if($request->id_golongan != null){
+                                    $query->whereHas('getDetailGolongan',function($query_2) use ($request){
+                                        $query_2->where('id_golongan',$request->id_golongan);
+                                    });
+                                }
+
                             })
                             ->whereHas('getDetailJadwal',function($query) use ($nama_hari_ini){
                             $query->where('hari',$nama_hari_ini);
@@ -98,7 +105,7 @@ class JadwalController extends Controller
             }
         }else{     
                 foreach ($jadwals as $index => $jadwal) {
-                    $max_jumlah_golongan = $jadwal->getKapal()->first()->getDetailGolongan()->where('id_golongan',1)->first()->jumlah;
+                    $max_jumlah_golongan = $jadwal->getKapal()->first()->getDetailGolongan()->where('id_golongan',$request->id_golongan)->first()->jumlah;
                     $jumlah_pembelian_golongan_saat_ini = $jadwal->getDetailJadwal()->first()->getPembelian()->whereDate('tanggal',$request->date)->where('status','terkonfirmasi')->count();
                     $sisa = $max_jumlah_golongan - $jumlah_pembelian_golongan_saat_ini;
 
