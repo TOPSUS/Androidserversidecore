@@ -106,7 +106,7 @@ class JadwalController extends Controller
                 foreach ($jadwals as $index => $jadwal) {
                     $max_jumlah_golongan = $jadwal->getKapal()->first()->getDetailGolongan()->where('id_golongan',$request->id_golongan)->first()->jumlah;
                     
-                    $jumlah_pembelian_golongan_saat_ini = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->first()->getPembelian()->whereDate('tanggal',$request->date)->where('status','terkonfirmasi')->get()->count();
+                    $jumlah_pembelian_golongan_saat_ini = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->first()->getPembelian()->whereDate('tanggal',$request->date)->where('id_golongan',$request->id_golongan)->where('status','terkonfirmasi')->get()->count();
 
                     $sisa = $max_jumlah_golongan - $jumlah_pembelian_golongan_saat_ini;
 
