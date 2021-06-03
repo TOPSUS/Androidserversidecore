@@ -64,16 +64,16 @@ class JadwalController extends Controller
                     $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini($request->date);
                     $sisa = ($speedboat->kapasitas - $pemesanan_saat_ini) - $request->jumlah_penumpang;
 
-                    if($sisa <= 0){
+                    if($sisa >= 0){
                         $jadwals[$index]->isOrderable = false;
-                        $jadwals[$index]->status = "KAPASITAS_FULL";
+                        $jadwals[$index]->status = "KAPASITAS FULL";
                     }
                     else if(($carbon_jadwal->diffInMilliseconds($limit_waktu,false) > 0)){
                         $jadwals[$index]->isOrderable = false;
-                        $jadwals[$index]->status = "SUDAH_BERANGKAT";
+                        $jadwals[$index]->status = "SUDAH BERANGKAT";
                     }else{
                         $jadwals[$index]->isOrderable = true;
-                        $jadwals[$index]->status = "BISA_DIPESAN";
+                        $jadwals[$index]->status = "BISA DIPESAN";
                     }
 
                     $jadwals[$index]->pelabuhan_asal_nama = $pelabuhan_asal->nama_pelabuhan;
@@ -108,16 +108,16 @@ class JadwalController extends Controller
                     
 
                     $carbon_jadwal = Carbon::parse($request->date." ".$jadwal->waktu_berangkat);
-                    if($sisa <= 0){
+                    if($sisa >= 0){
                         $jadwals[$index]->isOrderable = false;
-                        $jadwals[$index]->status = "KAPASITAS_FULL";
+                        $jadwals[$index]->status = "KAPASITAS FULL";
                     }
                     else if(($carbon_jadwal->diffInMilliseconds($limit_waktu,false) > 0)){
                         $jadwals[$index]->isOrderable = false;
-                        $jadwals[$index]->status = "SUDAH_BERANGKAT";
+                        $jadwals[$index]->status = "SUDAH BERANGKAT";
                     }else{
                         $jadwals[$index]->isOrderable = true;
-                        $jadwals[$index]->status = "BISA_DIPESAN";
+                        $jadwals[$index]->status = "BISA DIPESAN";
                     }
 
                     $jadwals[$index]->pelabuhan_asal_nama = $pelabuhan_asal->nama_pelabuhan;
