@@ -37,7 +37,6 @@ class Jadwal extends Model
         
         return Pembelian::where('status','terkonfirmasi')
                             ->where('id_jadwal',$detail_jadwal->id)
-                            ->where('id_golongan',null)
                             ->whereDate("tanggal",$tanggal)
                             ->count();
     }
@@ -45,10 +44,10 @@ class Jadwal extends Model
     public function getTotalPembelianGolonganSaatIni($tanggal,$id_golongan){
         $nama_hari = MyDayNameTranslater::changeDayName(Carbon::parse($tanggal)->dayName);
         $detail_jadwal = $this->getDetailJadwal()->where('hari',$nama_hari)->first();
-
+        return $detail_jadwal->id;
         return Pembelian::where('status','terkonfirmasi')
                             ->where('id_jadwal',$detail_jadwal->id)
-                            ->whereNull('id_golongan')
+                            ->where('id_golongan',$id_golongan)
                             ->whereDate("tanggal",$tanggal)
                             ->count();
     }

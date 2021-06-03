@@ -15,6 +15,8 @@ use App\Jadwal;
 use App\MetodePembayaran;
 use App\Golongan;
 use App\Http\Helper\NotificationHelper;
+use App\Http\Helper\MyDayNameTranslater;
+
 
 class PemesananController extends Controller
 {
@@ -71,6 +73,20 @@ class PemesananController extends Controller
                 }
                 
                 $speedboat = $jadwal->getKapal()->where('tipe_kapal',$request->tipe_kapal)->first();
+                
+                $nama_hari_berangkat = MyDayNameTranslater::changeDayName(Carbon::parse($request->tanggal_berangkat)->dayName);
+
+                $detai_jadwal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_berangkat)->first();
+
+                if($detai_jadwal == null){
+                    return response()->json([
+                        'response_code' => 400,
+                        'status' => 'failure',
+                        'message' => 'Tidak ditemukan id_detail_jadwal yang dimaksud',
+                        'error' => (Object)[],
+                    ],200);
+                }
+
                 $total_pembelian_saat_ini = $jadwal->getTotalPembelianSaatini($request->tanggal_berangkat);
                 
                 // CHECK APAKAH ADA KAPASITAS
@@ -78,7 +94,7 @@ class PemesananController extends Controller
                     
                     // SIMPAN KE DALAM TABLE PEMBELIAN
                         $pembelian = new Pembelian;
-                        $pembelian->id_jadwal = $request->id_jadwal;
+                        $pembelian->id_jadwal = $detai_jadwal->id;
                         $pembelian->id_user = $request->id_pemesan;
                         $pembelian->id_metode_pembayaran = $request->id_metode_pembayaran;
                         $pembelian->tanggal = $request->tanggal_berangkat;
