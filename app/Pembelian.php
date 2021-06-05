@@ -27,4 +27,8 @@ class Pembelian extends Model
     public function getReview(){
         return $this->hasOne('App\Review','id_pembelian','id')->withTrashed()->first();
     }
+
+    public function getDetailPembelian(){
+        return $this->hasMany('App\DetailPembelian','id_pembelian','id');
+    }
 }

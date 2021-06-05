@@ -35,10 +35,13 @@ class Jadwal extends Model
         
         $detail_jadwal = $this->getDetailJadwal()->where('hari',$nama_hari)->first();
         
-        return Pembelian::where('status','terkonfirmasi')
-                            ->where('id_jadwal',$detail_jadwal->id)
-                            ->whereDate("tanggal",$tanggal)
-                            ->count();
+        $pembelian = Pembelian::where('status','terkonfirmasi')
+                        ->where('id_jadwal',$detail_jadwal->id)
+                        ->whereDate("tanggal",$tanggal)->first();
+        
+        $total_pembelian = $pembelian->getDetailPembelian()->count();
+
+        return $total_pembelian;
     }
 
     public function getTotalPembelianGolonganSaatIni($tanggal,$id_golongan){
