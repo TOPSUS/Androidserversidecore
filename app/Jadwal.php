@@ -37,16 +37,17 @@ class Jadwal extends Model
         
         $pembelian = Pembelian::where('status','terkonfirmasi')
                         ->where('id_jadwal',$detail_jadwal->id)
-                        ->whereDate("tanggal",$tanggal)->first();
+                        ->whereDate("tanggal",$tanggal)->withCount(['getDetailPembelian'])->get();
         
         if($pembelian == null){
             return 0;
         }else{
-            $total_pembelian = $pembelian->getDetailPembelian()->count();
-
-            return $total_pembelian;
+            $total = 0;
+            foreach ($pembelian as $index => $value) {
+                $total += $value->get_detail_pembelian_count;
+            }
+            return $total;
         }
-
     }
 
     public function getTotalPembelianGolonganSaatIni($tanggal,$id_golongan){
