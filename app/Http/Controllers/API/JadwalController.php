@@ -62,11 +62,11 @@ class JadwalController extends Controller
                     $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
                     $speedboat = $jadwal->getKapal()->first();
                     $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini($request->date);
-                    $sisa = ($speedboat->kapasitas - $pemesanan_saat_ini) - $request->jumlah_penumpang;
+                    $sisa = ($speedboat->kapasitas - $pemesanan_saat_ini);
 
-                    if($sisa < 0){
+                    if((($speedboat->kapasitas - $pemesanan_saat_ini) - $request->jumlah_penumpang) <= 0){
                         $jadwals[$index]->isOrderable = false;
-                        $jadwals[$index]->status = "KAPASITAS FULL";
+                        $jadwals[$index]->status = "KAPASITAS FULL / KURANG";
                     }
                     else if(($carbon_jadwal->diffInMilliseconds($limit_waktu,false) > 0)){
                         $jadwals[$index]->isOrderable = false;
