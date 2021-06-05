@@ -100,12 +100,18 @@ class JadwalController extends Controller
                 foreach ($jadwals as $index => $jadwal) {
 
                     $golongan_exists = $jadwal->getKapal()->first()->getDetailGolongan()->where('id',$request->id_golongan)->first();
-                
-                    $max_jumlah_golongan = $jadwal->getKapal()->first()->getDetailGolongan()->where('id_golongan',$request->id_golongan)->first()->jumlah;
                     
-                    $jumlah_pembelian_golongan_saat_ini = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->first()->getPembelian()->whereDate('tanggal',$request->date)->where('id_golongan',$request->id_golongan)->where('status','terkonfirmasi')->get()->count();
+                    if($golongan_exists != null){
+                        $max_jumlah_golongan = $jadwal->getKapal()->first()->getDetailGolongan()->where('id_golongan',$request->id_golongan)->first()->jumlah;
+                    
+                        $jumlah_pembelian_golongan_saat_ini = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->first()->getPembelian()->whereDate('tanggal',$request->date)->where('id_golongan',$request->id_golongan)->where('status','terkonfirmasi')->get()->count();
+                        
+                        $sisa = $max_jumlah_golongan - $jumlah_pembelian_golongan_saat_ini;
 
-                    $sisa = $max_jumlah_golongan - $jumlah_pembelian_golongan_saat_ini;
+                        $jadwals[$index]->kapasitas = $max_jumlah_golongan;
+                        $jadwals[$index]->pemesanan_saat_ini = $jumlah_pembelian_golongan_saat_ini;
+                        $jadwals[$index]->sisa = $sisa;
+                    }
 
                     $pelabuhan_asal = $jadwal->getPelabuhanAsal();
                     $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
@@ -116,6 +122,9 @@ class JadwalController extends Controller
                     if($golongan_exists == null){
                         $jadwals[$index]->isOrderable = false;
                         $jadwals[$index]->status = "TIDAK SUPPORT GOLONGAN";
+                        $jadwals[$index]->kapasitas = 0;
+                        $jadwals[$index]->pemesanan_saat_ini = 0;
+                        $jadwals[$index]->sisa = 0;
                     }
                     else if($sisa <= 0){
                         $jadwals[$index]->isOrderable = false;
