@@ -145,9 +145,6 @@ class JadwalController extends Controller
                     $jadwals[$index]->pelabuhan_tujuan_kode = $pelabuhan_tujuan->kode_pelabuhan;
                 
                     $jadwals[$index]->nama_speedboat = $speedboat->nama_kapal;
-                    $jadwals[$index]->kapasitas = $max_jumlah_golongan;
-                    $jadwals[$index]->pemesanan_saat_ini = $jumlah_pembelian_golongan_saat_ini;
-                    $jadwals[$index]->sisa = $sisa;
                     $jadwals[$index]->deskripsi_boat = $speedboat->deskripsi;
                     $jadwals[$index]->foto_boat = $speedboat->foto;
                     $jadwals[$index]->contact_service = $speedboat->contact_service;
