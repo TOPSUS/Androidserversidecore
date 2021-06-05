@@ -25,6 +25,8 @@ class JadwalController extends Controller
             'tipe_kapal' => 'required|in:speedboat,feri'
         ]);
 
+        return $request->id_golongan == null;
+
         if($validator->fails()){
             return response()->json([
                 'response_code' => 400,
