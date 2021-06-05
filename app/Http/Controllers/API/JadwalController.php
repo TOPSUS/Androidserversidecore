@@ -43,13 +43,6 @@ class JadwalController extends Controller
         // PENCARIAN JADWAL DENGAN MODEL JADWAL
         $jadwals = Jadwal::whereHas('getKapal',function($query) use ($request){
                                 $query->where('tipe_kapal',$request->tipe_kapal);
-
-                                if($request->id_golongan != null){
-                                    $query->whereHas('getDetailGolongan',function($query_2) use ($request){
-                                        $query_2->where('id_golongan',$request->id_golongan);
-                                    });
-                                }
-
                             })
                             ->whereHas('getDetailJadwal',function($query) use ($nama_hari_pesanan){
                                 $query->where('hari',$nama_hari_pesanan);
@@ -73,7 +66,7 @@ class JadwalController extends Controller
 
                     if($sisa < 0){
                         $jadwals[$index]->isOrderable = false;
-                        $jadwals[$index]->status = "KAPASITAS FULL / KURANG";
+                        $jadwals[$index]->status = "KAPASITAS FULL";
                     }
                     else if(($carbon_jadwal->diffInMilliseconds($limit_waktu,false) > 0)){
                         $jadwals[$index]->isOrderable = false;
@@ -105,6 +98,9 @@ class JadwalController extends Controller
             }
         }else{     
                 foreach ($jadwals as $index => $jadwal) {
+
+                    $golongan_exists = $jadwal->getKapal()->first()->getDetailGolongan()->where('id',$request->id_golongan)->first();
+                
                     $max_jumlah_golongan = $jadwal->getKapal()->first()->getDetailGolongan()->where('id_golongan',$request->id_golongan)->first()->jumlah;
                     
                     $jumlah_pembelian_golongan_saat_ini = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->first()->getPembelian()->whereDate('tanggal',$request->date)->where('id_golongan',$request->id_golongan)->where('status','terkonfirmasi')->get()->count();
@@ -117,9 +113,13 @@ class JadwalController extends Controller
                     
 
                     $carbon_jadwal = Carbon::parse($request->date." ".$jadwal->waktu_berangkat);
-                    if($sisa <= 0){
+                    if($golongan_exists == null){
                         $jadwals[$index]->isOrderable = false;
-                        $jadwals[$index]->status = "KAPASITAS FULL";
+                        $jadwals[$index]->status = "TIDAK SUPPORT GOLONGAN";
+                    }
+                    else if($sisa <= 0){
+                        $jadwals[$index]->isOrderable = false;
+                        $jadwals[$index]->status = "KAPASITAS KURANG / FULL";
                     }
                     else if(($carbon_jadwal->diffInMilliseconds($limit_waktu,false) > 0)){
                         $jadwals[$index]->isOrderable = false;
