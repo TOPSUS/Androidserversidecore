@@ -70,7 +70,7 @@ class JadwalController extends Controller
                     }
                     else if(($carbon_jadwal->diffInMilliseconds($limit_waktu,false) > 0)){
                         $jadwals[$index]->isOrderable = false;
-                        $jadwals[$index]->status = "SUDAH BERANGKAT";
+                        $jadwals[$index]->status = "MELEWATI LIMIT WAKTU";
                     }else{
                         $jadwals[$index]->isOrderable = true;
                         $jadwals[$index]->status = "BISA DIPESAN";
@@ -132,7 +132,7 @@ class JadwalController extends Controller
                     }
                     else if(($carbon_jadwal->diffInMilliseconds($limit_waktu,false) > 0)){
                         $jadwals[$index]->isOrderable = false;
-                        $jadwals[$index]->status = "SUDAH BERANGKAT";
+                        $jadwals[$index]->status = "MELEWATI LIMIT WAKTU";
                     }else{
                         $jadwals[$index]->isOrderable = true;
                         $jadwals[$index]->status = "BISA DIPESAN";
