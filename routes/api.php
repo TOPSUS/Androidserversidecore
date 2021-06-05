@@ -99,6 +99,10 @@ Route::group(['middleware' => 'auth:api'],function(){
             Route::post('/getjadwal','API\JadwalController@getJadwal');
         // AKHIR
 
+        // GET CARD
+            Route::post('/getcard','API\PemesananController@getAllCard');
+        // AKHIR
+
         // GET METODE PEMBAYARAN
             Route::post('/getmetodepembayaran','API\PemesananController@showMetodePembayaran');
         // AKHIR

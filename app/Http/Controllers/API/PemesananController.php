@@ -198,4 +198,17 @@ class PemesananController extends Controller
             ],200); 
         // AKHIR
     }
+
+    // METHOD UNTUK MENAMPILKAN CARD SISTEM
+    public function getAllCard(){
+        $cards = Card::all();
+
+        return response()->json([
+            'response_code' => 200,
+            'status' => 'success',
+            'message' => "berhasil mendapatkan semua card",
+            'error' => (Object)[],
+            'cards' => $cards
+        ],200);
+    }
 }
