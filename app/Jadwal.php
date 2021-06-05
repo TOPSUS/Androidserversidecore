@@ -39,9 +39,14 @@ class Jadwal extends Model
                         ->where('id_jadwal',$detail_jadwal->id)
                         ->whereDate("tanggal",$tanggal)->first();
         
-        $total_pembelian = $pembelian->getDetailPembelian()->count();
+        if($pembelian == null){
+            return 0;
+        }else{
+            $total_pembelian = $pembelian->getDetailPembelian()->count();
 
-        return $total_pembelian;
+            return $total_pembelian;
+        }
+
     }
 
     public function getTotalPembelianGolonganSaatIni($tanggal,$id_golongan){
