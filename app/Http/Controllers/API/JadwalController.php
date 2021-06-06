@@ -45,7 +45,7 @@ class JadwalController extends Controller
                                 $query->where('tipe_kapal',$request->tipe_kapal);
                             })
                             ->whereHas('getDetailJadwal',function($query) use ($nama_hari_pesanan){
-                                $query->where('hari',$nama_hari_pesanan);
+                                $query->where('hari',$nama_hari_pesanan)->where('status','aktif');
                             })
                             ->where('id_asal_pelabuhan',$request->id_asal_pelabuhan)
                             ->where('id_tujuan_pelabuhan',$request->id_tujuan_pelabuhan)
