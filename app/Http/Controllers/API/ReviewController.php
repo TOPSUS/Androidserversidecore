@@ -31,7 +31,8 @@ class ReviewController extends Controller
         }
 
         $pembelian = Pembelian::find($request->id);
-        $jadwal = $pembelian->getJadwal();
+        $jadwal = $pembelian->getDetailJadwal()->first();
+        $jadwal = $jadwal->getJadwal()->first();
         $poin = $jadwal->getKapal()->first()->poin;
         $pembelian->poin=$poin;
         $pembelian->update();

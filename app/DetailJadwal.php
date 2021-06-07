@@ -16,6 +16,6 @@ class DetailJadwal extends Model
     }
 
     public function getJadwal(){
-        return $this->hasOne('App\Jadwal','id','id_jadwal');
+        return $this->hasOne('App\Jadwal','id','id_jadwal')->withTrashed()->first();
     }
 }
