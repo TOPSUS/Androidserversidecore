@@ -17,6 +17,7 @@ use App\Golongan;
 use App\Http\Helper\NotificationHelper;
 use App\Http\Helper\MyDayNameTranslater;
 use Carbon\Carbon;
+use DB;
 
 class PemesananController extends Controller
 {
@@ -126,11 +127,15 @@ class PemesananController extends Controller
 
                     // SIMPAN KE DALAM DETAIL PEMBELIAN
                         foreach ($penumpang_decode as $index => $penumpang) {
+
+                            $statement = DB::select("SHOW TABLE STATUS LIKE 'users'");
+                            $nextId = $statement[0]->Auto_increment;
+
                             // MENCARI KODE CARD DENGAN ID
                             $card = Card::where('card',$penumpang->type_id_card)->first();
 
                             // MEMBUAT KODE TICKET
-                            $kode_tiket = date('Ymd').$pembelian->id;
+                            $kode_tiket = date('Ymd').$nextId;
 
                             if($card == null){
                                 $card = Card::find(1);
