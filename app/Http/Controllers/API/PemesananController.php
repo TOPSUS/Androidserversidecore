@@ -128,7 +128,7 @@ class PemesananController extends Controller
                     // SIMPAN KE DALAM DETAIL PEMBELIAN
                         foreach ($penumpang_decode as $index => $penumpang) {
 
-                            $statement = DB::select("SHOW TABLE STATUS LIKE 'users'");
+                            $statement = DB::select("SHOW TABLE STATUS LIKE 'tb_detail_pembelian'");
                             $nextId = $statement[0]->Auto_increment;
 
                             // MENCARI KODE CARD DENGAN ID
