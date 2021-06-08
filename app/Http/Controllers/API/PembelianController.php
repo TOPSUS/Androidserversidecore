@@ -98,10 +98,13 @@ class PembelianController extends Controller
 
         //GET PEMBELIAN
         $pembelian = Pembelian::where('id', $request->id)->first();
+        
+        $metode_pembayaran_waktu = $pembelian->getPembayaran();
+
         //getSisaWaktu
         $sisaWaktu = $pembelian->created_at->format('Y-m-d H:i:s');
         $sisaWaktu = Carbon::createFromFormat('Y-m-d H:i:s', $sisaWaktu)
-            ->addMinutes(120)->format('Y-m-d H:i:s');
+            ->addSeconds($metode_pembayaran_waktu->payment_limit)->format('Y-m-d H:i:s');
         $sisaWaktu = Carbon::now()->diffInMilliseconds($sisaWaktu, false);
         if ($pembelian->status != "menunggu pembayaran") {
             $sisaWaktu = 0;
