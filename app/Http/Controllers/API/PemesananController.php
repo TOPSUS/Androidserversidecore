@@ -118,7 +118,7 @@ class PemesananController extends Controller
                             $pembelian->total_harga = $golongan->harga;
                             $pembelian->id_golongan = $request->id_golongan;
                             $pembelian->nomor_polisi = $request->nomor_polisi;
-                        }else{
+                        }else if($request->tipe_kapal == 'feri' && $request->id_golongan == null){
                             $golongan_penumpang = Golongan::where('id_pelabuhan',$jadwal->id_asal_pelabuhan)->where('golongan','golongan penumpang')->first();
 
                             if($golongan_penumpang == null){
@@ -131,6 +131,15 @@ class PemesananController extends Controller
                             }
 
                             $pembelian->total_harga = $golongan->harga * count($penumpang_decode);
+                        }else if($request->tipe_kapal = 'speedboat'){
+                            $pembelian->total_harga = $speedboat->harga;
+                        }else{
+                            return response()->json([
+                                'response_code' => 401,
+                                'status' => 'failure',
+                                'message' => 'Kesalahan Sistem Pemesanan Controller',
+                                'error' => (Object)[],
+                            ],200);
                         }
 
                         $pembelian->save();
