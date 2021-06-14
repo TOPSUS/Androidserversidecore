@@ -110,7 +110,7 @@ class PemesananController extends Controller
                                 return response()->json([
                                     'response_code' => 401,
                                     'status' => 'failure',
-                                    'message' => 'Tidak ditemukan  golongan yang dimaksud',
+                                    'message' => 'Tidak ditemukan golongan yang dimaksud',
                                     'error' => (Object)[],
                                 ],200);
                             }
@@ -119,7 +119,18 @@ class PemesananController extends Controller
                             $pembelian->id_golongan = $request->id_golongan;
                             $pembelian->nomor_polisi = $request->nomor_polisi;
                         }else{
-                            $pembelian->total_harga = $jadwal->harga * count($penumpang_decode);
+                            $golongan_penumpang = Golongan::where('id_pelabuhan',$jadwal->id_asal_pelabuhan)->where('golongan','nama_golongan')->first();
+
+                            if($golongan_penumpang == null){
+                                return response()->json([
+                                    'response_code' => 401,
+                                    'status' => 'failure',
+                                    'message' => 'Tidak ditemukan golongan yang dimaksud',
+                                    'error' => (Object)[],
+                                ],200);
+                            }
+
+                            $pembelian->total_harga = $golongan->harga * count($penumpang_decode);
                         }
 
                         $pembelian->save();
@@ -152,7 +163,7 @@ class PemesananController extends Controller
                             if($request->tipe_kapal == 'feri' && $request->id_golongan != null){
                                 $detail_pembelian->harga = 0;
                             }else{
-                                $detail_pembelian->harga = $jadwal->harga;
+                                $detail_pembelian->harga = $golongan->harga;
                             }
 
                             $detail_pembelian->status = "Not Used";
