@@ -105,7 +105,7 @@ class JadwalController extends Controller
 
                         // UBAH SISA VARIABLE
                         $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini($request->date);
-                        $detail_golongan = $golongan_penumpang->getDetailGolongan()->where('id_kapal',$speedboat->id)->first();
+                        $detail_golongan = $speedboat->getDetailGolongan()->where('id_golongan',$golongan_penumpang->id)->firstOrFail();
 
                         if($detail_golongan == null){
                             $jadwals[$index]->isOrderable = false;
