@@ -65,13 +65,13 @@ class JadwalController extends Controller
                     $sisa = ($speedboat->kapasitas - $pemesanan_saat_ini);
 
                     try{
-                        $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaAsal()->firstOrFail();
+                        $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaAsal()->firstOrFail()->nama_dermaga;
                     }catch(ModelNotFoundException  $error){
                         $safe_dermaga_asal = "Dermaga Utama";
                     }
 
                     try{
-                        $safe_dermaga_tujuan = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaTujuan()->firstOrFail();
+                        $safe_dermaga_tujuan = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaTujuan()->firstOrFail()->nama_dermaga;
                     }catch(ModelNotFoundException  $error){
                         $safe_dermaga_tujuan = "Dermaga Utama";
                     }
@@ -117,13 +117,13 @@ class JadwalController extends Controller
                     $golongan_exists = $jadwal->getKapal()->first()->getDetailGolongan()->where('id',$request->id_golongan)->first();
 
                     try{
-                        $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaAsal()->firstOrFail();
+                        $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaAsal()->firstOrFail()->nama_dermaga;
                     }catch(ModelNotFoundException $error){
                         $safe_dermaga_asal = "Dermaga Utama";
                     }
 
                     try{
-                        $safe_dermaga_tujuan = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaTujuan()->firstOrFail();
+                        $safe_dermaga_tujuan = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaTujuan()->firstOrFail()->nama_dermaga;
                     }catch(ModelNotFoundException $error){
                         $safe_dermaga_tujuan = "Dermaga Utama";
                     }
