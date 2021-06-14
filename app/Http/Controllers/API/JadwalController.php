@@ -76,6 +76,9 @@ class JadwalController extends Controller
                     //     $safe_dermaga_tujuan = "Dermaga Utama";
                     //     return "masuk 2";
                     // }
+                
+                    // $jadwals[$index]->dermaga_asal = $safe_dermaga_asal;
+                    // $jadwals[$index]->dermaga_tujuan = $safe_dermaga_tujuan;
 
                     if((($speedboat->kapasitas - $pemesanan_saat_ini) - $request->jumlah_penumpang) <= 0){
                         $jadwals[$index]->isOrderable = false;
@@ -88,9 +91,6 @@ class JadwalController extends Controller
                         $jadwals[$index]->isOrderable = true;
                         $jadwals[$index]->status = "BISA DIPESAN";
                     }
-
-                    $jadwals[$index]->dermaga_asal = $safe_dermaga_asal;
-                    $jadwals[$index]->dermaga_tujuan = $safe_dermaga_tujuan;
 
                     $jadwals[$index]->pelabuhan_asal_nama = $pelabuhan_asal->nama_pelabuhan;
                     $jadwals[$index]->pelabuhan_asal_kode = $pelabuhan_asal->kode_pelabuhan;
@@ -131,8 +131,8 @@ class JadwalController extends Controller
                     //     return "masuk 4";
                     // }
 
-                    $jadwals[$index]->dermaga_asal = $safe_dermaga_asal;
-                    $jadwals[$index]->dermaga_tujuan = $safe_dermaga_tujuan;
+                    // $jadwals[$index]->dermaga_asal = $safe_dermaga_asal;
+                    // $jadwals[$index]->dermaga_tujuan = $safe_dermaga_tujuan;
                     
                     if($golongan_exists != null){
                         $max_jumlah_golongan = $jadwal->getKapal()->first()->getDetailGolongan()->where('id_golongan',$request->id_golongan)->first()->jumlah;
