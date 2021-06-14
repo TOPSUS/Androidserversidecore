@@ -63,17 +63,13 @@ class JadwalController extends Controller
                     $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini($request->date);
                     $sisa = ($speedboat->kapasitas - $pemesanan_saat_ini);
 
-                    try{
+                    
                         $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaAsal()->firstOrFail();
-                    }catch(Exception $error){
-                        dd($error);
-                    }
+            
 
-                    try{
+                    
                         $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaTujuan()->firstOrFail();
-                    }catch(Exception $error){
-                        dd($error);
-                    }
+                    
                 
                     $jadwals[$index]->dermaga_asal = $safe_dermaga_asal;
                     $jadwals[$index]->dermaga_tujuan = $safe_dermaga_tujuan;
@@ -115,17 +111,12 @@ class JadwalController extends Controller
 
                     $golongan_exists = $jadwal->getKapal()->first()->getDetailGolongan()->where('id',$request->id_golongan)->first();
 
-                    try{
+                    
                         $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaAsal()->firstOrFail();
-                    }catch(Exception $error){
-                        dd($error);
-                    }
+                    
 
-                    try{
+                    
                         $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaTujuan()->firstOrFail();
-                    }catch(Exception $error){
-                        dd($error);
-                    }
 
                     $jadwals[$index]->dermaga_asal = $safe_dermaga_asal;
                     $jadwals[$index]->dermaga_tujuan = $safe_dermaga_tujuan;
