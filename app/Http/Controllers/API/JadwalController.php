@@ -136,9 +136,9 @@ class JadwalController extends Controller
                     
                     try{
                         $golongan = Golongan::findOrFail($request->id_golongan);
-                        $jadwals[$index] = $golongan->harga;
+                        $jadwals[$index]->harga = $golongan->harga;
                     }catch(ModalNotFoundException $error){
-                        $jadwals[$index] = 0;
+                        $jadwals[$index]->harga = 0;
                     }
                     
                     $detail_golongan_exists = $jadwal->getKapal()->first()->getDetailGolongan()->where('id',$request->id_golongan)->first();
@@ -154,9 +154,6 @@ class JadwalController extends Controller
                     }catch(ModelNotFoundException $error){
                         $safe_dermaga_tujuan = "Dermaga Utama";
                     }
-
-                    $jadwals[$index]->dermaga_asal = $safe_dermaga_asal;
-                    return $jadwals[$index];
                     
                     $jadwals[$index]->dermaga_asal = $safe_dermaga_asal;
                     $jadwals[$index]->dermaga_tujuan = $safe_dermaga_tujuan;
