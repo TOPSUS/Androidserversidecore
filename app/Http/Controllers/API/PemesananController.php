@@ -130,7 +130,7 @@ class PemesananController extends Controller
                                 ],200);
                             }
 
-                            $pembelian->total_harga = $golongan->harga * count($penumpang_decode);
+                            $pembelian->total_harga = $golongan_penumpang->harga * count($penumpang_decode);
                         }else if($request->tipe_kapal = 'speedboat'){
                             $pembelian->total_harga = $speedboat->harga_tiket * count($penumpang_decode);
                         }else{
