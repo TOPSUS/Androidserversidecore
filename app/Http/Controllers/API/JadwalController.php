@@ -154,9 +154,9 @@ class JadwalController extends Controller
                     }catch(ModelNotFoundException $error){
                         $safe_dermaga_tujuan = "Dermaga Utama";
                     }
-                    return $safe_dermaga_asal;
-                    $jadwals[$index]->dermaga_asal = $safe_dermaga_asal;
-                    $jadwals[$index]->dermaga_tujuan = $safe_dermaga_tujuan;
+                    
+                    // $jadwals[$index]->dermaga_asal = $safe_dermaga_asal;
+                    // $jadwals[$index]->dermaga_tujuan = $safe_dermaga_tujuan;
                     
                     if($detail_golongan_exists != null){
                         $max_jumlah_golongan = $jadwal->getKapal()->first()->getDetailGolongan()->where('id_golongan',$request->id_golongan)->first()->jumlah;
