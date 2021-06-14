@@ -66,15 +66,13 @@ class JadwalController extends Controller
                     try{
                         $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaAsal()->firstOrFail();
                     }catch(Exception $error){
-                        $safe_dermaga_asal = "Dermaga Utama";
-                        return "masuk 1";
+                        dd($error);
                     }
 
                     try{
                         $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaTujuan()->firstOrFail();
                     }catch(Exception $error){
-                        $safe_dermaga_tujuan = "Dermaga Utama";
-                        return "masuk 2";
+                        dd($error);
                     }
                 
                     $jadwals[$index]->dermaga_asal = $safe_dermaga_asal;
@@ -120,15 +118,13 @@ class JadwalController extends Controller
                     try{
                         $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaAsal()->firstOrFail();
                     }catch(Exception $error){
-                        $safe_dermaga_asal = "Dermaga Utama";
-                        return "masuk 3";
+                        dd($error);
                     }
 
                     try{
                         $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaTujuan()->firstOrFail();
                     }catch(Exception $error){
-                        $safe_dermaga_tujuan = "Dermaga Utama";
-                        return "masuk 4";
+                        dd($error);
                     }
 
                     $jadwals[$index]->dermaga_asal = $safe_dermaga_asal;
