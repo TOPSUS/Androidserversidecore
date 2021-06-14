@@ -172,7 +172,7 @@ class PemesananController extends Controller
                             if($request->tipe_kapal == 'feri' && $request->id_golongan != null){
                                 $detail_pembelian->harga = 0;
                             }else{
-                                $detail_pembelian->harga = $golongan->harga;
+                                $detail_pembelian->harga = 0;
                             }
 
                             $detail_pembelian->status = "Not Used";
