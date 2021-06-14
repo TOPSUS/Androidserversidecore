@@ -132,7 +132,7 @@ class PemesananController extends Controller
 
                             $pembelian->total_harga = $golongan->harga * count($penumpang_decode);
                         }else if($request->tipe_kapal = 'speedboat'){
-                            $pembelian->total_harga = $speedboat->harga;
+                            $pembelian->total_harga = $speedboat->harga_tiket;
                         }else{
                             return response()->json([
                                 'response_code' => 401,
@@ -175,7 +175,7 @@ class PemesananController extends Controller
                             }else if($request->tipe_kapal == 'feri' && $request->id_golongan == null){
                                 $detail_pembelian->harga = $golongan_penumpang->harga;
                             }else if($request->tipe_kapal == "speedboat"){
-                                $detail_pembelian->harga = $speedboat->harga;
+                                $detail_pembelian->harga = $speedboat->harga_tiket;
                             }
 
                             $detail_pembelian->status = "Not Used";
