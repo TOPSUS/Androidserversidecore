@@ -133,7 +133,9 @@ class JadwalController extends Controller
             }
         }else{     
                 foreach ($jadwals as $index => $jadwal) {
+                    $jadwals[$index]->dermaga_asal = "ngentot";
                     return $jadwals[$index];
+
                     
                     try{
                         $golongan = Golongan::findOrFail($request->id_golongan);
