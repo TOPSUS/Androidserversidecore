@@ -132,7 +132,7 @@ class PemesananController extends Controller
 
                             $pembelian->total_harga = $golongan->harga * count($penumpang_decode);
                         }else if($request->tipe_kapal = 'speedboat'){
-                            $pembelian->total_harga = $speedboat->harga_tiket;
+                            $pembelian->total_harga = $speedboat->harga_tiket * count($penumpang_decode);
                         }else{
                             return response()->json([
                                 'response_code' => 401,
