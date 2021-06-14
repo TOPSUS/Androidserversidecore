@@ -18,4 +18,12 @@ class DetailJadwal extends Model
     public function getJadwal(){
         return $this->hasOne('App\Jadwal','id','id_jadwal')->withTrashed()->first();
     }
+
+    public function getDermagaAsal(){
+        return $this->belongsTo('App\Dermaga','id_dermaga_asal','id');
+    }
+
+    public function getDermagaTujuan(){
+        return $this->belongsTo('App\Dermaga','id_dermaga_tujuan','id');
+    }
 }

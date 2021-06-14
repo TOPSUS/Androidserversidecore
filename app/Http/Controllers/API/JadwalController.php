@@ -52,10 +52,9 @@ class JadwalController extends Controller
                             ->orderBy('waktu_berangkat',"DESC")
                             ->get();
 
-
-        // JADWAL YANG DICARI ADALAH JADWAL SESUAI tipe_kapal / TIPE KAPAL DAN BATAS WAKTU 2 JAM
         if($request->id_golongan == null){
             foreach ($jadwals as $index => $jadwal) {
+
                     $carbon_jadwal = Carbon::parse($request->date." ".$jadwal->waktu_berangkat);
                     
                     $pelabuhan_asal = $jadwal->getPelabuhanAsal();
@@ -63,6 +62,18 @@ class JadwalController extends Controller
                     $speedboat = $jadwal->getKapal()->first();
                     $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini($request->date);
                     $sisa = ($speedboat->kapasitas - $pemesanan_saat_ini);
+
+                    try{
+                        $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaAsal()->firstOrFail();
+                    }catch(Exception $error){
+                        $safe_dermaga_asal = "Dermaga Utama";
+                    }
+
+                    try{
+                        $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaTujuan()->firstOrFail();
+                    }catch(Exception $error){
+                        $safe_dermaga_tujuan = "Dermaga Utama";
+                    }
 
                     if((($speedboat->kapasitas - $pemesanan_saat_ini) - $request->jumlah_penumpang) <= 0){
                         $jadwals[$index]->isOrderable = false;
@@ -75,6 +86,9 @@ class JadwalController extends Controller
                         $jadwals[$index]->isOrderable = true;
                         $jadwals[$index]->status = "BISA DIPESAN";
                     }
+
+                    $jadwals[$index]->dermaga_asal = $safe_dermaga_asal;
+                    $jadwals[$index]->dermaga_tujuan = $safe_dermaga_tujuan;
 
                     $jadwals[$index]->pelabuhan_asal_nama = $pelabuhan_asal->nama_pelabuhan;
                     $jadwals[$index]->pelabuhan_asal_kode = $pelabuhan_asal->kode_pelabuhan;
@@ -100,6 +114,21 @@ class JadwalController extends Controller
                 foreach ($jadwals as $index => $jadwal) {
 
                     $golongan_exists = $jadwal->getKapal()->first()->getDetailGolongan()->where('id',$request->id_golongan)->first();
+
+                    try{
+                        $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaAsal()->firstOrFail();
+                    }catch(Exception $error){
+                        $safe_dermaga_asal = "Dermaga Utama";
+                    }
+
+                    try{
+                        $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaTujuan()->firstOrFail();
+                    }catch(Exception $error){
+                        $safe_dermaga_tujuan = "Dermaga Utama";
+                    }
+
+                    $jadwals[$index]->dermaga_asal = $safe_dermaga_asal;
+                    $jadwals[$index]->dermaga_tujuan = $safe_dermaga_tujuan;
                     
                     if($golongan_exists != null){
                         $max_jumlah_golongan = $jadwal->getKapal()->first()->getDetailGolongan()->where('id_golongan',$request->id_golongan)->first()->jumlah;
