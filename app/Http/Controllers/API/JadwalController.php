@@ -63,19 +63,19 @@ class JadwalController extends Controller
                     $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini($request->date);
                     $sisa = ($speedboat->kapasitas - $pemesanan_saat_ini);
 
-                    try{
+                    // try{
                         $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaAsal()->firstOrFail();
-                    }catch(Exception $error){
-                        $safe_dermaga_asal = "Dermaga Utama";
-                        return "masuk 1";
-                    }
+                    // }catch(Exception $error){
+                    //     $safe_dermaga_asal = "Dermaga Utama";
+                    //     return "masuk 1";
+                    // }
 
-                    try{
+                    // try{
                         $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaTujuan()->firstOrFail();
-                    }catch(Exception $error){
-                        $safe_dermaga_tujuan = "Dermaga Utama";
-                        return "masuk 2";
-                    }
+                    // }catch(Exception $error){
+                    //     $safe_dermaga_tujuan = "Dermaga Utama";
+                    //     return "masuk 2";
+                    // }
 
                     if((($speedboat->kapasitas - $pemesanan_saat_ini) - $request->jumlah_penumpang) <= 0){
                         $jadwals[$index]->isOrderable = false;
@@ -117,19 +117,19 @@ class JadwalController extends Controller
 
                     $golongan_exists = $jadwal->getKapal()->first()->getDetailGolongan()->where('id',$request->id_golongan)->first();
 
-                    try{
+                    // try{
                         $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaAsal()->firstOrFail();
-                    }catch(Exception $error){
-                        $safe_dermaga_asal = "Dermaga Utama";
-                        return "masuk 3";
-                    }
+                    // }catch(Exception $error){
+                    //     $safe_dermaga_asal = "Dermaga Utama";
+                    //     return "masuk 3";
+                    // }
 
-                    try{
+                    // try{
                         $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaTujuan()->firstOrFail();
-                    }catch(Exception $error){
-                        $safe_dermaga_tujuan = "Dermaga Utama";
-                        return "masuk 4";
-                    }
+                    // }catch(Exception $error){
+                    //     $safe_dermaga_tujuan = "Dermaga Utama";
+                    //     return "masuk 4";
+                    // }
 
                     $jadwals[$index]->dermaga_asal = $safe_dermaga_asal;
                     $jadwals[$index]->dermaga_tujuan = $safe_dermaga_tujuan;
