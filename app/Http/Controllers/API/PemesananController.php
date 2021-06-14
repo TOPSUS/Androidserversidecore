@@ -119,7 +119,7 @@ class PemesananController extends Controller
                             $pembelian->id_golongan = $request->id_golongan;
                             $pembelian->nomor_polisi = $request->nomor_polisi;
                         }else{
-                            $golongan_penumpang = Golongan::where('id_pelabuhan',$jadwal->id_asal_pelabuhan)->where('golongan','nama_golongan')->first();
+                            $golongan_penumpang = Golongan::where('id_pelabuhan',$jadwal->id_asal_pelabuhan)->where('golongan','golongan penumpang')->first();
 
                             if($golongan_penumpang == null){
                                 return response()->json([
