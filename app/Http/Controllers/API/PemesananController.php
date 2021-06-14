@@ -174,8 +174,8 @@ class PemesananController extends Controller
                                 $detail_pembelian->harga = 0;
                             }else if($request->tipe_kapal == 'feri' && $request->id_golongan == null){
                                 $detail_pembelian->harga = $golongan_penumpang->harga;
-                            }else($request->tipe_kapal == "speedboat"){
-                                $detail_pembelian->harga =$speedboat->harga;
+                            }else if($request->tipe_kapal == "speedboat"){
+                                $detail_pembelian->harga = $speedboat->harga;
                             }
 
                             $detail_pembelian->status = "Not Used";
