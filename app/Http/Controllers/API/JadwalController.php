@@ -95,7 +95,7 @@ class JadwalController extends Controller
                     if($request->tipe_kapal == "speedboat"){
                         if($speedboat->harga_ticket == null){
                             $jadwals[$index]->isOrderable = false;
-                            $jadwals[$index]->status = "HARGA BELUM DIATUR";
+                            $jadwals[$index]->status = $speedboat->nama_kapal;
                             $jadwals[$index]->harga = 0;
                         }else{
                             $jadwals[$index]->harga = $speedboat->harga_ticket;
@@ -140,6 +140,7 @@ class JadwalController extends Controller
                     }catch(ModalNotFoundException $error){
                         $jadwals[$index] = 0;
                     }
+
                     $detail_golongan_exists = $jadwal->getKapal()->first()->getDetailGolongan()->where('id',$request->id_golongan)->first();
 
                     try{
