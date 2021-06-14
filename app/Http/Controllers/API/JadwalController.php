@@ -71,7 +71,7 @@ class JadwalController extends Controller
                     }
 
                     try{
-                        $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaTujuan()->firstOrFail();
+                        $safe_dermaga_tujuan = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaTujuan()->firstOrFail();
                     }catch(ModelNotFoundException  $error){
                         $safe_dermaga_tujuan = "Dermaga Utama";
                     }
@@ -123,7 +123,7 @@ class JadwalController extends Controller
                     }
 
                     try{
-                        $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaTujuan()->firstOrFail();
+                        $safe_dermaga_tujuan = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaTujuan()->firstOrFail();
                     }catch(ModelNotFoundException $error){
                         $safe_dermaga_tujuan = "Dermaga Utama";
                     }
