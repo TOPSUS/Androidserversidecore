@@ -96,7 +96,9 @@ Route::group(['middleware' => 'auth:api'],function(){
 
     // PROSES TRANSAKSI
         // GET JADWAL
-            Route::post('/getjadwal','API\JadwalController@getJadwal');
+            Route::post('/getjadwal',function(){
+                return "tot";
+            });
         // AKHIR
 
         // GET CARD
