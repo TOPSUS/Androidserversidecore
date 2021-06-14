@@ -63,7 +63,7 @@ class JadwalController extends Controller
                     $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
                     $speedboat = $jadwal->getKapal()->first();
                     $detail_jadwal =  $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->first();
-
+                    return $detail_jadwal;
                     try{
                         $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaAsal()->firstOrFail()->nama_dermaga;
                     }catch(ModelNotFoundException  $error){
