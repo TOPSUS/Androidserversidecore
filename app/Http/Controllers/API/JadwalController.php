@@ -154,7 +154,7 @@ class JadwalController extends Controller
                     }catch(ModelNotFoundException $error){
                         $safe_dermaga_tujuan = "Dermaga Utama";
                     }
-
+                    return $safe_dermaga_asal;
                     $jadwals[$index]->dermaga_asal = $safe_dermaga_asal;
                     $jadwals[$index]->dermaga_tujuan = $safe_dermaga_tujuan;
                     
