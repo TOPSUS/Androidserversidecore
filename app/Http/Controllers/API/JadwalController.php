@@ -133,6 +133,7 @@ class JadwalController extends Controller
             }
         }else{     
                 foreach ($jadwals as $index => $jadwal) {
+                    return $jadwals[$index];
                     
                     try{
                         $golongan = Golongan::findOrFail($request->id_golongan);
@@ -155,8 +156,8 @@ class JadwalController extends Controller
                         $safe_dermaga_tujuan = "Dermaga Utama";
                     }
                     
-                    // $jadwals[$index]->dermaga_asal = $safe_dermaga_asal;
-                    // $jadwals[$index]->dermaga_tujuan = $safe_dermaga_tujuan;
+                    $jadwals[$index]->dermaga_asal = $safe_dermaga_asal;
+                    $jadwals[$index]->dermaga_tujuan = $safe_dermaga_tujuan;
                     
                     if($detail_golongan_exists != null){
                         $max_jumlah_golongan = $jadwal->getKapal()->first()->getDetailGolongan()->where('id_golongan',$request->id_golongan)->first()->jumlah;
