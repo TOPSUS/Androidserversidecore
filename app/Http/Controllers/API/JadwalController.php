@@ -62,8 +62,7 @@ class JadwalController extends Controller
                     $pelabuhan_asal = $jadwal->getPelabuhanAsal();
                     $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
                     $speedboat = $jadwal->getKapal()->first();
-                    $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini($request->date);
-                    $sisa = ($speedboat->kapasitas - $pemesanan_saat_ini);
+                    $detail_jadwal =  $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->first();
 
                     try{
                         $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaAsal()->firstOrFail()->nama_dermaga;
@@ -100,6 +99,13 @@ class JadwalController extends Controller
                         }else{
                             $jadwals[$index]->harga = $speedboat->harga_tiket;
                         }
+
+                        $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini($request->date);
+                        $sisa = ($speedboat->kapasitas - $pemesanan_saat_ini);
+
+                        $jadwals[$index]->kapasitas = $speedboat->kapasitas;
+                        $jadwals[$index]->pemesanan_saat_ini = $pemesanan_saat_ini;
+                        $jadwals[$index]->sisa = $sisa;
                     }else{
                         try{
                             $golongan_penumpang = Golongan::where('id_pelabuhan',$pelabuhan_asal->id)->where('golongan','golongan penumpang')->firstOrFail();
@@ -109,6 +115,15 @@ class JadwalController extends Controller
                             $jadwals[$index]->harga = 0;
                             $jadwals[$index]->status = "TIDAK SUPPORT GOLONGAN";
                         }
+
+                        // UBAH SISA VARIABLE
+                        $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini($request->date);
+                        
+                        $sisa = ($detail_jadwal->jumlah - $pemesanan_saat_ini);
+
+                        $jadwals[$index]->kapasitas = $detail_jadwal->jumlah;
+                        $jadwals[$index]->pemesanan_saat_ini = $pemesanan_saat_ini;
+                        $jadwals[$index]->sisa = $sisa;
                     }
 
                     $jadwals[$index]->pelabuhan_asal_nama = $pelabuhan_asal->nama_pelabuhan;
@@ -118,9 +133,6 @@ class JadwalController extends Controller
                     $jadwals[$index]->pelabuhan_tujuan_kode = $pelabuhan_tujuan->kode_pelabuhan;
                 
                     $jadwals[$index]->nama_speedboat = $speedboat->nama_kapal;
-                    $jadwals[$index]->kapasitas = $speedboat->kapasitas;
-                    $jadwals[$index]->pemesanan_saat_ini = $pemesanan_saat_ini;
-                    $jadwals[$index]->sisa = $sisa;
                     $jadwals[$index]->deskripsi_boat = $speedboat->deskripsi;
                     $jadwals[$index]->foto_boat = $speedboat->foto;
                     $jadwals[$index]->contact_service = $speedboat->contact_service;
