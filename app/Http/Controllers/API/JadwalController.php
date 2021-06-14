@@ -62,8 +62,7 @@ class JadwalController extends Controller
                     $pelabuhan_asal = $jadwal->getPelabuhanAsal();
                     $pelabuhan_tujuan = $jadwal->getPelabuhanTujuan();
                     $speedboat = $jadwal->getKapal()->first();
-                    $detail_jadwal =  $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->first();
-                    return $detail_jadwal;
+                    
                     try{
                         $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaAsal()->firstOrFail()->nama_dermaga;
                     }catch(ModelNotFoundException  $error){
@@ -106,12 +105,23 @@ class JadwalController extends Controller
 
                         // UBAH SISA VARIABLE
                         $pemesanan_saat_ini = $jadwal->getTotalPembelianSaatini($request->date);
-                        
-                        $sisa = ($detail_jadwal->jumlah - $pemesanan_saat_ini);
+                        $detail_golongan = $golongan_penumpang->getDetailGolongan()->where('id_kapal',$speedboat->id)->first();
 
-                        $jadwals[$index]->kapasitas = $detail_jadwal->jumlah;
-                        $jadwals[$index]->pemesanan_saat_ini = $pemesanan_saat_ini;
-                        $jadwals[$index]->sisa = $sisa;
+                        if($detail_golongan == null){
+                            $jadwals[$index]->isOrderable = false;
+                            $jadwals[$index]->harga = 0;
+                            $jadwals[$index]->status = "TIDAK SUPPORT GOLONGAN";
+
+                            $jadwals[$index]->kapasitas = 0;
+                            $jadwals[$index]->pemesanan_saat_ini = 0;
+                            $jadwals[$index]->sisa = 0;
+                        }else{
+                            $sisa = ($detail_golongan->jumlah - $pemesanan_saat_ini);
+
+                            $jadwals[$index]->kapasitas = $detail_golongan->jumlah;
+                            $jadwals[$index]->pemesanan_saat_ini = $pemesanan_saat_ini;
+                            $jadwals[$index]->sisa = $sisa;
+                        }
                     }
 
                     
