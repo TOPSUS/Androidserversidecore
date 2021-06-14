@@ -78,18 +78,6 @@ class JadwalController extends Controller
                 
                     $jadwals[$index]->dermaga_asal = $safe_dermaga_asal;
                     $jadwals[$index]->dermaga_tujuan = $safe_dermaga_tujuan;
-
-                    if((($speedboat->kapasitas - $pemesanan_saat_ini) - $request->jumlah_penumpang) <= 0){
-                        $jadwals[$index]->isOrderable = false;
-                        $jadwals[$index]->status = "KAPASITAS FULL / KURANG";
-                    }
-                    else if(($carbon_jadwal->diffInMilliseconds($limit_waktu,false) > 0)){
-                        $jadwals[$index]->isOrderable = false;
-                        $jadwals[$index]->status = "MELEWATI LIMIT WAKTU";
-                    }else{
-                        $jadwals[$index]->isOrderable = true;
-                        $jadwals[$index]->status = "BISA DIPESAN";
-                    }
                     
                     if($request->tipe_kapal == "speedboat"){
                         if($speedboat->harga_tiket == null){
@@ -124,6 +112,19 @@ class JadwalController extends Controller
                         $jadwals[$index]->kapasitas = $detail_jadwal->jumlah;
                         $jadwals[$index]->pemesanan_saat_ini = $pemesanan_saat_ini;
                         $jadwals[$index]->sisa = $sisa;
+                    }
+
+                    
+                    if((($speedboat->kapasitas - $pemesanan_saat_ini) - $request->jumlah_penumpang) <= 0){
+                        $jadwals[$index]->isOrderable = false;
+                        $jadwals[$index]->status = "KAPASITAS FULL / KURANG";
+                    }
+                    else if(($carbon_jadwal->diffInMilliseconds($limit_waktu,false) > 0)){
+                        $jadwals[$index]->isOrderable = false;
+                        $jadwals[$index]->status = "MELEWATI LIMIT WAKTU";
+                    }else{
+                        $jadwals[$index]->isOrderable = true;
+                        $jadwals[$index]->status = "BISA DIPESAN";
                     }
 
                     $jadwals[$index]->pelabuhan_asal_nama = $pelabuhan_asal->nama_pelabuhan;
