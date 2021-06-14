@@ -67,12 +67,14 @@ class JadwalController extends Controller
                         $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaAsal()->firstOrFail();
                     }catch(Exception $error){
                         $safe_dermaga_asal = "Dermaga Utama";
+                        return "masuk 1";
                     }
 
                     try{
                         $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaTujuan()->firstOrFail();
                     }catch(Exception $error){
                         $safe_dermaga_tujuan = "Dermaga Utama";
+                        return "masuk 2";
                     }
 
                     if((($speedboat->kapasitas - $pemesanan_saat_ini) - $request->jumlah_penumpang) <= 0){
@@ -119,12 +121,14 @@ class JadwalController extends Controller
                         $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaAsal()->firstOrFail();
                     }catch(Exception $error){
                         $safe_dermaga_asal = "Dermaga Utama";
+                        return "masuk 3";
                     }
 
                     try{
                         $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaTujuan()->firstOrFail();
                     }catch(Exception $error){
                         $safe_dermaga_tujuan = "Dermaga Utama";
+                        return "masuk 4";
                     }
 
                     $jadwals[$index]->dermaga_asal = $safe_dermaga_asal;
