@@ -9,6 +9,7 @@ use App\Http\Helper\MyDayNameTranslater;
 use Carbon\Carbon;
 use App\Jadwal;
 use App\DetailJadwal;
+use App\Golongan;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class JadwalController extends Controller
@@ -90,6 +91,25 @@ class JadwalController extends Controller
                         $jadwals[$index]->isOrderable = true;
                         $jadwals[$index]->status = "BISA DIPESAN";
                     }
+                    
+                    if($request->tipe_kapal == "speedboat"){
+                        if($speedboat->harga_ticket == null){
+                            $jadwals[$index]->isOrderable = false;
+                            $jadwals[$index]->status = "HARGA BELUM DIATUR";
+                            $jadwals[$index]->harga = 0;
+                        }else{
+                            $jadwals[$index]->harga = $speedboat->harga_ticket;
+                        }
+                    }else{
+                        try{
+                            $golongan_penumpang = Golongan::where('id_pelabuhan',$pelabuhan_asal->id)->where('golongan','golongan penumpang')->firstOrFail();
+                            $jadwals[$index]->harga = $golongan_penumpang->harga;
+                        }catch(ModelNotFoundException  $error){
+                            $jadwals[$index]->isOrderable = false;
+                            $jadwals[$index]->harga = 0;
+                            $jadwals[$index]->status = "TIDAK SUPPORT GOLONGAN";
+                        }
+                    }
 
                     $jadwals[$index]->pelabuhan_asal_nama = $pelabuhan_asal->nama_pelabuhan;
                     $jadwals[$index]->pelabuhan_asal_kode = $pelabuhan_asal->kode_pelabuhan;
@@ -113,8 +133,14 @@ class JadwalController extends Controller
             }
         }else{     
                 foreach ($jadwals as $index => $jadwal) {
-
-                    $golongan_exists = $jadwal->getKapal()->first()->getDetailGolongan()->where('id',$request->id_golongan)->first();
+                    
+                    try{
+                        $golongan = Golongan::findOrFail($request->id_golongan);
+                        $jadwals[$index] = $golongan->harga;
+                    }catch(ModalNotFoundException $error){
+                        $jadwals[$index] = 0;
+                    }
+                    $detail_golongan_exists = $jadwal->getKapal()->first()->getDetailGolongan()->where('id',$request->id_golongan)->first();
 
                     try{
                         $safe_dermaga_asal = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->firstOrFail()->getDermagaAsal()->firstOrFail()->nama_dermaga;
@@ -131,7 +157,7 @@ class JadwalController extends Controller
                     $jadwals[$index]->dermaga_asal = $safe_dermaga_asal;
                     $jadwals[$index]->dermaga_tujuan = $safe_dermaga_tujuan;
                     
-                    if($golongan_exists != null){
+                    if($detail_golongan_exists != null){
                         $max_jumlah_golongan = $jadwal->getKapal()->first()->getDetailGolongan()->where('id_golongan',$request->id_golongan)->first()->jumlah;
                     
                         $jumlah_pembelian_golongan_saat_ini = $jadwal->getDetailJadwal()->where('hari',$nama_hari_pesanan)->first()->getPembelian()->whereDate('tanggal',$request->date)->where('id_golongan',$request->id_golongan)->where('status','terkonfirmasi')->get()->count();
@@ -149,7 +175,7 @@ class JadwalController extends Controller
                     
 
                     $carbon_jadwal = Carbon::parse($request->date." ".$jadwal->waktu_berangkat);
-                    if($golongan_exists == null){
+                    if($detail_golongan_exists == null){
                         $jadwals[$index]->isOrderable = false;
                         $jadwals[$index]->status = "TIDAK SUPPORT GOLONGAN";
                         $jadwals[$index]->kapasitas = 0;
