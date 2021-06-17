@@ -251,6 +251,7 @@ class PembelianController extends Controller
                 'rekening_refund' => $rekeningRefund,
                 'jumlah_refund' => $jumlahRefund,
                 'status_refund' => $statusRefund,
+                'isrefund' => $pembelian->isrefund,
                 'penumpang' => $penumpangs
             ], 200);
         } else {
