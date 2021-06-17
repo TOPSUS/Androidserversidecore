@@ -172,5 +172,9 @@ Route::group(['middleware' => 'auth:api'],function(){
         // SET REFUND
         Route::post('/setrefund','API\PembelianController@setrefund');
         // AKHIR
+
+        // TERIMA REFUND
+        Route::post('/terimarefund','API\PembelianController@terimarefund');
+        // AKHIR
     // AKHIR
 });

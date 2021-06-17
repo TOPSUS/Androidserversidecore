@@ -488,4 +488,57 @@ class PembelianController extends Controller
         ], 200);
         // AKHIR
     }
+
+    public function terimarefund(Request $request){
+         // LARAVEL VALIDATOR
+         $validator = Validator::make($request->all(), [
+            'id_pembelian' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'response_code' => 402,
+                'status' => 'failure',
+                'message' => 'terdapat format yang salah',
+                'error' => $validator->errors(),
+            ], 200);
+        }
+        // AKHIR
+
+        // MAIN LOGIC
+        // MENCARI PEMBELIAN DENGAN ID YANG DIMAKSUD
+        $pembelian = Pembelian::find($request->id_pembelian);
+
+        if ($pembelian == null) {
+            return response()->json([
+                'response_code' => 402,
+                'status' => 'failure',
+                'message' => 'id pembelian tidak ditemukan',
+                'error' => (object)[],
+            ], 200);
+        }
+        // AKHIR
+
+        // GET USER
+        $user = Auth::user();
+
+        //SET REFUND
+        $refund = Refund::where('id_pembelian', $pembelian->id)->first();
+        $refund->status = "diterima";
+        $refund->update();
+
+        //UBAH STATUS PEMBELIAN
+        $pembelian = Pembelian::find($request->id_pembelian);
+        $pembelian->status = "digunakan";
+        $pembelian->update();
+
+        // RETURN SUKSES RESPONSE
+        return response()->json([
+            'response_code' => 200,
+            'status' => 'success',
+            'message' => 'penerimaan dana berhasil',
+            'error' => (object)[],
+        ], 200);
+        // AKHIR
+    }
 }
