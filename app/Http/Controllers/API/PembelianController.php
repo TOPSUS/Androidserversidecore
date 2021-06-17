@@ -16,6 +16,8 @@ use App\User;
 use App\Jadwal;
 use App\MetodePembayaran;
 use App\Http\Helper\NotificationHelper;
+use App\JumlahRefund;
+use App\Refund;
 
 class PembelianController extends Controller
 {
@@ -98,7 +100,25 @@ class PembelianController extends Controller
 
         //GET PEMBELIAN
         $pembelian = Pembelian::where('id', $request->id)->first();
+
+        //GET DATA REFUND
+        if($pembelian->status == "direfund"){
+            $refund = Refund::where('id_pembelian', $pembelian->id)->first();
+            $tanggalRefund = $refund->created_at;
+            $rekeningRefund = $refund->no_rekening;
+            $jumlahRefund = $refund->refund;
+            $statusRefund = $refund->status;
+        }else{
+            $tanggalRefund = "NOPE";
+            $rekeningRefund = "NOPE";
+            $jumlahRefund = 0;
+            $statusRefund = "NOPE";
+        }
+
+        //GET PERSENAN REFUND
+        $persenanRefund = JumlahRefund::find(JumlahRefund::max('id'))->persenan_refund;
         
+        //GET METODE PEMBAYARAN
         $metode_pembayaran_waktu = $pembelian->getPembayaran();
 
         //getSisaWaktu
@@ -222,6 +242,11 @@ class PembelianController extends Controller
                 'harga_golongan' => $harga_golongan,
                 'rating' => $rating,
                 'review' => $review,
+                'persenan_refund' => $persenanRefund,
+                'tanggal_refund' => $tanggalRefund,
+                'rekening_refund' => $rekeningRefund,
+                'jumlah_refund' => $jumlahRefund,
+                'status_refund' => $statusRefund,
                 'penumpang' => $penumpangs
             ], 200);
         } else {
