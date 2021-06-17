@@ -106,7 +106,7 @@ class PembelianController extends Controller
         $pembelian = Pembelian::where('id', $request->id)->first();
 
         //GET DATA REFUND
-        if($pembelian->status == "direfund"){
+        if($pembelian->status == "direfund" || $pembelian->isrefund==1){
             $refund = Refund::where('id_pembelian', $pembelian->id)->first();
             $tanggalRefund = $refund->tanggal;
             $rekeningRefund = $refund->no_rekening;
