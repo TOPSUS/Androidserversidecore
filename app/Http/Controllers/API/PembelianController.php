@@ -465,7 +465,7 @@ class PembelianController extends Controller
         $refund = new Refund();
         $refund->id_pembelian = $pembelian->id;
         $refund->id_persenan = JumlahRefund::find(JumlahRefund::max('id'))->id;
-        $refund->refund = (JumlahRefund::find(JumlahRefund::max('id'))->persenan_refund)*($pembelian->total_harga);
+        $refund->refund = (JumlahRefund::find(JumlahRefund::max('id'))->persenan_refund/100)*($pembelian->total_harga);
         $refund->tanggal = Carbon::now();
         $refund->alasan = $request->alasan;
         $refund->no_rekening = $request->rekening;
