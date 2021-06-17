@@ -32,7 +32,7 @@ class PembelianController extends Controller
             })->orderBy('id', 'DESC')->get(
                 ['id', 'id_jadwal', 'id_user', 'tanggal', 'total_harga', 'status']
             );
-        } else if ($request->status == "terkonfirmasi") {
+        } else if ($request->status == "terkonfirmasi" || $request->status == "direfund") {
             $pembelians = Pembelian::where('id_user', $user->id)->where('status', $request->status)->orderBy('id', 'DESC')->get(
                 ['id', 'id_jadwal', 'id_user', 'tanggal', 'total_harga', 'status']
             );
