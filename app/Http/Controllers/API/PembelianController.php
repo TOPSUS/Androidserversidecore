@@ -104,7 +104,7 @@ class PembelianController extends Controller
         //GET DATA REFUND
         if($pembelian->status == "direfund"){
             $refund = Refund::where('id_pembelian', $pembelian->id)->first();
-            $tanggalRefund = $refund->created_at;
+            $tanggalRefund = $refund->tanggal;
             $rekeningRefund = $refund->no_rekening;
             $jumlahRefund = $refund->refund;
             $statusRefund = $refund->status;
@@ -422,5 +422,64 @@ class PembelianController extends Controller
             'message' => 'pembelian status berhasil diubah',
             'error' => (object)[],
         ], 200);
+    }
+
+    public function setrefund(Request $request){
+        // LARAVEL VALIDATOR
+        $validator = Validator::make($request->all(), [
+            'id_pembelian' => 'required|numeric'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'response_code' => 402,
+                'status' => 'failure',
+                'message' => 'terdapat format yang salah',
+                'error' => $validator->errors(),
+            ], 200);
+        }
+        // AKHIR
+
+        // MAIN LOGIC
+        // MENCARI PEMBELIAN DENGAN ID YANG DIMAKSUD
+        $pembelian = Pembelian::find($request->id_pembelian);
+
+        if ($pembelian == null) {
+            return response()->json([
+                'response_code' => 402,
+                'status' => 'failure',
+                'message' => 'id pembelian tidak ditemukan',
+                'error' => (object)[],
+            ], 200);
+        }
+        // AKHIR
+
+        // GET USER
+        $user = Auth::user();
+
+        //SET REFUND
+        $refund = new Refund();
+        $refund->id_pembelian = $pembelian->id;
+        $refund->id_persenan = JumlahRefund::find(JumlahRefund::max('id'))->id;
+        $refund->refund = (JumlahRefund::find(JumlahRefund::max('id'))->persenan_refund)*($pembelian->total_harga);
+        $refund->tanggal = Carbon::now();
+        $refund->alasan = $request->alasan;
+        $refund->no_rekening = $request->rekening;
+        $refund->status = "pending";
+        $refund->save();
+
+        //UBAH STATUS PEMBELIAN
+        $pembelian = Pembelian::find($request->id_pembelian);
+        $pembelian->status = "direfund";
+        $pembelian->update();
+
+        // RETURN SUKSES RESPONSE
+        return response()->json([
+            'response_code' => 200,
+            'status' => 'success',
+            'message' => 'pembelian berhasil dibatalkan',
+            'error' => (object)[],
+        ], 200);
+        // AKHIR
     }
 }

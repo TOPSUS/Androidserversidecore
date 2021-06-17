@@ -167,4 +167,10 @@ Route::group(['middleware' => 'auth:api'],function(){
             Route::post('/getnotification','API\UserNotificationController@getAllNotification');
         // AKHIR
     // AKHIR
+
+    // REFUND 
+        // SET REFUND
+        Route::post('/setrefund','API\PembelianController@setrefund');
+        // AKHIR
+    // AKHIR
 });
