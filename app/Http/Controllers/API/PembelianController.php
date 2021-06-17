@@ -476,6 +476,7 @@ class PembelianController extends Controller
         //UBAH STATUS PEMBELIAN
         $pembelian = Pembelian::find($request->id_pembelian);
         $pembelian->status = "direfund";
+        $pembelian->isrefund = 1;
         $pembelian->update();
 
         // RETURN SUKSES RESPONSE
